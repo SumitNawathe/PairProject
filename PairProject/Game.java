@@ -10,8 +10,8 @@ public class Game extends JPanel {
 	final int SCREEN_WIDTH = 1200, SCREEN_HEIGHT = 900;
 	double FOV_ANGLE = Math.PI/2;
 	double Z_NEAR = 0.1, Z_FAR = 1000.0;
-	double[][] projMatrix, matRotX, matRotZ;
-	Vector translationVector = new Vector(0, 0, 3);
+	double[][] projMatrix, matRotX = new double[4][4], matRotZ = new double[4][4];;
+	Vector translationVector = new Vector(0, 0, 8);
 	JPanel panel = this;
 	java.util.Timer timer;
 	double theta = 0;
@@ -20,7 +20,12 @@ public class Game extends JPanel {
 	
 	public Game () {
 		meshList = new ArrayList<Mesh>();
-		meshList.add(new MeshCube());
+		//meshList.add(new MeshCube());
+		try {
+			System.out.println("a");
+			meshList.add(Mesh.loadFromObjFile("Models/VideoShip.obj"));
+			System.out.println("b");
+		} catch (Exception e) {}
 		
 		double a = (double) SCREEN_HEIGHT/SCREEN_WIDTH;
 		//System.out.println("a: " + a);
@@ -66,7 +71,7 @@ public class Game extends JPanel {
 			public void run () {
 				theta += Math.PI/(18*6);
 				
-				matRotZ = new double[4][4];
+				//matRotZ = new double[4][4];
 				matRotZ[0][0] = Math.cos(theta);
 				matRotZ[0][1] = Math.sin(theta);
 				matRotZ[1][0] = -1*Math.sin(theta);
@@ -74,7 +79,7 @@ public class Game extends JPanel {
 				matRotZ[2][2] = 1;
 				matRotZ[3][3] = 1;
 				
-				matRotX = new double[4][4];
+				//matRotX = new double[4][4];
 				matRotX[0][0] = 1;
 				matRotX[1][1] = Math.cos(theta/2);
 				matRotX[1][2] = Math.sin(theta/2);
@@ -89,12 +94,13 @@ public class Game extends JPanel {
 	
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
-		System.out.println("painting");
+		//System.out.println("painting");
 //		g.setColor(Color.red);
 //		g.fillRect(10, 10, 100, 50);
 		g.setColor(Color.white);
 		
 		for (Mesh mesh : meshList) {
+			//System.out.println(mesh.getTris().size());
 			for (Triangle tri : mesh.getTris()) {
 				Triangle triangle = tri.clone();
 				triangle = matrixMult(triangle, matRotZ);
@@ -109,7 +115,7 @@ public class Game extends JPanel {
 					int[] xCoords = new int[3], yCoords = new int[3];
 					for (int i = 0; i < 3; i++) {
 						Vector vec = matrixMult(triangle.getVerts()[i], projMatrix);
-						System.out.println("projectedXCoord: " + vec.getX());
+						//System.out.println("projectedXCoord: " + vec.getX());
 						xCoords[i] = (int) ((vec.getX() + 1) * 0.5 * SCREEN_WIDTH);
 						yCoords[i] = (int) ((vec.getY() + 1) * 0.5 * SCREEN_HEIGHT);
 					}
@@ -132,12 +138,12 @@ public class Game extends JPanel {
 	}
 	
 	public Vector matrixMult (Vector vec, double[][] matrix) {
-		System.out.println(vec.getX());
+		//System.out.println(vec.getX());
 		Vector returnVec = new Vector(
 				vec.getX()*matrix[0][0] + vec.getY()*matrix[1][0] + vec.getZ()*matrix[2][0] + matrix[3][0],
 				vec.getX()*matrix[0][1] + vec.getY()*matrix[1][1] + vec.getZ()*matrix[2][1] + matrix[3][1],
 				vec.getX()*matrix[0][2] + vec.getY()*matrix[1][2] + vec.getZ()*matrix[2][2] + matrix[3][2]);
-		System.out.println(returnVec.getX());
+		//System.out.println(returnVec.getX());
 		double w = vec.getX()*matrix[0][3] + vec.getY()*matrix[1][3] + vec.getZ()*matrix[2][3] + matrix[3][3];
 		if (w != 0)
 			returnVec.scale(1/w);
