@@ -98,6 +98,7 @@ public class Game extends JPanel {
 //		g.setColor(Color.red);
 //		g.fillRect(10, 10, 100, 50);
 		g.setColor(Color.white);
+		ArrayList<DrawnTriangle> drawnTriangles = new ArrayList<DrawnTriangle>();
 		
 		for (Mesh mesh : meshList) {
 			//System.out.println(mesh.getTris().size());
@@ -113,12 +114,16 @@ public class Game extends JPanel {
 				
 				if (normal.dot(triangle.getVert1().clone().minus(cameraPos)) < 0) {
 					int[] xCoords = new int[3], yCoords = new int[3];
+					double depth = 0;
 					for (int i = 0; i < 3; i++) {
 						Vector vec = matrixMult(triangle.getVerts()[i], projMatrix);
 						//System.out.println("projectedXCoord: " + vec.getX());
 						xCoords[i] = (int) ((vec.getX() + 1) * 0.5 * SCREEN_WIDTH);
 						yCoords[i] = (int) ((vec.getY() + 1) * 0.5 * SCREEN_HEIGHT);
+						//System.out.println(vec.getZ());
+						depth += vec.getZ();
 					}
+					depth /= 3;
 					
 					double shadingValue = normal.dot(light_direction);
 					if (shadingValue < 0)
@@ -126,11 +131,42 @@ public class Game extends JPanel {
 					if (shadingValue > 1)
 						shadingValue = 1;
 					Color color = new Color((int) (255*shadingValue), (int) (255*shadingValue), (int) (255*shadingValue));
-					g.setColor(color);
-					g.fillPolygon(xCoords, yCoords, 3);
+					drawnTriangles.add(new DrawnTriangle(xCoords, yCoords, color, depth));
+					
+//					g.setColor(color);
+//					g.fillPolygon(xCoords, yCoords, 3);
 				}
 			}
 		}
+		
+		Collections.sort(drawnTriangles, new Comparator<DrawnTriangle>() {
+		    public int compare(DrawnTriangle tri1, DrawnTriangle tri2) {
+		    	//System.out.println((int) (tri1.depth-tri2.depth));
+		    	if (tri1.depth > tri2.depth)
+		    		return -1;
+		    	else if (tri1.depth < tri2.depth)
+		    		return 1;
+		    	return 0;
+		        //return (int) (tri1.depth-tri2.depth);
+		    }
+		});
+		
+		for (DrawnTriangle tri : drawnTriangles) {
+			g.setColor(tri.color);
+			g.fillPolygon(tri.xCoords, tri.yCoords, 3);
+		}
+	}
+	
+	private class DrawnTriangle {
+		public int[] xCoords, yCoords;
+		public Color color;
+		public double depth;
+		public DrawnTriangle (int[] xCoords, int[] yCoords, Color color, double depth) {
+			this.xCoords = xCoords;
+			this.yCoords = yCoords;
+			this.color = color;
+			this.depth = depth;
+		};
 	}
 	
 	public Triangle matrixMult(Triangle tri, double[][] matrix) {
