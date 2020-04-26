@@ -15,6 +15,8 @@ public class Game extends JPanel {
 	JPanel panel = this;
 	java.util.Timer timer;
 	double theta = 0;
+	Vector cameraPos = new Vector(0, 0, 0);
+	Vector light_direction = new Vector(0, 0, -1);
 	
 	public Game () {
 		meshList = new ArrayList<Mesh>();
@@ -93,22 +95,34 @@ public class Game extends JPanel {
 		g.setColor(Color.white);
 		
 		for (Mesh mesh : meshList) {
-			//int counter = 0;
 			for (Triangle tri : mesh.getTris()) {
 				Triangle triangle = tri.clone();
 				triangle = matrixMult(triangle, matRotZ);
 				triangle = matrixMult(triangle, matRotX);
-				Triangle translatedTri = triangle.translate(translationVector);
-				int[] xCoords = new int[3], yCoords = new int[3];
-				for (int i = 0; i < 3; i++) {
-					Vector vec = matrixMult(translatedTri.getVerts()[i], projMatrix);
-					System.out.println("projectedXCoord: " + vec.getX());
-					xCoords[i] = (int) ((vec.getX() + 1) * 0.5 * SCREEN_WIDTH);
-					yCoords[i] = (int) ((vec.getY() + 1) * 0.5 * SCREEN_HEIGHT);
+				triangle = triangle.translate(translationVector);
+				
+				Vector line1 = triangle.getVert2().clone().minus(triangle.getVert1());
+				Vector line2 = triangle.getVert3().clone().minus(triangle.getVert1());
+				Vector normal = line1.cross(line2).unit();
+				
+				if (normal.dot(triangle.getVert1().clone().minus(cameraPos)) < 0) {
+					int[] xCoords = new int[3], yCoords = new int[3];
+					for (int i = 0; i < 3; i++) {
+						Vector vec = matrixMult(triangle.getVerts()[i], projMatrix);
+						System.out.println("projectedXCoord: " + vec.getX());
+						xCoords[i] = (int) ((vec.getX() + 1) * 0.5 * SCREEN_WIDTH);
+						yCoords[i] = (int) ((vec.getY() + 1) * 0.5 * SCREEN_HEIGHT);
+					}
+					
+					double shadingValue = normal.dot(light_direction);
+					if (shadingValue < 0)
+						shadingValue = 0;
+					if (shadingValue > 1)
+						shadingValue = 1;
+					Color color = new Color((int) (255*shadingValue), (int) (255*shadingValue), (int) (255*shadingValue));
+					g.setColor(color);
+					g.fillPolygon(xCoords, yCoords, 3);
 				}
-				g.drawPolygon(xCoords, yCoords, 3);
-				//System.out.println(counter + ": " + translatedTri.toString());
-				//counter++;
 			}
 		}
 	}
