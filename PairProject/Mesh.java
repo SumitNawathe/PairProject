@@ -9,4 +9,10 @@ public abstract class Mesh {
 	public Mesh () {
 		tris = new ArrayList<Triangle>();
 	}
+	
+	public Mesh translate (Vector vec) {
+		for (Triangle tri : tris)
+			tri.translate(vec);
+		return this;
+	}
 }

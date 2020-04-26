@@ -18,13 +18,15 @@ public class Triangle {
 		this.vert2 = vert2;
 		this.vert3 = vert3;
 	}
+	
 	public Triangle clone () {
 		return new Triangle(vert1.clone(), vert2.clone(), vert3.clone());
 	}
-	public Triangle offset (Vector offset) {
-		vert1 = vert1.plus(offset);
-		vert2 = vert2.plus(offset);
-		vert3 = vert3.plus(offset);
+	
+	public Triangle translate (Vector offset) {
+//		vert1P = vert1.plus(offset);
+//		vert2P = vert2.plus(offset);
+//		vert3P = vert3.plus(offset);
 		return new Triangle(vert1.plus(offset), vert2.plus(offset), vert3.plus(offset));
 	}
 }
