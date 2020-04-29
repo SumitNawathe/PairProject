@@ -1,12 +1,13 @@
 public class Vector {
-	private double x, y, z;
+	private double x, y, z, w = 1;
 	public double getX () { return x; }
 	public double getY () { return y; }
 	public double getZ () { return z; }
+	public double getW () { return w; }
 	
 	public Vector () { x = 0; y = 0; z = 0; }
-	public Vector (double x, double y) { this.x = x; this.y = y; z = 0; }
 	public Vector (double x, double y, double z) { this.x = x; this.y = y; this.z = z; }
+	public Vector (double x, double y, double z, double w) { this.x = x; this.y = y; this.z = z; this.w = w;}
 	
 	public Vector plus (Vector pos) {
 		return new Vector(x+pos.getX(), y+pos.getY(), z+pos.getZ());

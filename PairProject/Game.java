@@ -38,6 +38,7 @@ public class Game extends JPanel {
 		projMatrix[2][2] = q;
 		projMatrix[2][3] = 1;
 		projMatrix[3][2] = -1*Z_NEAR*q;
+		projMatrix[3][3] = 0;
 		
 		frame = new JFrame();
 		frame.setMinimumSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
