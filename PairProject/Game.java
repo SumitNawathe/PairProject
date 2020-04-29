@@ -74,7 +74,7 @@ public class Game extends JPanel {
 		timer = new java.util.Timer();
 		timer.scheduleAtFixedRate(new TimerTask () {
 			public void run () {
-				theta += Math.PI/(18);
+				theta += Math.PI/(18*6);
 				
 				//matRotZ = new double[4][4];
 //				matRotZ[0][0] = Math.cos(theta);
@@ -98,7 +98,7 @@ public class Game extends JPanel {
 				
 				panel.repaint();
 			}
-		}, 100, 100);
+		}, 100, 20);
 	}
 	
 	public void paintComponent (Graphics g) {
