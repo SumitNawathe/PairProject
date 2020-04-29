@@ -47,4 +47,8 @@ public class Vector {
 	public Vector projOnto (Vector pos) {
 		return pos.clone().scale(this.dot(pos)/(pos.magnitude()*pos.magnitude()));
 	}
+	
+	public void trim () {
+		w = 1;
+	}
 }

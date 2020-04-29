@@ -27,7 +27,7 @@ public class Mesh {
 		ArrayList<Vector> vectorPool = new ArrayList<Vector>();
 		//while (!line.equals("")) {
 		while ((line = file.readLine()) != null) {
-			System.out.println(line);
+			//System.out.println(line);
 			StringTokenizer st = new StringTokenizer(line);
 			String starting = st.nextToken();
 			if (starting.equals("v")) {

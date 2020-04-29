@@ -10,7 +10,8 @@ public class Game extends JPanel {
 	final int SCREEN_WIDTH = 1200, SCREEN_HEIGHT = 900;
 	double FOV_ANGLE = Math.PI/2;
 	double Z_NEAR = 0.1, Z_FAR = 1000.0;
-	double[][] projMatrix, matRotX = new double[4][4], matRotZ = new double[4][4];;
+	double[][] projMatrix = new double[4][4], matRotX = Matrix.getIdentityMatrix(), 
+			matRotZ = Matrix.getIdentityMatrix(), transMatrix = new double[4][4], worldMatrix = new double[4][4];
 	Vector translationVector = new Vector(0, 0, 8);
 	JPanel panel = this;
 	java.util.Timer timer;
@@ -23,22 +24,25 @@ public class Game extends JPanel {
 		//meshList.add(new MeshCube());
 		try {
 			System.out.println("a");
-			meshList.add(Mesh.loadFromObjFile("Models/VideoShip.obj"));
+			meshList.add(Mesh.loadFromObjFile("Models/teapot.obj"));
 			System.out.println("b");
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
-		double a = (double) SCREEN_HEIGHT/SCREEN_WIDTH;
-		//System.out.println("a: " + a);
-		double f = 1/Math.tan(FOV_ANGLE/2);
-		//System.out.println("f: " + f);
-		double q = Z_FAR/(Z_FAR-Z_NEAR);
-		projMatrix = new double[4][4];
-		projMatrix[0][0] = a*f;
-		projMatrix[1][1] = f;
-		projMatrix[2][2] = q;
-		projMatrix[2][3] = 1;
-		projMatrix[3][2] = -1*Z_NEAR*q;
-		projMatrix[3][3] = 0;
+//		double a = (double) SCREEN_HEIGHT/SCREEN_WIDTH;
+//		//System.out.println("a: " + a);
+//		double f = 1/Math.tan(FOV_ANGLE/2);
+//		//System.out.println("f: " + f);
+//		double q = Z_FAR/(Z_FAR-Z_NEAR);
+//		projMatrix = new double[4][4];
+//		projMatrix[0][0] = a*f;
+//		projMatrix[1][1] = f;
+//		projMatrix[2][2] = q;
+//		projMatrix[2][3] = 1;
+//		projMatrix[3][2] = -1*Z_NEAR*q;
+//		projMatrix[3][3] = 0;
+		projMatrix = Matrix.getProjMatrix((double) SCREEN_HEIGHT/SCREEN_WIDTH, 1/Math.tan(FOV_ANGLE/2), Z_NEAR, Z_FAR);
 		
 		frame = new JFrame();
 		frame.setMinimumSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
@@ -70,54 +74,70 @@ public class Game extends JPanel {
 		timer = new java.util.Timer();
 		timer.scheduleAtFixedRate(new TimerTask () {
 			public void run () {
-				theta += Math.PI/(18*6);
+				theta += Math.PI/(18);
 				
 				//matRotZ = new double[4][4];
-				matRotZ[0][0] = Math.cos(theta);
-				matRotZ[0][1] = Math.sin(theta);
-				matRotZ[1][0] = -1*Math.sin(theta);
-				matRotZ[1][1] = Math.cos(theta);
-				matRotZ[2][2] = 1;
-				matRotZ[3][3] = 1;
+//				matRotZ[0][0] = Math.cos(theta);
+//				matRotZ[0][1] = Math.sin(theta);
+//				matRotZ[1][0] = -1*Math.sin(theta);
+//				matRotZ[1][1] = Math.cos(theta);
+//				matRotZ[2][2] = 1;
+//				matRotZ[3][3] = 1;
+				matRotZ = Matrix.getRotMatZ(theta);
 				
 				//matRotX = new double[4][4];
-				matRotX[0][0] = 1;
-				matRotX[1][1] = Math.cos(theta/2);
-				matRotX[1][2] = Math.sin(theta/2);
-				matRotX[2][1] = -1*Math.sin(theta/2);
-				matRotX[2][2] = Math.cos(theta/2);
-				matRotX[3][3] = 1;
+//				matRotX[0][0] = 1;
+//				matRotX[1][1] = Math.cos(theta/2);
+//				matRotX[1][2] = Math.sin(theta/2);
+//				matRotX[2][1] = -1*Math.sin(theta/2);
+//				matRotX[2][2] = Math.cos(theta/2);
+//				matRotX[3][3] = 1;
+				matRotX = Matrix.getRotMatX(theta/2);
+				
+				transMatrix = Matrix.getTranslationMatrix(translationVector);
 				
 				panel.repaint();
 			}
-		}, 0, 20);
+		}, 100, 100);
 	}
 	
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
+		System.out.println("painting");
 		//System.out.println("painting");
 //		g.setColor(Color.red);
 //		g.fillRect(10, 10, 100, 50);
 		g.setColor(Color.white);
 		ArrayList<DrawnTriangle> drawnTriangles = new ArrayList<DrawnTriangle>();
 		
+		worldMatrix = Matrix.mulMatMat(matRotZ, matRotX);
+		worldMatrix = Matrix.mulMatMat(worldMatrix, transMatrix);
+		
 		for (Mesh mesh : meshList) {
 			//System.out.println(mesh.getTris().size());
 			for (Triangle tri : mesh.getTris()) {
-				Triangle triangle = tri.clone();
-				triangle = matrixMult(triangle, matRotZ);
-				triangle = matrixMult(triangle, matRotX);
-				triangle = triangle.translate(translationVector);
+//				Triangle triangle = tri.clone();
+//				triangle = matrixMult(triangle, matRotZ);
+//				triangle = matrixMult(triangle, matRotX);
+//				triangle = triangle.translate(translationVector);
+				Triangle triangle = new Triangle(Matrix.multMatVec(worldMatrix, tri.getVert1()), 
+						Matrix.multMatVec(worldMatrix, tri.getVert2()), Matrix.multMatVec(worldMatrix, tri.getVert3()));
+				triangle.getVert1().trim();
+				triangle.getVert2().trim();
+				triangle.getVert3().trim();
 				
 				Vector line1 = triangle.getVert2().clone().minus(triangle.getVert1());
 				Vector line2 = triangle.getVert3().clone().minus(triangle.getVert1());
 				Vector normal = line1.cross(line2).unit();
 				
 				if (normal.dot(triangle.getVert1().clone().minus(cameraPos)) < 0) {
+					//System.out.println("good");
 					int[] xCoords = new int[3], yCoords = new int[3];
 					double depth = 0;
 					for (int i = 0; i < 3; i++) {
-						Vector vec = matrixMult(triangle.getVerts()[i], projMatrix);
+						//Vector vec = matrixMult(triangle.getVerts()[i], projMatrix);
+						Vector vec = Matrix.multMatVec(projMatrix, triangle.getVerts()[i]);
+						vec.scale(1/vec.getW());
 						//System.out.println("projectedXCoord: " + vec.getX());
 						xCoords[i] = (int) ((vec.getX() + 1) * 0.5 * SCREEN_WIDTH);
 						yCoords[i] = (int) ((vec.getY() + 1) * 0.5 * SCREEN_HEIGHT);
@@ -126,7 +146,7 @@ public class Game extends JPanel {
 					}
 					depth /= 3;
 					
-					double shadingValue = normal.dot(light_direction);
+					double shadingValue = normal.dot(light_direction.unit());
 					if (shadingValue < 0)
 						shadingValue = 0;
 					if (shadingValue > 1)
@@ -152,6 +172,7 @@ public class Game extends JPanel {
 		    }
 		});
 		
+		//System.out.println(drawnTriangles.size());
 		for (DrawnTriangle tri : drawnTriangles) {
 			g.setColor(tri.color);
 			g.fillPolygon(tri.xCoords, tri.yCoords, 3);
