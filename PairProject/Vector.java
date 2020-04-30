@@ -48,7 +48,19 @@ public class Vector {
 		return pos.clone().scale(this.dot(pos)/(pos.magnitude()*pos.magnitude()));
 	}
 	
-	public void trim () {
+	public Vector trim () {
 		w = 1;
+		return this;
+	}
+	
+	public static Vector VecPlaneIntersect (Vector planePoint, Vector planeNorm, Vector lineStart, Vector lineEnd) {
+		planeNorm = planeNorm.unit();
+		double plane_d = -1*planePoint.dot(planeNorm);
+		double ad = lineStart.dot(planeNorm);
+		double bd = lineEnd.dot(planeNorm);
+		double t = (-plane_d - ad) / (bd - ad);
+		Vector lineStartToEnd = lineEnd.minus(lineStart);
+		Vector lineToIntersect = lineStartToEnd.scale(t);
+		return lineStart.plus(lineToIntersect);
 	}
 }
