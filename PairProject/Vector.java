@@ -6,6 +6,7 @@ public class Vector {
 	public double getW () { return w; }
 	
 	public Vector () { x = 0; y = 0; z = 0; }
+	public Vector (double x, double y) { this.x = x; this.y = y; this.z = 0; }
 	public Vector (double x, double y, double z) { this.x = x; this.y = y; this.z = z; }
 	public Vector (double x, double y, double z, double w) { this.x = x; this.y = y; this.z = z; this.w = w;}
 	
@@ -52,6 +53,9 @@ public class Vector {
 		w = 1;
 		return this;
 	}
+	public void setW (double w) {
+		this.w = w;
+	}
 	
 	public static Vector VecPlaneIntersect (Vector planePoint, Vector planeNorm, Vector lineStart, Vector lineEnd) {
 		planeNorm = planeNorm.unit();
@@ -61,6 +65,8 @@ public class Vector {
 		double t = (-plane_d - ad) / (bd - ad);
 		Vector lineStartToEnd = lineEnd.minus(lineStart);
 		Vector lineToIntersect = lineStartToEnd.scale(t);
-		return lineStart.plus(lineToIntersect);
+		Vector answer = lineStart.plus(lineToIntersect);
+		answer.setW(t);
+		return answer;
 	}
 }

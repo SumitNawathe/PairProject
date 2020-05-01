@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class Triangle {
 	private Vector vert1, vert2, vert3;
+	private Vector tex1, tex2, tex3;
 	private Color color;
 	private double depth;
 	
@@ -15,8 +16,16 @@ public class Triangle {
 	public Vector getVert2 () { return vert2; }
 	public Vector getVert3 () { return vert3; }
 	public Vector[] getVerts () {
-		Vector[] verts = {vert1, vert2, vert3};
-		return verts;
+		return new Vector[] {vert1, vert2, vert3};
+	}
+	public Vector getTex1 () { return tex1; }
+	public void setTex1 (Vector tex1) { this.tex1 = tex1; }
+	public Vector getTex2 () { return tex2; }
+	public void setTex2 (Vector tex2) { this.tex2 = tex2; }
+	public Vector getTex3 () { return tex3; }
+	public void setTex3 (Vector tex3) { this.tex3 = tex3; }
+	public Vector[] getTex () {
+		return new Vector[] {tex1, tex2, tex3};
 	}
 	
 	public String toString () {
@@ -29,22 +38,26 @@ public class Triangle {
 		this.vert3 = vert3;
 		this.color = Color.white;
 	}
-	public Triangle (Vector vert1, Vector vert2, Vector vert3, Color color) {
+	public Triangle (Vector vert1, Vector vert2, Vector vert3, Vector[] tex) {
 		this.vert1 = vert1;
 		this.vert2 = vert2;
 		this.vert3 = vert3;
-		this.color = color;
+		this.tex1 = tex[0];
+		this.tex2 = tex[1];
+		this.tex3 = tex[2];
 	}
-	public Triangle (Vector vert1, Vector vert2, Vector vert3, Color color, double depth) {
+	public Triangle (Vector vert1, Vector vert2, Vector vert3, Vector[] tex, double depth) {
 		this.vert1 = vert1;
 		this.vert2 = vert2;
 		this.vert3 = vert3;
-		this.color = color;
+		this.tex1 = tex[0];
+		this.tex2 = tex[1];
+		this.tex3 = tex[2];
 		this.depth = depth;
 	}
 	
 	public Triangle clone () {
-		return new Triangle(vert1.clone(), vert2.clone(), vert3.clone());
+		return new Triangle(vert1.clone(), vert2.clone(), vert3.clone(), new Vector[] {tex1.clone(), tex2.clone(), tex3.clone()}, depth);
 	}
 	
 	public Triangle translate (Vector offset) {
