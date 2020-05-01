@@ -23,7 +23,7 @@ public class Game extends JPanel {
 		//meshList.add(new MeshCube());
 		try {
 			System.out.println("a");
-			meshList.add(Mesh.loadFromObjFile("Models/Ship Model 2.obj"));
+			meshList.add(Mesh.loadFromObjFile("Models/Ship Model 1.obj"));
 			System.out.println("b");
 		} catch (Exception e) {}
 		
