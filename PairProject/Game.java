@@ -23,7 +23,7 @@ public class Game extends JPanel {
 		meshList = new ArrayList<Mesh>();
 		try {
 			System.out.println("a");
-			meshList.add(Mesh.loadFromObjFile("Models/VideoShip.obj"));
+			meshList.add(Mesh.loadFromObjFile("Models/ShipModel2.obj"));
 			System.out.println("b");
 		} catch (Exception e) {
 			System.out.println(e);
@@ -118,37 +118,25 @@ public class Game extends JPanel {
 				
 				if (normal.dot(transformedTri.getVert1().clone().minus(cameraPos)) < 0) {
 					double shadingValue = normal.dot(light_direction.unit());
-					shadingValue += 0.1;
+//					shadingValue += 0.4;
 					if (shadingValue < 0)
 						shadingValue = 0;
 					if (shadingValue > 1)
 						shadingValue = 1;
 					//shadingValue = 1; //TODO remove
+					shadingValue /= 4;
+					shadingValue += 0.75;
 					Color color = new Color((int) (255*shadingValue), (int) (255*shadingValue), (int) (255*shadingValue));
 					
 					//for (Triangle clippedTri : clipAgainstPlane(cameraPos.clone().plus(cameraForward.clone().unit().scale(10*Z_NEAR)), cameraForward.clone().unit(), transformedTri)) {
 						Triangle triViewed = new Triangle(Matrix.multMatVec(viewMatrix, transformedTri.getVert1()), 
 								Matrix.multMatVec(viewMatrix, transformedTri.getVert2()), Matrix.multMatVec(viewMatrix, transformedTri.getVert3()));
-					for (Triangle clippedTri : clipAgainstPlane(new Vector(0, 0, 1), new Vector(0, 0, 0.00000000001), triViewed)) {
+					for (Triangle clippedTri : clipAgainstPlane(new Vector(0, 0, 1), new Vector(0, 0, Z_NEAR), triViewed)) {
 						Triangle projectedTri = new Triangle(Matrix.multMatVec(projMatrix, clippedTri.getVert1()), 
 								Matrix.multMatVec(projMatrix, clippedTri.getVert2()), Matrix.multMatVec(projMatrix, clippedTri.getVert3()));
 						double depth = (clippedTri.getVert1().getZ() + clippedTri.getVert2().getZ() + clippedTri.getVert3().getZ())/3.0;
 						projectedTri = new Triangle(projectedTri.getVert1().scale(1/projectedTri.getVert1().getW()), 
 								projectedTri.getVert2().scale(1/projectedTri.getVert2().getW()), projectedTri.getVert3().scale(1/projectedTri.getVert3().getW()), color, depth);
-						
-//						int[] xCoords = new int[] {
-//								(int) ((projectedTri.getVert1().getX()+1) * 0.5 * SCREEN_WIDTH),
-//								(int) ((projectedTri.getVert2().getX()+1) * 0.5 * SCREEN_WIDTH),
-//								(int) ((projectedTri.getVert3().getX()+1) * 0.5 * SCREEN_WIDTH)
-//						};
-//						int[] yCoords = new int[] {
-//								(int) ((projectedTri.getVert1().getY()+1) * 0.5 * SCREEN_HEIGHT),
-//								(int) ((projectedTri.getVert2().getY()+1) * 0.5 * SCREEN_HEIGHT),
-//								(int) ((projectedTri.getVert3().getY()+1) * 0.5 * SCREEN_HEIGHT)
-//						};
-//						double depth = (clippedTri.getVert1().getZ() + clippedTri.getVert2().getZ() + clippedTri.getVert3().getZ())/3.0;
-//						
-//						drawnTriangles.add(new DrawnTriangle(xCoords, yCoords, color, depth));
 						drawnTriangles.add(projectedTri);
 					}
 				}
@@ -203,74 +191,7 @@ public class Game extends JPanel {
 				g.drawPolygon(xCoords, yCoords, 3);
 			}
 		}
-		
-//		for (Triangle triToDraw : drawnTriangles) {
-//			ArrayList<Triangle> listTriangles = new ArrayList<Triangle>();
-//			
-//			// Add initial triangle
-//			listTriangles.add(triToDraw);
-//			int nNewTriangles = 1;
-//
-//			for (int p = 0; p < 4; p++)
-//			{
-//				int nTrisToAdd = 0;
-//				while (nNewTriangles > 0)
-//				{
-//					// Take triangle from front of queue
-//					triangle test = listTriangles.front();
-//					listTriangles.pop_front();
-//					nNewTriangles--;
-//
-//					// Clip it against a plane. We only need to test each 
-//					// subsequent plane, against subsequent new triangles
-//					// as all triangles after a plane clip are guaranteed
-//					// to lie on the inside of the plane. I like how this
-//					// comment is almost completely and utterly justified
-//					switch (p)
-//					{
-//					case 0:	nTrisToAdd = Triangle_ClipAgainstPlane({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, test, clipped[0], clipped[1]); break;
-//					case 1:	nTrisToAdd = Triangle_ClipAgainstPlane({ 0.0f, (float)ScreenHeight() - 1, 0.0f }, { 0.0f, -1.0f, 0.0f }, test, clipped[0], clipped[1]); break;
-//					case 2:	nTrisToAdd = Triangle_ClipAgainstPlane({ 0.0f, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f }, test, clipped[0], clipped[1]); break;
-//					case 3:	nTrisToAdd = Triangle_ClipAgainstPlane({ (float)ScreenWidth() - 1, 0.0f, 0.0f }, { -1.0f, 0.0f, 0.0f }, test, clipped[0], clipped[1]); break;
-//					}
-//
-//					// Clipping may yield a variable number of triangles, so
-//					// add these new ones to the back of the queue for subsequent
-//					// clipping against next planes
-//					for (int w = 0; w < nTrisToAdd; w++)
-//						listTriangles.push_back(clipped[w]);
-//				}
-//				nNewTriangles = listTriangles.size();
-//			}
-//			
-//			int[] xCoords = new int[] {
-//					(int) ((tri.getVert1().getX()+1) * 0.5 * SCREEN_WIDTH),
-//					(int) ((tri.getVert2().getX()+1) * 0.5 * SCREEN_WIDTH),
-//					(int) ((tri.getVert3().getX()+1) * 0.5 * SCREEN_WIDTH)
-//			};
-//			int[] yCoords = new int[] {
-//					(int) ((tri.getVert1().getY()+1) * 0.5 * SCREEN_HEIGHT),
-//					(int) ((tri.getVert2().getY()+1) * 0.5 * SCREEN_HEIGHT),
-//					(int) ((tri.getVert3().getY()+1) * 0.5 * SCREEN_HEIGHT)
-//			};
-//			g.setColor(tri.getColor());
-//			g.fillPolygon(xCoords, yCoords, 3);
-////			g.setColor(Color.black);
-////			g.drawPolygon(xCoords, yCoords, 3);
-//		}
 	}
-	
-//	private class DrawnTriangle {
-//		public int[] xCoords, yCoords;
-//		public Color color;
-//		public double depth;
-//		public DrawnTriangle (int[] xCoords, int[] yCoords, Color color, double depth) {
-//			this.xCoords = xCoords;
-//			this.yCoords = yCoords;
-//			this.color = color;
-//			this.depth = depth;
-//		};
-//	}
 	
 	private Triangle[] clipAgainstPlane(Vector planePos, Vector planeNorm, Triangle tri) {
 		planeNorm = planeNorm.unit();
