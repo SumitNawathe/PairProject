@@ -131,7 +131,7 @@ public class Game extends JPanel {
 					//for (Triangle clippedTri : clipAgainstPlane(cameraPos.clone().plus(cameraForward.clone().unit().scale(10*Z_NEAR)), cameraForward.clone().unit(), transformedTri)) {
 						Triangle triViewed = new Triangle(Matrix.multMatVec(viewMatrix, transformedTri.getVert1()), 
 								Matrix.multMatVec(viewMatrix, transformedTri.getVert2()), Matrix.multMatVec(viewMatrix, transformedTri.getVert3()));
-					for (Triangle clippedTri : clipAgainstPlane(new Vector(0, 0, 1), new Vector(0, 0, 0.000000001), triViewed)) {
+					for (Triangle clippedTri : clipAgainstPlane(new Vector(0, 0, Z_NEAR), new Vector(0, 0, 0.000000001), triViewed)) {
 						Triangle projectedTri = new Triangle(Matrix.multMatVec(projMatrix, clippedTri.getVert1()), 
 								Matrix.multMatVec(projMatrix, clippedTri.getVert2()), Matrix.multMatVec(projMatrix, clippedTri.getVert3()));
 						double depth = (clippedTri.getVert1().getZ() + clippedTri.getVert2().getZ() + clippedTri.getVert3().getZ())/3.0;
