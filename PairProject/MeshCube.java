@@ -3,33 +3,34 @@ public class MeshCube extends Mesh {
 		super();
 		double[][] triCoords =  {
 				// SOUTH
-				{ 0.0d, 0.0d, 0.0d,    0.0d, 1.0d, 0.0d,    1.0d, 1.0d, 0.0d },
-				{ 0.0d, 0.0d, 0.0d,    1.0d, 1.0d, 0.0d,    1.0d, 0.0d, 0.0d },
-
-				// EAST                                                      
-				{ 1.0d, 0.0d, 0.0d,    1.0d, 1.0d, 0.0d,    1.0d, 1.0d, 1.0d },
-				{ 1.0d, 0.0d, 0.0d,    1.0d, 1.0d, 1.0d,    1.0d, 0.0d, 1.0d },
-
-				// NORTH                                                     
-				{ 1.0d, 0.0d, 1.0d,    1.0d, 1.0d, 1.0d,    0.0d, 1.0d, 1.0d },
-				{ 1.0d, 0.0d, 1.0d,    0.0d, 1.0d, 1.0d,    0.0d, 0.0d, 1.0d },
-
-				// WEST                                                      
-				{ 0.0d, 0.0d, 1.0d,    0.0d, 1.0d, 1.0d,    0.0d, 1.0d, 0.0d },
-				{ 0.0d, 0.0d, 1.0d,    0.0d, 1.0d, 0.0d,    0.0d, 0.0d, 0.0d },
-
-				// TOP                                                       
-				{ 0.0d, 1.0d, 0.0d,    0.0d, 1.0d, 1.0d,    1.0d, 1.0d, 1.0d },
-				{ 0.0d, 1.0d, 0.0d,    1.0d, 1.0d, 1.0d,    1.0d, 1.0d, 0.0d },
-
-				// BOTTOM                                                    
-				{ 1.0d, 0.0d, 1.0d,    0.0d, 0.0d, 1.0d,    0.0d, 0.0d, 0.0d },
-				{ 1.0d, 0.0d, 1.0d,    0.0d, 0.0d, 0.0d,    1.0d, 0.0d, 0.0d }
+				{ 0.0f, 0.0f, 0.0f, 1.0f,    0.0f, 1.0f, 0.0f, 1.0f,    1.0f, 1.0f, 0.0f, 1.0f,		0.0f, 1.0f, 1.0f,		0.0f, 0.0f, 1.0f,		1.0f, 0.0f, 1.0f,}, 
+				{ 0.0f, 0.0f, 0.0f, 1.0f,    1.0f, 1.0f, 0.0f, 1.0f,    1.0f, 0.0f, 0.0f, 1.0f,		0.0f, 1.0f, 1.0f,		1.0f, 0.0f, 1.0f,		1.0f, 1.0f, 1.0f,},
+								  																			   
+				// EAST           																			   
+				{ 1.0f, 0.0f, 0.0f, 1.0f,    1.0f, 1.0f, 0.0f, 1.0f,    1.0f, 1.0f, 1.0f, 1.0f,		0.0f, 1.0f, 1.0f,		0.0f, 0.0f, 1.0f,		1.0f, 0.0f, 1.0f,},
+				{ 1.0f, 0.0f, 0.0f, 1.0f,    1.0f, 1.0f, 1.0f, 1.0f,    1.0f, 0.0f, 1.0f, 1.0f,		0.0f, 1.0f, 1.0f,		1.0f, 0.0f, 1.0f,		1.0f, 1.0f, 1.0f,},
+								   																			   
+				// NORTH           																			   
+				{ 1.0f, 0.0f, 1.0f, 1.0f,    1.0f, 1.0f, 1.0f, 1.0f,    0.0f, 1.0f, 1.0f, 1.0f,		0.0f, 1.0f, 1.0f,		0.0f, 0.0f, 1.0f,		1.0f, 0.0f, 1.0f,},
+				{ 1.0f, 0.0f, 1.0f, 1.0f,    0.0f, 1.0f, 1.0f, 1.0f,    0.0f, 0.0f, 1.0f, 1.0f,		0.0f, 1.0f, 1.0f,		1.0f, 0.0f, 1.0f,		1.0f, 1.0f, 1.0f,},
+								   																			   
+				// WEST            																			   
+				{ 0.0f, 0.0f, 1.0f, 1.0f,    0.0f, 1.0f, 1.0f, 1.0f,    0.0f, 1.0f, 0.0f, 1.0f,		0.0f, 1.0f, 1.0f,		0.0f, 0.0f, 1.0f,		1.0f, 0.0f, 1.0f,},
+				{ 0.0f, 0.0f, 1.0f, 1.0f,    0.0f, 1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 0.0f, 1.0f,		0.0f, 1.0f, 1.0f,		1.0f, 0.0f, 1.0f,		1.0f, 1.0f, 1.0f,},
+								   																			   
+				// TOP             																			   
+				{ 0.0f, 1.0f, 0.0f, 1.0f,    0.0f, 1.0f, 1.0f, 1.0f,    1.0f, 1.0f, 1.0f, 1.0f,		0.0f, 1.0f, 1.0f,		0.0f, 0.0f, 1.0f,		1.0f, 0.0f, 1.0f,},
+				{ 0.0f, 1.0f, 0.0f, 1.0f,    1.0f, 1.0f, 1.0f, 1.0f,    1.0f, 1.0f, 0.0f, 1.0f,		0.0f, 1.0f, 1.0f,		1.0f, 0.0f, 1.0f,		1.0f, 1.0f, 1.0f,},
+								   																			  
+				// BOTTOM          																			  
+				{ 1.0f, 0.0f, 1.0f, 1.0f,    0.0f, 0.0f, 1.0f, 1.0f,    0.0f, 0.0f, 0.0f, 1.0f,		0.0f, 1.0f, 1.0f,		0.0f, 0.0f, 1.0f,		1.0f, 0.0f, 1.0f,},
+				{ 1.0f, 0.0f, 1.0f, 1.0f,    0.0f, 0.0f, 0.0f, 1.0f,    1.0f, 0.0f, 0.0f, 1.0f,		0.0f, 1.0f, 1.0f,		1.0f, 0.0f, 1.0f,		1.0f, 1.0f, 1.0f,},
 		};
 		for (double[] triCoord : triCoords)
 			getTris().add(new Triangle(
-					new Vector(triCoord[0], triCoord[1], triCoord[2]),
-					new Vector(triCoord[3], triCoord[4], triCoord[5]),
-					new Vector(triCoord[6], triCoord[7], triCoord[8])));
+					new Vector(triCoord[0], triCoord[1], triCoord[2], triCoord[3]),
+					new Vector(triCoord[4], triCoord[5], triCoord[6], triCoord[7]),
+					new Vector(triCoord[8], triCoord[9], triCoord[10], triCoord[11]),
+					new Vector[] {new Vector(triCoord[12], triCoord[13]), new Vector(triCoord[15], triCoord[16]), new Vector(triCoord[18], triCoord[19])}));
 	}
 }

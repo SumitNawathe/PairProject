@@ -26,8 +26,12 @@ public class Mesh {
 		//System.out.println("e");
 		ArrayList<Vector> vectorPool = new ArrayList<Vector>();
 		//while (!line.equals("")) {
+		//System.out.println("f");
+		//int counter = 1;
 		while ((line = file.readLine()) != null) {
-			System.out.println(line);
+			//System.out.println(counter);
+			//counter++;
+			//System.out.println(line);
 			StringTokenizer st = new StringTokenizer(line);
 			String starting = st.nextToken();
 			if (starting.equals("v")) {
@@ -48,6 +52,7 @@ public class Mesh {
 //			} catch (Exception e) { break; }
 		}
 		file.close();
+		//System.out.println("e");
 		//System.out.println("mesh size: " + mesh.getTris().size());
 		return mesh;
 	}
