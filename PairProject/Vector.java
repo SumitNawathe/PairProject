@@ -14,20 +14,21 @@ public class Vector {
 		return new Vector(x+pos.getX(), y+pos.getY(), z+pos.getZ());
 	}
 	public Vector scale (double factor) {
-		x *= factor;
-		y *= factor;
-		z *= factor;
-		return this;
+		return new Vector(x*factor, y*factor, z*factor);
+//		x *= factor;
+//		y *= factor;
+//		z *= factor;
+//		return this;
 	}
 	public Vector minus (Vector pos) {
-		return (this.clone().plus(pos.clone().scale(-1)));
+		return (this.plus(pos.clone().scale(-1)));
 	}
 	public Vector unit () {
 		return this.clone().scale(1/this.magnitude());
 	}
 	
 	public Vector clone () {
-		return new Vector(x, y, z);
+		return new Vector(x, y, z, w);
 	}
 	public double magnitude () {
 		return Math.sqrt(x*x + y*y + z*z);
@@ -45,9 +46,9 @@ public class Vector {
 	public Vector cross (Vector pos) {
 		return new Vector(y*pos.getZ()-z*pos.getY(), -1*(x*pos.getZ()-z*pos.getX()), x*pos.getY()-y*pos.getX());
 	}
-	public Vector projOnto (Vector pos) {
-		return pos.clone().scale(this.dot(pos)/(pos.magnitude()*pos.magnitude()));
-	}
+//	public Vector projOnto (Vector pos) {
+//		return pos.clone().scale(this.dot(pos)/(pos.magnitude()*pos.magnitude()));
+//	}
 	
 	public Vector trim () {
 		w = 1;

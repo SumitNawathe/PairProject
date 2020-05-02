@@ -68,13 +68,13 @@ public class Game extends JPanel {
 					xAngle += Math.PI/(18*3);
 				
 				if (event.getKeyCode() == KeyEvent.VK_W)
-					cameraPos = cameraPos.plus(cameraForward.clone().scale(0.5));
+					cameraPos = cameraPos.plus(cameraForward.scale(0.5));
 				else if (event.getKeyCode() == KeyEvent.VK_S)
-					cameraPos = cameraPos.minus(cameraForward.clone().scale(0.5));
+					cameraPos = cameraPos.minus(cameraForward.scale(0.5));
 				else if (event.getKeyCode() == KeyEvent.VK_D)
-					cameraPos = cameraPos.minus(cameraRight.clone().scale(0.5).scale(-1));
+					cameraPos = cameraPos.minus(cameraRight.scale(-0.5));
 				else if (event.getKeyCode() == KeyEvent.VK_A)
-					cameraPos = cameraPos.minus(cameraRight.clone().scale(0.5));
+					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				panel.getIgnoreRepaint();
 			}
@@ -100,7 +100,7 @@ public class Game extends JPanel {
 				viewMatrix = Matrix.mulMatMat(viewMatrix, Matrix.getRotMatrix(cameraForward, cameraRight));
 				viewMatrix = Matrix.mulMatMat(viewMatrix, Matrix.getTranslationMatrix(cameraPos.clone()));
 				
-				light_direction = cameraForward.clone().scale(-1);
+				light_direction = cameraForward.scale(-1);
 				
 				panel.repaint();
 			}
@@ -124,11 +124,11 @@ public class Game extends JPanel {
 				transformedTri.getVert2().trim();
 				transformedTri.getVert3().trim();
 				
-				Vector line1 = transformedTri.getVert2().clone().minus(transformedTri.getVert1());
-				Vector line2 = transformedTri.getVert3().clone().minus(transformedTri.getVert1());
+				Vector line1 = transformedTri.getVert2().minus(transformedTri.getVert1());
+				Vector line2 = transformedTri.getVert3().minus(transformedTri.getVert1());
 				Vector normal = line1.cross(line2).unit();
 				
-				if (normal.dot(transformedTri.getVert1().clone().minus(cameraPos)) < 0) {
+				if (normal.dot(transformedTri.getVert1().minus(cameraPos)) < 0) {
 					double shadingValue = normal.dot(light_direction.unit());
 //					shadingValue += 0.4;
 					if (shadingValue < 0)
@@ -149,11 +149,11 @@ public class Game extends JPanel {
 								Matrix.multMatVec(projMatrix, clippedTri.getVert2()), Matrix.multMatVec(projMatrix, clippedTri.getVert3()), clippedTri.getTex());
 						double depth = (clippedTri.getVert1().getZ() + clippedTri.getVert2().getZ() + clippedTri.getVert3().getZ())/3.0;
 						System.out.println("proj w: " + projectedTri.getVert1().getW() + " " + projectedTri.getVert2().getW() + " " + projectedTri.getVert3().getW());
-						projectedTri.setTex1(projectedTri.getTex1().clone().scale(1/projectedTri.getVert1().getW()));
+						projectedTri.setTex1(projectedTri.getTex1().scale(1/projectedTri.getVert1().getW()));
 						projectedTri.getTex1().setW(1/projectedTri.getVert1().getW());
-						projectedTri.setTex2(projectedTri.getTex2().clone().scale(1/projectedTri.getVert2().getW()));
+						projectedTri.setTex2(projectedTri.getTex2().scale(1/projectedTri.getVert2().getW()));
 						projectedTri.getTex2().setW(1/projectedTri.getVert2().getW());
-						projectedTri.setTex3(projectedTri.getTex3().clone().scale(1/projectedTri.getVert3().getW()));
+						projectedTri.setTex3(projectedTri.getTex3().scale(1/projectedTri.getVert3().getW()));
 						projectedTri.getTex3().setW(1/projectedTri.getVert3().getW());
 //						System.out.println("out w: " + projectedTri.getVert3().getW());
 						//System.out.println(projectedTri.getTex()[0])
@@ -420,11 +420,11 @@ public class Game extends JPanel {
 //				
 //			} else
 //				outsidePoints.add(point);
-		if (planeNorm.dot(tri.getVert1().clone().minus(planePos)) >= 0) { insidePoints.add(tri.getVert1()); insideTex.add(tri.getTex1()); }
+		if (planeNorm.dot(tri.getVert1().minus(planePos)) >= 0) { insidePoints.add(tri.getVert1()); insideTex.add(tri.getTex1()); }
 		else { outsidePoints.add(tri.getVert1()); outsideTex.add(tri.getTex1()); }
-		if (planeNorm.dot(tri.getVert2().clone().minus(planePos)) >= 0) { insidePoints.add(tri.getVert2()); insideTex.add(tri.getTex2()); }
+		if (planeNorm.dot(tri.getVert2().minus(planePos)) >= 0) { insidePoints.add(tri.getVert2()); insideTex.add(tri.getTex2()); }
 		else { outsidePoints.add(tri.getVert2()); outsideTex.add(tri.getTex2()); }
-		if (planeNorm.dot(tri.getVert3().clone().minus(planePos)) >= 0) { insidePoints.add(tri.getVert3()); insideTex.add(tri.getTex3()); }
+		if (planeNorm.dot(tri.getVert3().minus(planePos)) >= 0) { insidePoints.add(tri.getVert3()); insideTex.add(tri.getTex3()); }
 		else { outsidePoints.add(tri.getVert3()); outsideTex.add(tri.getTex3()); }
 
 		if (insidePoints.size() == 0) {
@@ -435,10 +435,10 @@ public class Game extends JPanel {
 			Vector vert1 = insidePoints.get(0);
 			Vector tex1 = insideTex.get(0);
 			Vector vert2 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0));
-			Vector tex2 = insideTex.get(0).clone().plus( outsideTex.get(0).clone().minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0))) );
+			Vector tex2 = insideTex.get(0).plus( outsideTex.get(0).minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0))) );
 			//vert2.trim();
 			Vector vert3 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(1));
-			Vector tex3 = insideTex.get(0).clone().plus( outsideTex.get(1).clone().minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(1))) );
+			Vector tex3 = insideTex.get(0).plus( outsideTex.get(1).minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(1))) );
 			//vert3.trim();
 			
 //			System.out.println("new tex1: " + tex1 + " tex2: " + tex2 + " tex3: " + tex3);
@@ -456,10 +456,10 @@ public class Game extends JPanel {
 			Vector vert2 = insidePoints.get(1);
 			Vector tex2 = insideTex.get(1);
 			Vector vert3 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0));
-			Vector tex3 = insideTex.get(0).clone().plus( outsideTex.get(0).clone().minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0))) );
+			Vector tex3 = insideTex.get(0).plus( outsideTex.get(0).minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0))) );
 			//vert3.trim();
 			Vector vert4 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(1), outsidePoints.get(0));
-			Vector tex4 = insideTex.get(1).clone().plus( outsideTex.get(0).clone().minus(insideTex.get(1)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(1), outsidePoints.get(0))) );
+			Vector tex4 = insideTex.get(1).plus( outsideTex.get(0).minus(insideTex.get(1)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(1), outsidePoints.get(0))) );
 			//vert4.trim();
 			
 //			System.out.println("new tex1: " + tex1 + " tex2: " + tex2 + " tex3: " + tex3 + " tex4: " + tex4);
