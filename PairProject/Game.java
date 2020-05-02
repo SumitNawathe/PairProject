@@ -148,7 +148,7 @@ public class Game extends JPanel {
 						Triangle projectedTri = new Triangle(Matrix.multMatVec(projMatrix, clippedTri.getVert1()), 
 								Matrix.multMatVec(projMatrix, clippedTri.getVert2()), Matrix.multMatVec(projMatrix, clippedTri.getVert3()), clippedTri.getTex());
 						double depth = (clippedTri.getVert1().getZ() + clippedTri.getVert2().getZ() + clippedTri.getVert3().getZ())/3.0;
-						System.out.println("proj w: " + projectedTri.getVert1().getW() + " " + projectedTri.getVert2().getW() + " " + projectedTri.getVert3().getW());
+//						System.out.println("proj w: " + projectedTri.getVert1().getW() + " " + projectedTri.getVert2().getW() + " " + projectedTri.getVert3().getW());
 						projectedTri.setTex1(projectedTri.getTex1().scale(1/projectedTri.getVert1().getW()));
 						projectedTri.getTex1().setW(1/projectedTri.getVert1().getW());
 						projectedTri.setTex2(projectedTri.getTex2().scale(1/projectedTri.getVert2().getW()));
@@ -242,10 +242,10 @@ public class Game extends JPanel {
 				u3 = tri.getTex3().getX(),
 				v3 = tri.getTex3().getY(),
 				w3 = tri.getTex3().getW();
-		System.out.println("w: " + w1 + " " + w2 + " " + w3);
-		System.out.println(tri.getTex1());
-		System.out.println(tri.getTex2());
-		System.out.println(tri.getTex3());
+//		System.out.println("w: " + w1 + " " + w2 + " " + w3);
+//		System.out.println(tri.getTex1());
+//		System.out.println(tri.getTex2());
+//		System.out.println(tri.getTex3());
 		
 		if (y2 < y1) {
 			int tempa = y1; y1 = y2; y2 = tempa;
