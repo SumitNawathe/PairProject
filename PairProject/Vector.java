@@ -59,14 +59,20 @@ public class Vector {
 	
 	public static Vector VecPlaneIntersect (Vector planePoint, Vector planeNorm, Vector lineStart, Vector lineEnd) {
 		planeNorm = planeNorm.unit();
+		double t = VecPlaneIntersectGetT (planePoint, planeNorm, lineStart, lineEnd);
+		Vector lineStartToEnd = lineEnd.clone().minus(lineStart);
+		Vector lineToIntersect = lineStartToEnd.clone().scale(t);
+		Vector answer = lineStart.clone().plus(lineToIntersect);
+		//answer.setW(t);
+		return answer;
+	}
+	
+	public static double VecPlaneIntersectGetT (Vector planePoint, Vector planeNorm, Vector lineStart, Vector lineEnd) {
+		planeNorm = planeNorm.unit();
 		double plane_d = -1*planePoint.dot(planeNorm);
 		double ad = lineStart.dot(planeNorm);
 		double bd = lineEnd.dot(planeNorm);
 		double t = (-plane_d - ad) / (bd - ad);
-		Vector lineStartToEnd = lineEnd.minus(lineStart);
-		Vector lineToIntersect = lineStartToEnd.scale(t);
-		Vector answer = lineStart.plus(lineToIntersect);
-		answer.setW(t);
-		return answer;
+		return t;
 	}
 }
