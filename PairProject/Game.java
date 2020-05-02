@@ -435,10 +435,14 @@ public class Game extends JPanel {
 			Vector vert1 = insidePoints.get(0);
 			Vector tex1 = insideTex.get(0);
 			Vector vert2 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0));
-			Vector tex2 = insideTex.get(0).plus( outsideTex.get(0).minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0))) );
+			double t2 = Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0));
+			Vector tex2 = insideTex.get(0).plus( outsideTex.get(0).minus(insideTex.get(0)).scale(t2) );
+			tex2.setW( insideTex.get(0).getW() + (outsideTex.get(0).getW() - insideTex.get(0).getW())*t2 );
 			//vert2.trim();
 			Vector vert3 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(1));
-			Vector tex3 = insideTex.get(0).plus( outsideTex.get(1).minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(1))) );
+			double t3 = Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(1));
+			Vector tex3 = insideTex.get(0).plus( outsideTex.get(1).minus(insideTex.get(0)).scale(t3) );
+			tex3.setW( insideTex.get(0).getW() + (outsideTex.get(1).getW() - insideTex.get(0).getW())*t3 );
 			//vert3.trim();
 			
 //			System.out.println("new tex1: " + tex1 + " tex2: " + tex2 + " tex3: " + tex3);
@@ -456,10 +460,14 @@ public class Game extends JPanel {
 			Vector vert2 = insidePoints.get(1);
 			Vector tex2 = insideTex.get(1);
 			Vector vert3 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0));
-			Vector tex3 = insideTex.get(0).plus( outsideTex.get(0).minus(insideTex.get(0)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0))) );
+			double t3 = Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(0), outsidePoints.get(0));
+			Vector tex3 = insideTex.get(0).plus( outsideTex.get(0).minus(insideTex.get(0)).scale(t3) );
+			tex3.setW( insideTex.get(0).getW() + (outsideTex.get(0).getW() - insideTex.get(0).getW())*t3 );
 			//vert3.trim();
 			Vector vert4 = Vector.VecPlaneIntersect(planePos, planeNorm, insidePoints.get(1), outsidePoints.get(0));
-			Vector tex4 = insideTex.get(1).plus( outsideTex.get(0).minus(insideTex.get(1)).scale(Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(1), outsidePoints.get(0))) );
+			double t4 = Vector.VecPlaneIntersectGetT(planePos, planeNorm, insidePoints.get(1), outsidePoints.get(0));
+			Vector tex4 = insideTex.get(1).plus( outsideTex.get(0).minus(insideTex.get(1)).scale(t4) );
+			tex4.setW( insideTex.get(1).getW() + (outsideTex.get(0).getW() - insideTex.get(1).getW())*t4 );;
 			//vert4.trim();
 			
 //			System.out.println("new tex1: " + tex1 + " tex2: " + tex2 + " tex3: " + tex3 + " tex4: " + tex4);
