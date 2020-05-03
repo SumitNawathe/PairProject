@@ -27,7 +27,7 @@ public class Game extends JPanel {
 		meshList = new ArrayList<Mesh>();
 		try {
 			System.out.println("a");
-			//meshList.add(Mesh.loadFromObjFile("Models/ShipModel2.obj"));
+			//meshList.add(Mesh.loadFromObjFile("Models/Ship Model 2.obj"));
 			meshList.add(new MeshCube());
 			System.out.println("b");
 		} catch (Exception e) {
@@ -35,7 +35,7 @@ public class Game extends JPanel {
 		}
 		
 		try {
-			texture = ImageIO.read(new File("Textures/Pikachu.png"));
+			texture = ImageIO.read(new File("Textures/Apple.png"));
 		} catch (Exception e) { System.out.println("Texture reading failed."); }
 		
 		projMatrix = Matrix.getProjMatrix((double) SCREEN_HEIGHT/SCREEN_WIDTH, 1/Math.tan(FOV_ANGLE/2), Z_NEAR, Z_FAR);
