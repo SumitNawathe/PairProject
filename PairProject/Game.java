@@ -28,7 +28,7 @@ public class Game extends JPanel {
 		meshList = new ArrayList<Mesh>();
 		try {
 			System.out.println("a");
-			meshList.add(Mesh.loadFromObjFile("Models/newSpyro.obj"));
+			meshList.add(Mesh.loadFromObjFile("Models/artisans.obj"));
 			//meshList.add(new MeshCube());
 			System.out.println("b");
 		} catch (Exception e) {
@@ -36,7 +36,7 @@ public class Game extends JPanel {
 		}
 		
 		try {
-			texture = ImageIO.read(new File("Textures/Glimmer_ObjectTextures.png"));
+			texture = ImageIO.read(new File("Textures/High.png"));
 		} catch (Exception e) { System.out.println("Texture reading failed."); }
 		
 		projMatrix = Matrix.getProjMatrix((double) SCREEN_HEIGHT/SCREEN_WIDTH, 1/Math.tan(FOV_ANGLE/2), Z_NEAR, Z_FAR);
