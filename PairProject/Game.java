@@ -22,20 +22,21 @@ public class Game extends JPanel {
 	Vector cameraPos = new Vector(0, 0, 0), cameraForward = new Vector(0, 0, 1), cameraRight = new Vector(1, 0, 0);
 	Vector light_direction = new Vector(0, 0, -1);
 	BufferedImage texture;
+	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 	
 	public Game () {
 		meshList = new ArrayList<Mesh>();
 		try {
 			System.out.println("a");
-			//meshList.add(Mesh.loadFromObjFile("Models/ShipModel2.obj"));
-			meshList.add(new MeshCube());
+			meshList.add(Mesh.loadFromObjFile("Models/newSpyro.obj"));
+			//meshList.add(new MeshCube());
 			System.out.println("b");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		
 		try {
-			texture = ImageIO.read(new File("Textures/Pikachu.png"));
+			texture = ImageIO.read(new File("Textures/Glimmer_ObjectTextures.png"));
 		} catch (Exception e) { System.out.println("Texture reading failed."); }
 		
 		projMatrix = Matrix.getProjMatrix((double) SCREEN_HEIGHT/SCREEN_WIDTH, 1/Math.tan(FOV_ANGLE/2), Z_NEAR, Z_FAR);
@@ -85,6 +86,8 @@ public class Game extends JPanel {
 		timer = new java.util.Timer();
 		timer.scheduleAtFixedRate(new TimerTask () {
 			public void run () {
+				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
+				
 				//theta += Math.PI/(18*18);
 				double[][] matRotZ = Matrix.getRotMatZ(theta);
 				double[][] matRotX = Matrix.getRotMatX(theta/2);
@@ -217,8 +220,8 @@ public class Game extends JPanel {
 				
 				drawTexturedTriangle(tri, bufferedImage);
 				
-				g.setColor(Color.red);
-				g.drawPolygon(xCoords, yCoords, 3);
+//				g.setColor(Color.red);
+//				g.drawPolygon(xCoords, yCoords, 3);
 			}
 		}
 //		bufferedImage = texture;
@@ -336,9 +339,23 @@ public class Game extends JPanel {
 //					System.out.println("u, v: " + tex_u + " " + tex_v);
 //					if (Math.random() < 0.001)
 //						System.out.println("tex_w: " + tex_w);
-					try {
-						image.setRGB(j, i, texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w)));
-					} catch (Exception e) {}
+//					if (1/tex_w > depthArray[i][j]) {
+						try {
+							int colorRGB;
+							if (texture != null)
+								colorRGB = texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w));
+							else {
+								double myTexW = 2*tex_w;
+								if (myTexW < 0)
+									myTexW = 0;
+								if (myTexW > 1)
+									myTexW = 1;
+								colorRGB = (new Color((int) (255*myTexW), (int) (255*myTexW), (int) (255*myTexW))).getRGB();
+							}
+							image.setRGB(j, i, colorRGB);
+						} catch (Exception e) {}
+//						depthArray[i][j] = 1/tex_w;
+//					}
 						//pDepthBuffer[i*ScreenWidth() + j] = tex_w;
 					//}
 					t += tstep;
@@ -397,7 +414,18 @@ public class Game extends JPanel {
 						//image.setRGB(j, i, texture.getRGB((int) (tex_u/tex_w), (int) (tex_v/tex_w)));
 					//System.out.println("RGB:" + texture.getRGB((int) (tex_u*texture.getWidth()), (int) (tex_v*texture.getHeight())));
 					try {
-						image.setRGB(j, i, texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w)));
+						int colorRGB;
+						if (texture != null)
+							colorRGB = texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w));
+						else {
+							double myTexW = 2*tex_w;
+							if (myTexW < 0)
+								myTexW = 0;
+							if (myTexW > 1)
+								myTexW = 1;
+							colorRGB = (new Color((int) (255*myTexW), (int) (255*myTexW), (int) (255*myTexW))).getRGB();
+						}
+						image.setRGB(j, i, colorRGB);
 					} catch (Exception e) {}
 						//pDepthBuffer[i*ScreenWidth() + j] = tex_w;
 					//}
