@@ -510,7 +510,7 @@ public class Game extends JPanel {
 						int colorRGB;
 						if (tri.getTexture() != null) {
 							colorRGB = tri.getTexture().getRGB((int) (tex_u*tri.getTexture().getWidth()/tex_w), (int) (tex_v*tri.getTexture().getHeight()/tex_w));
-							System.out.println("good");
+//							System.out.println("good");
 						} else {
 							double myTexW = 2*tex_w;
 							myTexW += 0.3;
