@@ -34,7 +34,7 @@ public class Game extends JPanel {
 			System.out.println("a");
 			
 			ringList = new ArrayList<AgilityRing>();
-			ringList.add(new AgilityRing(new Vector(5, 0, 0)));
+			ringList.add(new AgilityRing(new Vector(5, 0, -5)));
 			ringList.add(new AgilityRing(new Vector(5, 0, 5)));
 //			ringList.add(new AgilityRing(new Vector(8, 0, 0)));
 			meshList.addAll(ringList);
@@ -153,7 +153,13 @@ public class Game extends JPanel {
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 				System.out.println(moveHoriz + " " + moveVert);
 				playerShip.update(moveHoriz, moveVert, moveForward);
-				cameraPos = new Vector(-14+playerShip.getPlayerPos().getX(), 0, 0);
+				double y =  playerShip.getPlayerPos().getY();
+				if (y < -5) y = -5;
+				if (y > 5) y = 5;
+				double z = playerShip.getPlayerPos().getZ();
+				if (z < -5) z = -5;
+				if (z > 5) z = 5;
+				cameraPos = new Vector(-14+playerShip.getPlayerPos().getX(), y,  z);
 				//xAngle = playerShip.getXAngle() + Math.PI/2;
 				//yAngle = playerShip.getYAngle();
 				

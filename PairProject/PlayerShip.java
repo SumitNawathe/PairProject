@@ -65,9 +65,9 @@ public class PlayerShip extends Mesh {
 			vert = Math.min(0.25, -playerVel.getY());
 		
 		playerVel = playerVel.plus(new Vector(speed/30.0, vert/20.0, -horiz/20.0));
-		if ((playerPos.getY() >= 12 && playerVel.getY() > 0) || (playerPos.getY() <= -12 && playerVel.getY() < 0))
+		if ((playerPos.getY() >= 17 && playerVel.getY() > 0) || (playerPos.getY() <= -17 && playerVel.getY() < 0))
 			playerVel = new Vector(playerVel.getX(), 0, playerVel.getZ());
-		if ((playerPos.getZ() >= 14 && playerVel.getZ() > 0) || (playerPos.getZ() <= -14 && playerVel.getZ() < 0))
+		if ((playerPos.getZ() >= 19 && playerVel.getZ() > 0) || (playerPos.getZ() <= -19 && playerVel.getZ() < 0))
 			playerVel = new Vector(playerVel.getX(), playerVel.getY(), 0);
 		moveShipTo(playerPos.plus(playerVel));
 	}
