@@ -52,6 +52,9 @@ public class Game extends JPanel {
 			playerShip = new PlayerShip(new Vector(0, 0, 0));
 			meshList.add(playerShip);
 			
+			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
+			meshList.add(bullet1);
+			
 			System.out.println("b");
 		} catch (Exception e) {
 			System.out.println("Error loading meshes");
@@ -203,7 +206,7 @@ public class Game extends JPanel {
 		g.setColor(Color.white);
 		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();
 		
-		System.out.println(playerShip.getPlayerPos());
+//		System.out.println(playerShip.getPlayerPos());
 		for (AgilityRing ring : ringList)
 			ring.shipCollision(playerShip);
 		
