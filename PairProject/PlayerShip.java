@@ -13,9 +13,10 @@ public class PlayerShip extends Mesh {
 		super();
 		this.playerPos = offset;
 		try {
-			setTris(Mesh.loadFromObjFileNoTexture("Models/ShipModel2.obj").getTris());
+			setTris(Mesh.loadFromObjFile("Models/ShipModel1.obj", "Textures/Ship Model 1 Map.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading ShipModel2.obj"); }
 		translate(offset);
+		System.out.println(this.getTris().get(0).getTexture());
 	}
 	
 	public void update (double horiz, double vert, double speed) {
@@ -42,7 +43,7 @@ public class PlayerShip extends Mesh {
 					Matrix.multMatVec(rotMat, tri.getVert3())});
 		translate(playerPos);
 		
-		System.out.println("playerVel: " + playerVel);
+//		System.out.println("playerVel: " + playerVel);
 		if ((playerVel.getX() >= 0.3 && speed == 1) || (playerVel.getX() <= -0.3 && speed == -1))
 			speed = 0;
 		else if (speed == 0 && playerVel.getX() > 0)

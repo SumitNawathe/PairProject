@@ -1,13 +1,17 @@
 import java.awt.*;
+import java.awt.image.*;
 
 public class Triangle {
 	private Vector vert1, vert2, vert3;
 	private Vector tex1, tex2, tex3;
-	private Color color;
+//	private Color color;
+	private BufferedImage texture;
 	private double depth;
 	
-	public Color getColor () { return color; }
-	public void setColor (Color color) { this.color = color; }
+//	public Color getColor () { return color; }
+//	public void setColor (Color color) { this.color = color; }
+	public BufferedImage getTexture () { return texture; }
+	public void setTexture (BufferedImage texture) { this.texture = texture; }
 	
 	public double getDepth () { return depth; }
 	public void setDepth (double depth) { this.depth = depth; }
@@ -41,7 +45,7 @@ public class Triangle {
 		this.vert1 = vert1;
 		this.vert2 = vert2;
 		this.vert3 = vert3;
-		this.color = Color.white;
+//		this.color = Color.white;
 	}
 	public Triangle (Vector vert1, Vector vert2, Vector vert3, Vector[] tex) {
 		this.vert1 = vert1;
@@ -51,7 +55,7 @@ public class Triangle {
 		this.tex2 = tex[1];
 		this.tex3 = tex[2];
 	}
-	public Triangle (Vector vert1, Vector vert2, Vector vert3, Vector[] tex, double depth) {
+	public Triangle (Vector vert1, Vector vert2, Vector vert3, Vector[] tex, double depth, BufferedImage texture) {
 		this.vert1 = vert1;
 		this.vert2 = vert2;
 		this.vert3 = vert3;
@@ -59,10 +63,11 @@ public class Triangle {
 		this.tex2 = tex[1];
 		this.tex3 = tex[2];
 		this.depth = depth;
+		this.texture = texture;
 	}
 	
 	public Triangle clone () {
-		return new Triangle(vert1.clone(), vert2.clone(), vert3.clone(), new Vector[] {tex1.clone(), tex2.clone(), tex3.clone()}, depth);
+		return new Triangle(vert1.clone(), vert2.clone(), vert3.clone(), new Vector[] {tex1.clone(), tex2.clone(), tex3.clone()}, depth, texture);
 	}
 	
 	public Triangle translate (Vector offset) {

@@ -1,10 +1,16 @@
 import java.io.*;
 import java.util.*;
 
+import javax.imageio.ImageIO;
+
+import java.awt.image.*;
+
 public class Mesh {
 	private ArrayList<Triangle> tris;
 	public ArrayList<Triangle> getTris () { return tris; }
 	public void setTris (ArrayList<Triangle> tris) { this.tris = tris; }
+	private BufferedImage texture;
+	public BufferedImage getTexture () { return texture; }
 	
 	public Mesh () {
 		tris = new ArrayList<Triangle>();
@@ -48,7 +54,7 @@ public class Mesh {
 		return mesh;
 	}
 	
-	public static Mesh loadFromObjFile (String filePath) throws IOException {
+	public static Mesh loadFromObjFile (String filePath, String texturePath) throws IOException {
 		Mesh mesh = new Mesh();
 		BufferedReader file = new BufferedReader(new FileReader(filePath));
 		//System.out.println("d");
@@ -104,6 +110,11 @@ public class Mesh {
 		file.close();
 		//System.out.println("e");
 		//System.out.println("mesh size: " + mesh.getTris().size());
+		
+		BufferedImage texture = ImageIO.read(new File(texturePath));
+		for (Triangle tri : mesh.getTris())
+			tri.setTexture(texture);
+		
 		return mesh;
 	}
 }

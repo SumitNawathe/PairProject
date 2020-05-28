@@ -157,7 +157,7 @@ public class Game extends JPanel {
 				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
-				System.out.println(moveHoriz + " " + moveVert);
+//				System.out.println(moveHoriz + " " + moveVert);
 				playerShip.update(moveHoriz, moveVert, moveForward);
 				double y =  playerShip.getPlayerPos().getY();
 				if (y < -5) y = -5;
@@ -252,7 +252,8 @@ public class Game extends JPanel {
 						//System.out.println(projectedTri.getTex()[0])
 						
 						projectedTri = new Triangle(projectedTri.getVert1().scale(1/projectedTri.getVert1().getW()), 
-								projectedTri.getVert2().scale(1/projectedTri.getVert2().getW()), projectedTri.getVert3().scale(1/projectedTri.getVert3().getW()), projectedTri.getTex(), depth);
+								projectedTri.getVert2().scale(1/projectedTri.getVert2().getW()), projectedTri.getVert3().scale(1/projectedTri.getVert3().getW()), 
+								projectedTri.getTex(), depth, tri.getTexture());
 						drawnTriangles.add(projectedTri);
 					}
 				}
@@ -292,16 +293,16 @@ public class Game extends JPanel {
 			}
 			
 			for (Triangle tri : listTriangle) {
-				int[] xCoords = new int[] {
-						(int) ((tri.getVert1().getX()+1) * 0.5 * SCREEN_WIDTH),
-						(int) ((tri.getVert2().getX()+1) * 0.5 * SCREEN_WIDTH),
-						(int) ((tri.getVert3().getX()+1) * 0.5 * SCREEN_WIDTH)
-				};
-				int[] yCoords = new int[] {
-						(int) ((tri.getVert1().getY()+1) * 0.5 * SCREEN_HEIGHT),
-						(int) ((tri.getVert2().getY()+1) * 0.5 * SCREEN_HEIGHT),
-						(int) ((tri.getVert3().getY()+1) * 0.5 * SCREEN_HEIGHT)
-				};
+//				int[] xCoords = new int[] {
+//						(int) ((tri.getVert1().getX()+1) * 0.5 * SCREEN_WIDTH),
+//						(int) ((tri.getVert2().getX()+1) * 0.5 * SCREEN_WIDTH),
+//						(int) ((tri.getVert3().getX()+1) * 0.5 * SCREEN_WIDTH)
+//				};
+//				int[] yCoords = new int[] {
+//						(int) ((tri.getVert1().getY()+1) * 0.5 * SCREEN_HEIGHT),
+//						(int) ((tri.getVert2().getY()+1) * 0.5 * SCREEN_HEIGHT),
+//						(int) ((tri.getVert3().getY()+1) * 0.5 * SCREEN_HEIGHT)
+//				};
 //				if (tri.getColor() != null)
 //					g.setColor(tri.getColor());
 //				else
@@ -319,7 +320,7 @@ public class Game extends JPanel {
 		panelG.drawImage(bufferedImage, 0, 0, null);
 	}
 	
-	private void drawTexturedTriangle (Triangle tri, BufferedImage image) {
+	private void drawTexturedTriangle (Triangle tri, BufferedImage image) {		
 		int x1 = (int) ((tri.getVert1().getX()+1) * 0.5 * SCREEN_WIDTH), 
 				x2 = (int) ((tri.getVert2().getX()+1) * 0.5 * SCREEN_WIDTH), 
 				x3 = (int) ((tri.getVert3().getX()+1) * 0.5 * SCREEN_WIDTH), 
@@ -432,9 +433,9 @@ public class Game extends JPanel {
 //					if (1/tex_w > depthArray[i][j]) {
 						try {
 							int colorRGB;
-							if (texture != null)
-								colorRGB = texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w));
-							else {
+							if (tri.getTexture() != null) {
+								colorRGB = tri.getTexture().getRGB((int) (tex_u*tri.getTexture().getWidth()/tex_w), (int) (tex_v*tri.getTexture().getHeight()/tex_w));
+							} else {
 								double myTexW = 2*tex_w;
 								myTexW += 0.3;
 								if (myTexW < 0)
@@ -507,9 +508,10 @@ public class Game extends JPanel {
 					//System.out.println("RGB:" + texture.getRGB((int) (tex_u*texture.getWidth()), (int) (tex_v*texture.getHeight())));
 					try {
 						int colorRGB;
-						if (texture != null)
-							colorRGB = texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w));
-						else {
+						if (tri.getTexture() != null) {
+							colorRGB = tri.getTexture().getRGB((int) (tex_u*tri.getTexture().getWidth()/tex_w), (int) (tex_v*tri.getTexture().getHeight()/tex_w));
+							System.out.println("good");
+						} else {
 							double myTexW = 2*tex_w;
 							myTexW += 0.3;
 							if (myTexW < 0)
@@ -574,7 +576,7 @@ public class Game extends JPanel {
 //			vert3.trim();
 			
 			return new Triangle[] {
-				new Triangle(vert1, vert2, vert3, new Vector[] {tex1, tex2, tex3})	
+				new Triangle(vert1, vert2, vert3, new Vector[] {tex1, tex2, tex3}, 0, tri.getTexture())	
 			};
 		} else if (insidePoints.size() == 2) {
 			Vector vert1 = insidePoints.get(0);
@@ -599,8 +601,8 @@ public class Game extends JPanel {
 //			vert4.trim();
 			
 			return new Triangle[] {
-					new Triangle(vert1, vert2, vert4, new Vector[] {tex1, tex2, tex4}),
-					new Triangle(vert1, vert4, vert3, new Vector[] {tex1, tex4, tex3})
+					new Triangle(vert1, vert2, vert4, new Vector[] {tex1, tex2, tex4}, 0, tri.getTexture()),
+					new Triangle(vert1, vert4, vert3, new Vector[] {tex1, tex4, tex3}, 0, tri.getTexture())
 			};
 		}
 		return new Triangle[] {};
