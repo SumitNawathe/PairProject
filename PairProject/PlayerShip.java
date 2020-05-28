@@ -1,6 +1,6 @@
 public class PlayerShip extends Mesh {
 	private Vector playerPos = new Vector(0, 0, 0);
-	private double yAngle = 0, xAngle = 0;
+	private int horizAngleState, vertAngleState;
 	private Vector playerVel = new Vector(0.1, 0, 0);
 	
 	public void moveShipTo (Vector pos) {
@@ -8,10 +8,6 @@ public class PlayerShip extends Mesh {
 		playerPos = pos;
 	}
 	public Vector getPlayerPos () { return playerPos; }
-	public double getXAngle () { return xAngle; }
-	public double getYAngle () { return yAngle; }
-	public void setXAngle (double x) { xAngle = x; }
-	public void setYAngle (double y) { yAngle = y; }
 	
 	public PlayerShip (Vector offset) {
 		super();
@@ -23,6 +19,29 @@ public class PlayerShip extends Mesh {
 	}
 	
 	public void update (double horiz, double vert, double speed) {
+		double[][] rotMat = Matrix.getIdentityMatrix();
+		if ((horiz > 0 && horizAngleState < 15) || (horiz == 0 && horizAngleState < 0)) {
+			horizAngleState++;
+			rotMat = Matrix.mulMatMat(rotMat, Matrix.getRotMatX(-Math.PI/50));
+		} else if ((horiz < 0 && horizAngleState > -15) || (horiz == 0 && horizAngleState > 0)) {
+			horizAngleState--;
+			rotMat = Matrix.mulMatMat(rotMat, Matrix.getRotMatX(Math.PI/50));
+		}
+		//NOTE: cannot have horiz and vert rotation simultaneously, otherwise breaks
+//		if ((vert > 0 && vertAngleState < 15) || (vert == 0 && vertAngleState < 0)) {
+//			vertAngleState++;
+//			rotMat = Matrix.mulMatMat(rotMat, Matrix.getRotMatZ(Math.PI/50));
+//		} else if ((vert < 0 && vertAngleState > -15) || (vert == 0 && vertAngleState > 0)) {
+//			vertAngleState--;
+//			rotMat = Matrix.mulMatMat(rotMat, Matrix.getRotMatZ(-Math.PI/50));
+//		}
+		translate(playerPos.clone().scale(-1));
+		for (Triangle tri : getTris())
+			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
+					Matrix.multMatVec(rotMat, tri.getVert2()), 
+					Matrix.multMatVec(rotMat, tri.getVert3())});
+		translate(playerPos);
+		
 		System.out.println("playerVel: " + playerVel);
 		if ((playerVel.getX() >= 0.3 && speed == 1) || (playerVel.getX() <= -0.3 && speed == -1))
 			speed = 0;
