@@ -26,6 +26,7 @@ public class Game extends JPanel {
 	PlayerShip playerShip;
 	Vector velocity = new Vector(0.1, 0, 0);
 	ArrayList<AgilityRing> ringList;
+	private int moveHoriz, moveVert, moveForward;
 	
 	public Game () {
 		meshList = new ArrayList<Mesh>();
@@ -71,26 +72,32 @@ public class Game extends JPanel {
 			public void keyPressed (KeyEvent event) {
 				if (event.getKeyCode() == KeyEvent.VK_SPACE) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
-					velocity = velocity.plus(new Vector(0.1, 0, 0));
-					System.out.println("Space");
+					//velocity = velocity.plus(new Vector(0.1, 0, 0));
+					//System.out.println("Space");
+					moveForward = 1;
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
-					velocity = velocity.plus(new Vector(-0.1, 0, 0));
-					System.out.println("Shift");
+					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
+					//System.out.println("Shift");
+					moveForward = -1;
 				}
 				
 				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
 					//yAngle -= Math.PI/(18*3);
-					playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
+					moveHoriz = 1;
 				} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
 					//yAngle += Math.PI/(18*3);
-					playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
+					moveHoriz = -1;
 				} else if (event.getKeyCode() == KeyEvent.VK_UP) {
 					//xAngle -= Math.PI/(18*3);
-					playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
+					moveVert = 1;
 				} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
 					//xAngle += Math.PI/(18*3);
-					playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
+					moveVert = -1;
 				}
 				
 				if (event.getKeyCode() == KeyEvent.VK_W)
@@ -104,7 +111,37 @@ public class Game extends JPanel {
 				
 				panel.getIgnoreRepaint();
 			}
-			public void keyReleased (KeyEvent event) {}
+			public void keyReleased (KeyEvent event) {
+				if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
+					//velocity = velocity.plus(new Vector(0.1, 0, 0));
+					//System.out.println("Space");
+					moveForward = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
+					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
+					//System.out.println("Shift");
+					moveForward = 0;
+				}
+				
+				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+					//yAngle -= Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
+					moveHoriz = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+					//yAngle += Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
+					moveHoriz = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_UP) {
+					//xAngle -= Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
+					moveVert = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+					//xAngle += Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
+					moveVert = 0;
+				}
+			}
 			public void keyTyped (KeyEvent event) {}
 		});
 		
@@ -113,8 +150,10 @@ public class Game extends JPanel {
 			public void run () {
 				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
-				playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
-				cameraPos = playerShip.getPlayerPos().minus(new Vector(7, -2, 0));
+				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
+				System.out.println(moveHoriz + " " + moveVert);
+				playerShip.update(moveHoriz, moveVert, moveForward);
+				cameraPos = new Vector(-14+playerShip.getPlayerPos().getX(), 0, 0);
 				//xAngle = playerShip.getXAngle() + Math.PI/2;
 				//yAngle = playerShip.getYAngle();
 				
