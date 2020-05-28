@@ -186,12 +186,16 @@ public class Game extends JPanel {
 				
 				panel.repaint();
 			}
-		}, 100, 20);
+		}, 100, 25);
 	}
 	
 	public void paintComponent (Graphics panelG) {
 		super.paintComponent(panelG);
-		BufferedImage bufferedImage = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		//BufferedImage bufferedImage = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bufferedImage = null;
+		try {
+			bufferedImage = ImageIO.read(new File("Textures/StarBackground1.jpg"));
+		} catch (Exception e) {}
 		Graphics g = bufferedImage.getGraphics();
 		g.setColor(Color.white);
 		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();
