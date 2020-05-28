@@ -18,6 +18,11 @@ public class Triangle {
 	public Vector[] getVerts () {
 		return new Vector[] {vert1, vert2, vert3};
 	}
+	public void setVerts (Vector[] verts) {
+		vert1 = verts[0];
+		vert2 = verts[1];
+		vert3 = verts[2];
+	}
 	public Vector getTex1 () { return tex1; }
 	public void setTex1 (Vector tex1) { this.tex1 = tex1; }
 	public Vector getTex2 () { return tex2; }
