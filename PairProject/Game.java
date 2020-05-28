@@ -27,9 +27,14 @@ public class Game extends JPanel {
 	Vector velocity = new Vector(0.1, 0, 0);
 	ArrayList<AgilityRing> ringList;
 	private int moveHoriz, moveVert, moveForward;
+	Image backgroundImage;
 	
 	public Game () {
 		this.setBackground(Color.RED);
+		this.setOpaque(true);
+		
+		try { backgroundImage = ImageIO.read(new File("Textures/StarBackground1.jpg")); } catch (Exception e) {}
+		
 		meshList = new ArrayList<Mesh>();
 		try {
 			System.out.println("a");
@@ -63,7 +68,7 @@ public class Game extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setFocusable(true);
-		this.setBackground(Color.black);
+//		this.setBackground(Color.black);
 		this.setMinimumSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		frame.getContentPane().add(this);
 		frame.pack();
@@ -192,11 +197,8 @@ public class Game extends JPanel {
 	
 	public void paintComponent (Graphics panelG) {
 		super.paintComponent(panelG);
+		panelG.drawImage(backgroundImage, 0, 0, null);
 		BufferedImage bufferedImage = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-//		BufferedImage bufferedImage = null;
-//		try {
-//			bufferedImage = ImageIO.read(new File("Textures/StarBackground1.jpg"));
-//		} catch (Exception e) {}
 		Graphics g = bufferedImage.getGraphics();
 		g.setColor(Color.white);
 		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();
