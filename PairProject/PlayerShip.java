@@ -13,7 +13,7 @@ public class PlayerShip extends Mesh {
 		super();
 		this.playerPos = offset;
 		try {
-			setTris(Mesh.loadFromObjFile("Models/ShipModel1.obj", "Textures/Ship Model 1 Map.png").getTris());
+			setTris(Mesh.loadFromObjFile("Models/Ship Model 3.obj", "Textures/Ship Model 3 Map.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading ShipModel2.obj"); }
 		translate(offset);
 		System.out.println(this.getTris().get(0).getTexture());
