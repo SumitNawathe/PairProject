@@ -3,17 +3,17 @@ import java.util.*;
 
 public class Mesh {
 	private ArrayList<Triangle> tris;
-	public ArrayList<Triangle> getTris () {
-		return tris;
-	}
+	public ArrayList<Triangle> getTris () { return tris; }
+	public void setTris (ArrayList<Triangle> tris) { this.tris = tris; }
 	
 	public Mesh () {
 		tris = new ArrayList<Triangle>();
 	}
 	
 	public Mesh translate (Vector vec) {
-		for (Triangle tri : tris)
-			tri.translate(vec);
+		//System.out.println("translate");
+		for (Triangle tri : getTris())
+			tri.setVerts(new Vector[] {tri.getVert1().plus(vec), tri.getVert2().plus(vec), tri.getVert3().plus(vec)});
 		return this;
 	}
 	

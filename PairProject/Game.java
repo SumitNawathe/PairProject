@@ -18,25 +18,41 @@ public class Game extends JPanel {
 	JPanel panel = this;
 	java.util.Timer timer;
 	double theta = 0;
-	double yAngle = 0, xAngle = 0;
-	Vector cameraPos = new Vector(0, 0, 0), cameraForward = new Vector(0, 0, 1), cameraRight = new Vector(1, 0, 0);
+	double yAngle = -Math.PI/2, xAngle = 0;
+	Vector cameraPos = new Vector(-5, 1.5, 0), cameraForward = new Vector(1, 0, 0), cameraRight = new Vector(0, 0, -1);
 	Vector light_direction = new Vector(0, 0, -1);
 	BufferedImage texture;
 	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
+	PlayerShip playerShip;
+	Vector velocity = new Vector(0.1, 0, 0);
+	ArrayList<AgilityRing> ringList;
+	private int moveHoriz, moveVert, moveForward;
 	
 	public Game () {
 		meshList = new ArrayList<Mesh>();
 		try {
 			System.out.println("a");
-			meshList.add(Mesh.loadFromObjFile("Models/Spherical Ship.obj"));
+			
+			ringList = new ArrayList<AgilityRing>();
+			ringList.add(new AgilityRing(new Vector(5, 0, -5)));
+			ringList.add(new AgilityRing(new Vector(5, 0, 5)));
+//			ringList.add(new AgilityRing(new Vector(8, 0, 0)));
+			meshList.addAll(ringList);
+			
+			//meshList.add(Mesh.loadFromObjFile("Models/artisans.obj"));
+			//meshList.add(Mesh.loadFromObjFileNoTexture("Models/ShipModel2.obj"));
 			//meshList.add(new MeshCube());
+			
+			playerShip = new PlayerShip(new Vector(0, 0, 0));
+			meshList.add(playerShip);
+			
 			System.out.println("b");
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("Error loading meshes");
 		}
 		
 		try {
-			texture = ImageIO.read(new File("Textures/Spherical Ship Map.png"));
+			//texture = ImageIO.read(new File("Textures/High.png"));
 		} catch (Exception e) { System.out.println("Texture reading failed."); }
 		
 		projMatrix = Matrix.getProjMatrix((double) SCREEN_HEIGHT/SCREEN_WIDTH, 1/Math.tan(FOV_ANGLE/2), Z_NEAR, Z_FAR);
@@ -54,19 +70,35 @@ public class Game extends JPanel {
 		
 		frame.addKeyListener(new KeyListener () {
 			public void keyPressed (KeyEvent event) {
-				if (event.getKeyCode() == KeyEvent.VK_SPACE)
-					cameraPos = cameraPos.plus(new Vector(0, 1, 0));
-				else if (event.getKeyCode() == KeyEvent.VK_SHIFT)
-					cameraPos = cameraPos.plus(new Vector(0, -1, 0));
+				if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
+					//velocity = velocity.plus(new Vector(0.1, 0, 0));
+					//System.out.println("Space");
+					moveForward = 1;
+				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
+					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
+					//System.out.println("Shift");
+					moveForward = -1;
+				}
 				
-				if (event.getKeyCode() == KeyEvent.VK_RIGHT)
-					yAngle -= Math.PI/(18*3);
-				else if (event.getKeyCode() == KeyEvent.VK_LEFT)
-					yAngle += Math.PI/(18*3);
-				else if (event.getKeyCode() == KeyEvent.VK_UP)
-					xAngle -= Math.PI/(18*3);
-				else if (event.getKeyCode() == KeyEvent.VK_DOWN)
-					xAngle += Math.PI/(18*3);
+				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+					//yAngle -= Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
+					moveHoriz = 1;
+				} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+					//yAngle += Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
+					moveHoriz = -1;
+				} else if (event.getKeyCode() == KeyEvent.VK_UP) {
+					//xAngle -= Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
+					moveVert = 1;
+				} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+					//xAngle += Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
+					moveVert = -1;
+				}
 				
 				if (event.getKeyCode() == KeyEvent.VK_W)
 					cameraPos = cameraPos.plus(cameraForward.scale(0.5));
@@ -79,7 +111,37 @@ public class Game extends JPanel {
 				
 				panel.getIgnoreRepaint();
 			}
-			public void keyReleased (KeyEvent event) {}
+			public void keyReleased (KeyEvent event) {
+				if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
+					//velocity = velocity.plus(new Vector(0.1, 0, 0));
+					//System.out.println("Space");
+					moveForward = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
+					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
+					//System.out.println("Shift");
+					moveForward = 0;
+				}
+				
+				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+					//yAngle -= Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
+					moveHoriz = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+					//yAngle += Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
+					moveHoriz = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_UP) {
+					//xAngle -= Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
+					moveVert = 0;
+				} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+					//xAngle += Math.PI/(18*3);
+					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
+					moveVert = 0;
+				}
+			}
 			public void keyTyped (KeyEvent event) {}
 		});
 		
@@ -88,12 +150,29 @@ public class Game extends JPanel {
 			public void run () {
 				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
+				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
+				System.out.println(moveHoriz + " " + moveVert);
+				playerShip.update(moveHoriz, moveVert, moveForward);
+				double y =  playerShip.getPlayerPos().getY();
+				if (y < -5) y = -5;
+				if (y > 5) y = 5;
+				double z = playerShip.getPlayerPos().getZ();
+				if (z < -5) z = -5;
+				if (z > 5) z = 5;
+				cameraPos = new Vector(-14+playerShip.getPlayerPos().getX(), y,  z);
+				//xAngle = playerShip.getXAngle() + Math.PI/2;
+				//yAngle = playerShip.getYAngle();
+				
+				for (AgilityRing ring : ringList)
+					ring.spin();
+				
 				//theta += Math.PI/(18*18);
-				double[][] matRotZ = Matrix.getRotMatZ(theta);
-				double[][] matRotX = Matrix.getRotMatX(theta/2);
-				double[][] transMatrix = Matrix.getTranslationMatrix(translationVector);
-				worldMatrix = Matrix.mulMatMat(matRotZ, matRotX);
-				worldMatrix = Matrix.mulMatMat(worldMatrix, transMatrix);
+				//double[][] matRotZ = Matrix.getRotMatZ(theta);
+				//double[][] matRotX = Matrix.getRotMatX(theta/2);
+				//double[][] transMatrix = Matrix.getTranslationMatrix(translationVector);
+				//worldMatrix = Matrix.mulMatMat(matRotZ, matRotX);
+				//worldMatrix = Matrix.mulMatMat(worldMatrix, transMatrix);
+				worldMatrix = Matrix.getIdentityMatrix();
 				
 				viewMatrix = Matrix.getTranslationMatrix(cameraPos.clone().scale(-1));
 				cameraForward = Matrix.multMatVec(Matrix.getRotMatX(xAngle), new Vector(0, 0, 1));
@@ -107,15 +186,23 @@ public class Game extends JPanel {
 				
 				panel.repaint();
 			}
-		}, 100, 20);
+		}, 100, 25);
 	}
 	
 	public void paintComponent (Graphics panelG) {
 		super.paintComponent(panelG);
-		BufferedImage bufferedImage = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		//BufferedImage bufferedImage = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bufferedImage = null;
+		try {
+			bufferedImage = ImageIO.read(new File("Textures/StarBackground1.jpg"));
+		} catch (Exception e) {}
 		Graphics g = bufferedImage.getGraphics();
 		g.setColor(Color.white);
-		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();		
+		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();
+		
+		System.out.println(playerShip.getPlayerPos());
+		for (AgilityRing ring : ringList)
+			ring.shipCollision(playerShip);
 		
 		for (Mesh mesh : meshList) {
 			//System.out.println(mesh.getTris().size());
@@ -346,11 +433,13 @@ public class Game extends JPanel {
 								colorRGB = texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w));
 							else {
 								double myTexW = 2*tex_w;
+								myTexW += 0.3;
 								if (myTexW < 0)
 									myTexW = 0;
 								if (myTexW > 1)
 									myTexW = 1;
 								colorRGB = (new Color((int) (255*myTexW), (int) (255*myTexW), (int) (255*myTexW))).getRGB();
+								//colorRGB = Color.WHITE.getRGB();
 							}
 							image.setRGB(j, i, colorRGB);
 						} catch (Exception e) {}
@@ -419,11 +508,13 @@ public class Game extends JPanel {
 							colorRGB = texture.getRGB((int) (tex_u*texture.getWidth()/tex_w), (int) (tex_v*texture.getHeight()/tex_w));
 						else {
 							double myTexW = 2*tex_w;
+							myTexW += 0.3;
 							if (myTexW < 0)
 								myTexW = 0;
 							if (myTexW > 1)
 								myTexW = 1;
 							colorRGB = (new Color((int) (255*myTexW), (int) (255*myTexW), (int) (255*myTexW))).getRGB();
+							//colorRGB = Color.WHITE.getRGB();
 						}
 						image.setRGB(j, i, colorRGB);
 					} catch (Exception e) {}
