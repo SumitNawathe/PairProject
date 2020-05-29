@@ -8,7 +8,7 @@ public class AgilityRing extends Mesh {
 		super();
 		this.position = position;
 		try {
-			setTris(Mesh.loadFromObjFileNoTexture("Models/ring.obj").getTris());
+			setTris(Mesh.loadFromObjFile("Models/Ring.obj", "Textures/Ring Map.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading ring.obj"); }
 		translate(position);
 	}
