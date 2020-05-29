@@ -53,9 +53,9 @@ public class PlayerShip extends SpaceShip {
 		if ((playerVel.getZ() <= -0.4 && horiz == 1) || (playerVel.getZ() >= 0.4 && horiz == -1))
 			horiz = 0;
 		else if (horiz == 0 && playerVel.getZ() < 0)
-			horiz = -0.25;
+			horiz = Math.max(-0.25, playerVel.getZ());
 		else if (horiz == 0 && playerVel.getZ() > 0)
-			horiz = 0.25;
+			horiz = Math.min(0.25, playerVel.getZ());
 		
 		if ((playerVel.getY() >= 0.4 && vert == 1) || (playerVel.getY() <= -0.4 && vert == -1))
 			vert = 0;
