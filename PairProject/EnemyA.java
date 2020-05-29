@@ -1,4 +1,7 @@
-public class EnemyA extends SpaceShip {	
+public class EnemyA extends SpaceShip {
+	private double theta;
+	private double fireCounter;
+	
 	public EnemyA (Vector pos) {
 		super();
 		setPos(pos);
@@ -8,5 +11,16 @@ public class EnemyA extends SpaceShip {
 		translate(pos);
 		
 		setCollisionRadius(2);
+	}
+	
+	public void update (Game game) {
+		this.translate(new Vector(game.getPlayerShip().getPos().getX()+10-getPos().getX(), 10*Math.cos(theta)-getPos().getY(), 10*Math.sin(theta)-getPos().getZ()));
+		this.setPos(new Vector(game.getPlayerShip().getPos().getX()+10, 10*Math.cos(theta), 10*Math.sin(theta)));
+		theta += Math.PI/80;
+		fireCounter++;
+		if (fireCounter >= 10) {
+			game.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0));
+			fireCounter = 0;
+		}
 	}
 }

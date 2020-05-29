@@ -1,6 +1,10 @@
 public class PlayerShip extends SpaceShip {
+	private double health = 100;
 	private int horizAngleState, vertAngleState;
 	private Vector playerVel = new Vector(0.1, 0, 0);
+	
+	public void decreaseHealth (double amt) { health -= amt; System.out.println("Shot");}
+	public double getHealth () { return health; }
 	
 	public void moveShipTo (Vector pos) {
 		translate(pos.minus(getPos()));
@@ -16,6 +20,7 @@ public class PlayerShip extends SpaceShip {
 		} catch (Exception e) { System.out.println("Error loading ShipModel2.obj"); }
 		translate(offset);
 		System.out.println(this.getTris().get(0).getTexture());
+		setCollisionRadius(2.5);
 	}
 	
 	public void update (double horiz, double vert, double speed) {

@@ -30,14 +30,18 @@ public class Game extends JPanel {
 	ArrayList<SpaceShip> enemyShips = new ArrayList<SpaceShip>();
 	private int moveHoriz, moveVert, moveForward;
 	Image backgroundImage;
+	Game game;
 	
-	public void fireBullet () {
-		Bullet bullet = new Bullet(playerShip.getPos().plus(new Vector(3, 0, 0)));
+	public PlayerShip getPlayerShip () { return playerShip; }
+	
+	public void fireBullet (Vector pos, Vector vel) {
+		Bullet bullet = new Bullet(pos, vel);
 		bulletList.add(bullet);
 		meshList.add(bullet);
 	}
 	
 	public Game () {
+		game = this;
 		this.setBackground(Color.RED);
 		this.setOpaque(true);
 		
@@ -133,7 +137,7 @@ public class Game extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				if (event.getKeyCode() == KeyEvent.VK_F)
-					fireBullet();
+					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(1, 0, 0));
 				
 				panel.getIgnoreRepaint();
 			}
@@ -212,19 +216,24 @@ public class Game extends JPanel {
 				
 				for (int i = 0; i < bulletList.size(); i++) {
 					bulletList.get(i).update();
-					if (bulletList.get(i).getPos().getX() > playerShip.getPos().getX() + 60) {
+					if (bulletList.get(i).getPos().clone().minus(playerShip.getPos()).magnitude() > 150) {
 						meshList.remove(bulletList.get(i));
 						bulletList.remove(i);
 						i--;
 					}
 				}
 				
-				for (int i = 0; i < enemyShips.size(); i++)
+				for (int i = 0; i < enemyShips.size(); i++) {
+					enemyShips.get(i).update(game);
 					if (enemyShips.get(i).collision(bulletList)) {
 						meshList.remove(enemyShips.get(i));
 						enemyShips.remove(i);
 						i--;
 					}
+				}
+				
+				if (playerShip.collision(bulletList))
+					playerShip.decreaseHealth(10);
 				
 				panel.repaint();
 			}

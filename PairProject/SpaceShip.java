@@ -15,4 +15,6 @@ public class SpaceShip extends Mesh {
 				return true;
 		return false;
 	}
+	
+	public void update (Game game) {}
 }

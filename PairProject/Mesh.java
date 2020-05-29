@@ -30,7 +30,7 @@ public class Mesh {
 		ArrayList<Vector> vectorPool = new ArrayList<Vector>();
 		ArrayList<Vector> texturePool = new ArrayList<Vector>();
 		while ((line = file.readLine()) != null) {
-			System.out.println(vectorPool.size() + " " + texturePool.size());
+//			System.out.println(vectorPool.size() + " " + texturePool.size());
 			StringTokenizer st = new StringTokenizer(line);
 			String starting = st.nextToken();
 			if (starting.equals("v")) {
@@ -67,7 +67,7 @@ public class Mesh {
 		//System.out.println("f");
 		//int counter = 1;
 		while ((line = file.readLine()) != null) {
-			System.out.println(vectorPool.size() + " " + texturePool.size());
+//			System.out.println(vectorPool.size() + " " + texturePool.size());
 			//System.out.println(counter);
 			//counter++;
 			//System.out.println(line);

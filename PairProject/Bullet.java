@@ -1,11 +1,12 @@
 public class Bullet extends Mesh {
 	private Vector pos;
-	private Vector vel = new Vector(1, 0, 0);
+	private Vector vel;
 	public Vector getPos () { return pos; }
 	
-	public Bullet (Vector pos) {
+	public Bullet (Vector pos, Vector vel) {
 		super();
 		this.pos = pos;
+		this.vel = vel;
 		try {
 			setTris(Mesh.loadFromObjFileNoTexture("Models/smallbulletsphere2.obj").getTris());
 		} catch (Exception e) { System.out.println("Error loading smallbulletsphere2.obj"); }
