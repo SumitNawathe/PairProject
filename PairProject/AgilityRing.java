@@ -23,8 +23,8 @@ public class AgilityRing extends Mesh {
 	}
 	
 	public boolean shipCollision (PlayerShip ship) {
-		if (position.clone().minus(ship.getPlayerPos()).magnitude() < (1.7 + 1.5))
+		if (position.clone().minus(ship.getPos()).magnitude() < (1.7 + 1.5))
 			System.out.println("collision");
-		return (position.clone().minus(ship.getPlayerPos()).magnitude() < (1.7 + 1.5));
+		return (position.clone().minus(ship.getPos()).magnitude() < (1.7 + 1.5));
 	}
 }

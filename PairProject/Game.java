@@ -27,11 +27,12 @@ public class Game extends JPanel {
 	Vector velocity = new Vector(0.1, 0, 0);
 	ArrayList<AgilityRing> ringList;
 	ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
+	ArrayList<SpaceShip> enemyShips = new ArrayList<SpaceShip>();
 	private int moveHoriz, moveVert, moveForward;
 	Image backgroundImage;
 	
 	public void fireBullet () {
-		Bullet bullet = new Bullet(playerShip.getPlayerPos().plus(new Vector(3, 0, 0)));
+		Bullet bullet = new Bullet(playerShip.getPos().plus(new Vector(3, 0, 0)));
 		bulletList.add(bullet);
 		meshList.add(bullet);
 	}
@@ -61,6 +62,10 @@ public class Game extends JPanel {
 			
 //			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
 //			meshList.add(bullet1);
+			
+			EnemyA enemy1 = new EnemyA(new Vector(10, 0, 0));
+			enemyShips.add(enemy1);
+			meshList.add(enemy1);
 			
 //			meshList.add(Mesh.loadFromObjFile("Models/Ship Model 3.obj", "Textures/Ship Model 3 Map.png"));
 			
@@ -174,13 +179,13 @@ public class Game extends JPanel {
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
 				playerShip.update(moveHoriz, moveVert, moveForward);
-				double y =  playerShip.getPlayerPos().getY();
+				double y =  playerShip.getPos().getY();
 				if (y < -5) y = -5;
 				if (y > 5) y = 5;
-				double z = playerShip.getPlayerPos().getZ();
+				double z = playerShip.getPos().getZ();
 				if (z < -5) z = -5;
 				if (z > 5) z = 5;
-				cameraPos = new Vector(-14+playerShip.getPlayerPos().getX(), y,  z);
+				cameraPos = new Vector(-14+playerShip.getPos().getX(), y,  z);
 				//xAngle = playerShip.getXAngle() + Math.PI/2;
 				//yAngle = playerShip.getYAngle();
 				
@@ -207,12 +212,19 @@ public class Game extends JPanel {
 				
 				for (int i = 0; i < bulletList.size(); i++) {
 					bulletList.get(i).update();
-					if (bulletList.get(i).getPos().getX() > playerShip.getPlayerPos().getX() + 60) {
+					if (bulletList.get(i).getPos().getX() > playerShip.getPos().getX() + 60) {
 						meshList.remove(bulletList.get(i));
 						bulletList.remove(i);
 						i--;
 					}
 				}
+				
+				for (int i = 0; i < enemyShips.size(); i++)
+					if (enemyShips.get(i).collision(bulletList)) {
+						meshList.remove(enemyShips.get(i));
+						enemyShips.remove(i);
+						i--;
+					}
 				
 				panel.repaint();
 			}
