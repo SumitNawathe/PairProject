@@ -73,6 +73,10 @@ public class Game extends JPanel {
 			
 //			meshList.add(Mesh.loadFromObjFile("Models/Ship Model 3.obj", "Textures/Ship Model 3 Map.png"));
 			
+//			Mesh moonMesh = Mesh.loadFromObjFile("Models/moon2.obj", "Textures/Bump_2K.png");
+//			moonMesh.translate(new Vector(600, -300, -300));
+//			meshList.add(moonMesh);
+			
 			System.out.println("b");
 		} catch (Exception e) {
 			System.out.println("Error loading meshes");
