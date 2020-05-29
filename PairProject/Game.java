@@ -26,8 +26,15 @@ public class Game extends JPanel {
 	PlayerShip playerShip;
 	Vector velocity = new Vector(0.1, 0, 0);
 	ArrayList<AgilityRing> ringList;
+	ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
 	private int moveHoriz, moveVert, moveForward;
 	Image backgroundImage;
+	
+	public void fireBullet () {
+		Bullet bullet = new Bullet(playerShip.getPlayerPos().plus(new Vector(3, 0, 0)));
+		bulletList.add(bullet);
+		meshList.add(bullet);
+	}
 	
 	public Game () {
 		this.setBackground(Color.RED);
@@ -52,8 +59,10 @@ public class Game extends JPanel {
 			playerShip = new PlayerShip(new Vector(0, 0, 0));
 			meshList.add(playerShip);
 			
-			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
-			meshList.add(bullet1);
+//			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
+//			meshList.add(bullet1);
+			
+//			meshList.add(Mesh.loadFromObjFile("Models/Ship Model 3.obj", "Textures/Ship Model 3 Map.png"));
 			
 			System.out.println("b");
 		} catch (Exception e) {
@@ -117,6 +126,9 @@ public class Game extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(-0.5));
 				else if (event.getKeyCode() == KeyEvent.VK_A)
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
+				
+				if (event.getKeyCode() == KeyEvent.VK_F)
+					fireBullet();
 				
 				panel.getIgnoreRepaint();
 			}
@@ -192,6 +204,15 @@ public class Game extends JPanel {
 				viewMatrix = Matrix.mulMatMat(viewMatrix, Matrix.getTranslationMatrix(cameraPos.clone()));
 				
 				light_direction = cameraForward.scale(-1);
+				
+				for (int i = 0; i < bulletList.size(); i++) {
+					bulletList.get(i).update();
+					if (bulletList.get(i).getPos().getX() > playerShip.getPlayerPos().getX() + 60) {
+						meshList.remove(bulletList.get(i));
+						bulletList.remove(i);
+						i--;
+					}
+				}
 				
 				panel.repaint();
 			}
@@ -440,7 +461,7 @@ public class Game extends JPanel {
 								colorRGB = tri.getTexture().getRGB((int) (tex_u*tri.getTexture().getWidth()/tex_w), (int) (tex_v*tri.getTexture().getHeight()/tex_w));
 							} else {
 								double myTexW = 2*tex_w;
-								myTexW += 0.3;
+								myTexW += 1;
 								if (myTexW < 0)
 									myTexW = 0;
 								if (myTexW > 1)
@@ -516,7 +537,7 @@ public class Game extends JPanel {
 //							System.out.println("good");
 						} else {
 							double myTexW = 2*tex_w;
-							myTexW += 0.3;
+							myTexW += 1;
 							if (myTexW < 0)
 								myTexW = 0;
 							if (myTexW > 1)
