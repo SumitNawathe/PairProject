@@ -52,6 +52,7 @@ public class Game extends JPanel {
 		while (width*3/4 > gd.getDisplayMode().getHeight())
 		    width = (int) (width - width*0.1);
 		//System.out.println(width);
+		width-=20;
 		SCREEN_WIDTH=width;
 		SCREEN_HEIGHT=width*3/4;
 		game = this;
