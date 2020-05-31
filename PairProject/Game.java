@@ -22,7 +22,7 @@ public class Game extends JPanel {
 	Vector cameraPos = new Vector(-5, 1.5, 0), cameraForward = new Vector(1, 0, 0), cameraRight = new Vector(0, 0, -1);
 	Vector light_direction = new Vector(0, 0, -1);
 	BufferedImage texture;
-	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
+//	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 	PlayerShip playerShip;
 	Vector velocity = new Vector(0.1, 0, 0);
 	ArrayList<AgilityRing> ringList;
@@ -31,11 +31,13 @@ public class Game extends JPanel {
 	private int moveHoriz, moveVert, moveForward;
 	Image backgroundImage;
 	Game game;
+	double bigShotChargeCounter;
+	ChargeShot charge;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	
-	public void fireBullet (Vector pos, Vector vel) {
-		Bullet bullet = new Bullet(pos, vel);
+	public void fireBullet (Vector pos, Vector vel, double collisionRadius) {
+		Bullet bullet = new Bullet(pos, vel, collisionRadius);
 		bulletList.add(bullet);
 		meshList.add(bullet);
 	}
@@ -76,6 +78,9 @@ public class Game extends JPanel {
 //			Mesh moonMesh = Mesh.loadFromObjFile("Models/moon2.obj", "Textures/Bump_2K.png");
 //			moonMesh.translate(new Vector(600, -300, -300));
 //			meshList.add(moonMesh);
+			
+			charge = new ChargeShot(playerShip.getPos());
+//			meshList.add(charge);
 			
 			System.out.println("b");
 		} catch (Exception e) {
@@ -141,7 +146,12 @@ public class Game extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				if (event.getKeyCode() == KeyEvent.VK_F)
-					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(1, 0, 0));
+					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(1, 0, 0), 0.3);
+				else if (event.getKeyCode() == KeyEvent.VK_D) {
+					if (!meshList.contains(charge))
+						meshList.add(charge);
+					bigShotChargeCounter++;
+				}
 				
 				panel.getIgnoreRepaint();
 			}
@@ -175,6 +185,15 @@ public class Game extends JPanel {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
 					moveVert = 0;
 				}
+				
+				if (event.getKeyCode() == KeyEvent.VK_D) {
+					meshList.remove(charge);
+					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+						playerShip.decreaseEnergy(10);
+						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3);
+					}
+					bigShotChargeCounter = 0;
+				}
 			}
 			public void keyTyped (KeyEvent event) {}
 		});
@@ -182,7 +201,7 @@ public class Game extends JPanel {
 		timer = new java.util.Timer();
 		timer.scheduleAtFixedRate(new TimerTask () {
 			public void run () {
-				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
+//				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
@@ -229,15 +248,17 @@ public class Game extends JPanel {
 				
 				for (int i = 0; i < enemyShips.size(); i++) {
 					enemyShips.get(i).update(game);
-					if (enemyShips.get(i).collision(bulletList)) {
+					if (enemyShips.get(i).bulletCollision(bulletList)) {
 						meshList.remove(enemyShips.get(i));
 						enemyShips.remove(i);
 						i--;
 					}
 				}
 				
-				if (playerShip.collision(bulletList))
+				if (playerShip.bulletCollision(bulletList))
 					playerShip.decreaseHealth(10);
+				
+				charge.update(game);
 				
 				panel.repaint();
 			}
@@ -367,6 +388,18 @@ public class Game extends JPanel {
 //		bufferedImage = texture;
 		
 		panelG.drawImage(bufferedImage, 0, 0, null);
+		
+		panelG.setColor(Color.RED);
+		panelG.setFont(new Font ("TimesRoman", Font.BOLD, 30));
+		panelG.drawString("HEALTH", 1050, 820);
+		panelG.drawRect(780, 830, 400, 30);
+		panelG.fillRect((int) (780+4*(100-playerShip.getHealth())), 830, (int) (4*playerShip.getHealth()), 30);
+		
+		panelG.setColor(Color.CYAN);
+		panelG.setFont(new Font ("TimesRoman", Font.BOLD, 30));
+		panelG.drawString("ENERGY", 10, 820);
+		panelG.drawRect(10, 830, 400, 30);
+		panelG.fillRect(10, 830, (int) (4*playerShip.getEnergy()), 30);
 	}
 	
 	private void drawTexturedTriangle (Triangle tri, BufferedImage image) {		

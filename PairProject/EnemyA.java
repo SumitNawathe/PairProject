@@ -19,7 +19,7 @@ public class EnemyA extends SpaceShip {
 		theta += Math.PI/80;
 		fireCounter++;
 		if (fireCounter >= 10) {
-			game.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0));
+			game.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0), 0.3);
 			fireCounter = 0;
 		}
 	}
