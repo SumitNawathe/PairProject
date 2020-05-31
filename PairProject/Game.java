@@ -99,13 +99,14 @@ public class Game extends JPanel {
 		frame.setResizable(false);
 		frame.setFocusable(true);
 		int width = SCREEN_WIDTH;
+		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
+		//System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
 		if (width > gd.getDisplayMode().getWidth())
 		    width = gd.getDisplayMode().getWidth();
 		while (width*3/4 > gd.getDisplayMode().getHeight())
 		    width = (int) (width - width*0.1);
-		System.out.println(width);
+		//System.out.println(width);
 		frame.setBounds(frame.getBounds().x, frame.getBounds().y, width, width*3/4);
 		SCREEN_WIDTH=width;
 		SCREEN_HEIGHT=width*3/4;
@@ -212,8 +213,6 @@ public class Game extends JPanel {
 		timer = new java.util.Timer();
 		timer.scheduleAtFixedRate(new TimerTask () {
 			public void run () {
-//				SCREEN_WIDTH=frame.getWidth();
-//				SCREEN_HEIGHT=SCREEN_WIDTH; TODO: Delete.
 				frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
 //				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
