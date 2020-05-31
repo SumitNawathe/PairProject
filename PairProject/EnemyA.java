@@ -6,7 +6,7 @@ public class EnemyA extends SpaceShip {
 		super();
 		setPos(pos);
 		try {
-			setTris(Mesh.loadFromObjFile("Models/Ship Model 3.obj", "Textures/Ship Model 3 Map.png").getTris());
+			setTris(Mesh.loadFromObjFile("Models/Explosion.obj", "Textures/Explosion Map 1.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading smallbulletsphere2.obj"); }
 		translate(pos);
 		
