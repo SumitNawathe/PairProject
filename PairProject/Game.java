@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 public class Game extends JPanel {
 	JFrame frame;
 	ArrayList<Mesh> meshList;
-	int SCREEN_WIDTH = 1200, SCREEN_HEIGHT = 900;
+	int SCREEN_WIDTH = 10000, SCREEN_HEIGHT = 900;
 	double FOV_ANGLE = Math.PI/2;
 	double Z_NEAR = 0.1, Z_FAR = 1000.0;
 	double[][] projMatrix = new double[4][4], worldMatrix = new double[4][4], viewMatrix = new double[4][4];
@@ -43,6 +43,17 @@ public class Game extends JPanel {
 	}
 	
 	public Game () {
+		int width = SCREEN_WIDTH;
+		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		//System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
+		if (width > gd.getDisplayMode().getWidth())
+		    width = gd.getDisplayMode().getWidth();
+		while (width*3/4 > gd.getDisplayMode().getHeight())
+		    width = (int) (width - width*0.1);
+		//System.out.println(width);
+		SCREEN_WIDTH=width;
+		SCREEN_HEIGHT=width*3/4;
 		game = this;
 		this.setBackground(Color.RED);
 		this.setOpaque(true);
@@ -98,18 +109,7 @@ public class Game extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setFocusable(true);
-		int width = SCREEN_WIDTH;
-		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		//System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
-		if (width > gd.getDisplayMode().getWidth())
-		    width = gd.getDisplayMode().getWidth();
-		while (width*3/4 > gd.getDisplayMode().getHeight())
-		    width = (int) (width - width*0.1);
-		//System.out.println(width);
 		frame.setBounds(frame.getBounds().x, frame.getBounds().y, width, width*3/4);
-		SCREEN_WIDTH=width;
-		SCREEN_HEIGHT=width*3/4;
 //		this.setBackground(Color.black);
 		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		frame.getContentPane().add(this);
