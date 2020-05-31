@@ -22,14 +22,28 @@ public class Game extends JPanel {
 	Vector cameraPos = new Vector(-5, 1.5, 0), cameraForward = new Vector(1, 0, 0), cameraRight = new Vector(0, 0, -1);
 	Vector light_direction = new Vector(0, 0, -1);
 	BufferedImage texture;
-	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
+//	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 	PlayerShip playerShip;
 	Vector velocity = new Vector(0.1, 0, 0);
 	ArrayList<AgilityRing> ringList;
+	ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
+	ArrayList<SpaceShip> enemyShips = new ArrayList<SpaceShip>();
 	private int moveHoriz, moveVert, moveForward;
 	Image backgroundImage;
+	Game game;
+	double bigShotChargeCounter;
+	ChargeShot charge;
+	
+	public PlayerShip getPlayerShip () { return playerShip; }
+	
+	public void fireBullet (Vector pos, Vector vel, double collisionRadius) {
+		Bullet bullet = new Bullet(pos, vel, collisionRadius);
+		bulletList.add(bullet);
+		meshList.add(bullet);
+	}
 	
 	public Game () {
+		game = this;
 		this.setBackground(Color.RED);
 		this.setOpaque(true);
 		
@@ -51,6 +65,22 @@ public class Game extends JPanel {
 			
 			playerShip = new PlayerShip(new Vector(0, 0, 0));
 			meshList.add(playerShip);
+			
+//			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
+//			meshList.add(bullet1);
+			
+			EnemyA enemy1 = new EnemyA(new Vector(10, 0, 0));
+			enemyShips.add(enemy1);
+			meshList.add(enemy1);
+			
+//			meshList.add(Mesh.loadFromObjFile("Models/Ship Model 3.obj", "Textures/Ship Model 3 Map.png"));
+			
+//			Mesh moonMesh = Mesh.loadFromObjFile("Models/moon2.obj", "Textures/Bump_2K.png");
+//			moonMesh.translate(new Vector(600, -300, -300));
+//			meshList.add(moonMesh);
+			
+			charge = new ChargeShot(playerShip.getPos());
+//			meshList.add(charge);
 			
 			System.out.println("b");
 		} catch (Exception e) {
@@ -115,6 +145,14 @@ public class Game extends JPanel {
 				else if (event.getKeyCode() == KeyEvent.VK_A)
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
+				if (event.getKeyCode() == KeyEvent.VK_F)
+					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(1, 0, 0), 0.3);
+				else if (event.getKeyCode() == KeyEvent.VK_D) {
+					if (!meshList.contains(charge))
+						meshList.add(charge);
+					bigShotChargeCounter++;
+				}
+				
 				panel.getIgnoreRepaint();
 			}
 			public void keyReleased (KeyEvent event) {
@@ -147,6 +185,15 @@ public class Game extends JPanel {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
 					moveVert = 0;
 				}
+				
+				if (event.getKeyCode() == KeyEvent.VK_D) {
+					meshList.remove(charge);
+					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+						playerShip.decreaseEnergy(10);
+						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3);
+					}
+					bigShotChargeCounter = 0;
+				}
 			}
 			public void keyTyped (KeyEvent event) {}
 		});
@@ -154,18 +201,18 @@ public class Game extends JPanel {
 		timer = new java.util.Timer();
 		timer.scheduleAtFixedRate(new TimerTask () {
 			public void run () {
-				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
+//				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
 				playerShip.update(moveHoriz, moveVert, moveForward);
-				double y =  playerShip.getPlayerPos().getY();
+				double y =  playerShip.getPos().getY();
 				if (y < -5) y = -5;
 				if (y > 5) y = 5;
-				double z = playerShip.getPlayerPos().getZ();
+				double z = playerShip.getPos().getZ();
 				if (z < -5) z = -5;
 				if (z > 5) z = 5;
-				cameraPos = new Vector(-14+playerShip.getPlayerPos().getX(), y,  z);
+				cameraPos = new Vector(-14+playerShip.getPos().getX(), y,  z);
 				//xAngle = playerShip.getXAngle() + Math.PI/2;
 				//yAngle = playerShip.getYAngle();
 				
@@ -190,6 +237,29 @@ public class Game extends JPanel {
 				
 				light_direction = cameraForward.scale(-1);
 				
+				for (int i = 0; i < bulletList.size(); i++) {
+					bulletList.get(i).update();
+					if (bulletList.get(i).getPos().clone().minus(playerShip.getPos()).magnitude() > 150) {
+						meshList.remove(bulletList.get(i));
+						bulletList.remove(i);
+						i--;
+					}
+				}
+				
+				for (int i = 0; i < enemyShips.size(); i++) {
+					enemyShips.get(i).update(game);
+					if (enemyShips.get(i).bulletCollision(bulletList)) {
+						meshList.remove(enemyShips.get(i));
+						enemyShips.remove(i);
+						i--;
+					}
+				}
+				
+				if (playerShip.bulletCollision(bulletList))
+					playerShip.decreaseHealth(10);
+				
+				charge.update(game);
+				
 				panel.repaint();
 			}
 		}, 100, 20);
@@ -203,7 +273,7 @@ public class Game extends JPanel {
 		g.setColor(Color.white);
 		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();
 		
-		System.out.println(playerShip.getPlayerPos());
+//		System.out.println(playerShip.getPlayerPos());
 		for (AgilityRing ring : ringList)
 			ring.shipCollision(playerShip);
 		
@@ -318,6 +388,18 @@ public class Game extends JPanel {
 //		bufferedImage = texture;
 		
 		panelG.drawImage(bufferedImage, 0, 0, null);
+		
+		panelG.setColor(Color.RED);
+		panelG.setFont(new Font ("TimesRoman", Font.BOLD, 30));
+		panelG.drawString("HEALTH", 1050, 820);
+		panelG.drawRect(780, 830, 400, 30);
+		panelG.fillRect((int) (780+4*(100-playerShip.getHealth())), 830, (int) (4*playerShip.getHealth()), 30);
+		
+		panelG.setColor(Color.CYAN);
+		panelG.setFont(new Font ("TimesRoman", Font.BOLD, 30));
+		panelG.drawString("ENERGY", 10, 820);
+		panelG.drawRect(10, 830, 400, 30);
+		panelG.fillRect(10, 830, (int) (4*playerShip.getEnergy()), 30);
 	}
 	
 	private void drawTexturedTriangle (Triangle tri, BufferedImage image) {		
@@ -437,7 +519,7 @@ public class Game extends JPanel {
 								colorRGB = tri.getTexture().getRGB((int) (tex_u*tri.getTexture().getWidth()/tex_w), (int) (tex_v*tri.getTexture().getHeight()/tex_w));
 							} else {
 								double myTexW = 2*tex_w;
-								myTexW += 0.3;
+								myTexW += 1;
 								if (myTexW < 0)
 									myTexW = 0;
 								if (myTexW > 1)
@@ -510,10 +592,10 @@ public class Game extends JPanel {
 						int colorRGB;
 						if (tri.getTexture() != null) {
 							colorRGB = tri.getTexture().getRGB((int) (tex_u*tri.getTexture().getWidth()/tex_w), (int) (tex_v*tri.getTexture().getHeight()/tex_w));
-							//System.out.println("good");
+//							System.out.println("good");
 						} else {
 							double myTexW = 2*tex_w;
-							myTexW += 0.3;
+							myTexW += 1;
 							if (myTexW < 0)
 								myTexW = 0;
 							if (myTexW > 1)
