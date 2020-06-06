@@ -252,6 +252,9 @@ public class Game extends JPanel {
 				
 				light_direction = cameraForward.scale(-1);
 				
+				for (AgilityRing ring : ringList)
+					ring.shipCollision(playerShip);
+				
 				for (int i = 0; i < bulletList.size(); i++) {
 					bulletList.get(i).update();
 					if (bulletList.get(i).getPos().clone().minus(playerShip.getPos()).magnitude() > 150) {
@@ -262,12 +265,18 @@ public class Game extends JPanel {
 				}
 				
 				for (int i = 0; i < enemyShips.size(); i++) {
-					enemyShips.get(i).update(game);
-					if (enemyShips.get(i).bulletCollision(bulletList)) {
-//						meshList.remove(enemyShips.get(i));
-//						enemyShips.remove(i);
-//						i--;
-						enemyShips.get(i).destroy(game);
+					if (enemyShips.get(i).getTris().size() ==0) {
+						meshList.remove(enemyShips.get(i));
+						enemyShips.remove(i);
+						i--;
+					} else {
+						enemyShips.get(i).update(game);
+						if (enemyShips.get(i).bulletCollision(bulletList)) {
+	//						meshList.remove(enemyShips.get(i));
+	//						enemyShips.remove(i);
+	//						i--;
+							enemyShips.get(i).destroy(game);
+						}
 					}
 				}
 				
@@ -288,10 +297,6 @@ public class Game extends JPanel {
 		Graphics g = bufferedImage.getGraphics();
 		g.setColor(Color.white);
 		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();
-		
-//		System.out.println(playerShip.getPlayerPos());
-		for (AgilityRing ring : ringList)
-			ring.shipCollision(playerShip);
 		
 		for (Mesh mesh : meshList) {
 			//System.out.println(mesh.getTris().size());
