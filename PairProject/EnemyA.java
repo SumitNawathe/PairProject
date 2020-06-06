@@ -1,6 +1,7 @@
 public class EnemyA extends SpaceShip {
 	private double theta;
 	private double fireCounter;
+	private Explosion explosion;
 	
 	public EnemyA (Vector pos) {
 		super();
@@ -18,9 +19,24 @@ public class EnemyA extends SpaceShip {
 		this.setPos(new Vector(game.getPlayerShip().getPos().getX()+10, 10*Math.cos(theta), 10*Math.sin(theta)));
 		theta += Math.PI/80;
 		fireCounter++;
-		if (fireCounter >= 10) {
-			game.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0), 0.3);
-			fireCounter = 0;
+		if (explosion == null) {
+			if (fireCounter >= 10) {
+				game.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0), 0.3);
+				fireCounter = 0;
+			}
+		} else {
+			if (!explosion.update(getPos())) {
+				System.out.println("clear");
+				this.getTris().clear();
+			}
+		}
+	}
+	
+	public void destroy (Game game) {
+		System.out.println("destroy");
+		if (explosion == null) {
+			explosion = new Explosion(this.getPos(), 10, 10);
+			game.getMeshList().add(explosion);
 		}
 	}
 }

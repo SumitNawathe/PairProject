@@ -25,6 +25,8 @@ public class PlayerShip extends SpaceShip {
 		setCollisionRadius(2.5);
 	}
 	
+	public void destroy (Game game) {}
+	
 	public void update (Game game) {
 		update(0, 0, 0);
 	}
