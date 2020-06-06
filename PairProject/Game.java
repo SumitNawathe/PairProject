@@ -68,6 +68,12 @@ public class Game extends JPanel {
 			
 			ringList = new ArrayList<AgilityRing>();
 			ringList.add(new AgilityRing(new Vector(5, 0, -5)));
+			ringList.add(new AgilityRing(new Vector(25, 0, -5)));
+			ringList.add(new AgilityRing(new Vector(45, 0, -5)));
+			ringList.add(new AgilityRing(new Vector(65, 0, -5)));
+			ringList.add(new AgilityRing(new Vector(85, 0, -5)));
+			ringList.add(new AgilityRing(new Vector(105, 0, -5)));
+			ringList.add(new AgilityRing(new Vector(125, 0, -5)));
 			ringList.add(new AgilityRing(new Vector(5, 0, 5)));
 //			ringList.add(new AgilityRing(new Vector(8, 0, 0)));
 			meshList.addAll(ringList);
@@ -160,7 +166,7 @@ public class Game extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				if (event.getKeyCode() == KeyEvent.VK_F)
-					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(1, 0, 0), 0.3);
+					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(2, 0, 0), 0.3);
 				else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
 						meshList.add(charge);
