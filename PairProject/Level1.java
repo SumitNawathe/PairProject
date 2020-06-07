@@ -13,7 +13,7 @@ public class Level1 extends Level {
 	public boolean update(Game game) {
 		if (getProgressState() == 0 && game.getPlayerShip().getPos().getX() > 50) {
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0));
+			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0), 20);
 			game.getEnemyShips().add(enemy);
 			game.getMeshList().add(enemy);
 		}

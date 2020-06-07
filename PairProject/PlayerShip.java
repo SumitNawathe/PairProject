@@ -19,7 +19,7 @@ public class PlayerShip extends SpaceShip {
 		super();
 		setPos(offset);
 		try {
-			setTris(Mesh.loadFromObjFile("Models/Explosion.obj", "Textures/Explosion Map 1.png").getTris());
+			setTris(Mesh.loadFromObjFile("Models/Ship Model 1.obj", "Textures/Ship Model 1 Map.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading ShipModel2.obj"); }
 		translate(offset);
 		System.out.println(this.getTris().get(0).getTexture());
