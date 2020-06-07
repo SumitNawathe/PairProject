@@ -90,7 +90,7 @@ public class Game extends JPanel {
 			//meshList.add(Mesh.loadFromObjFileNoTexture("Models/ShipModel2.obj"));
 			//meshList.add(new MeshCube());
 			
-			playerShip = new PlayerShip(new Vector(-80, 0, 0));
+			playerShip = new PlayerShip(new Vector(-160, 0, 0));
 			meshList.add(playerShip);
 			
 //			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
@@ -263,6 +263,17 @@ public class Game extends JPanel {
 				//double[][] transMatrix = Matrix.getTranslationMatrix(translationVector);
 				//worldMatrix = Matrix.mulMatMat(matRotZ, matRotX);
 				//worldMatrix = Matrix.mulMatMat(worldMatrix, transMatrix);
+				
+				if (counter < 80) {
+					cameraPos = new Vector(playerShip.getPos().getX() + 14*Math.cos(Math.PI*counter/80), 
+							playerShip.getPos().getY(), 
+							playerShip.getPos().getZ() - 14*Math.sin(Math.PI*counter/80));
+					yAngle = Math.PI/2 * (40-counter)/40.0;
+//					yAngle = -Math.PI/2;
+					counter++;
+				} else {
+					yAngle = -Math.PI/2;
+				}
 				
 				worldMatrix = Matrix.getIdentityMatrix();
 				
