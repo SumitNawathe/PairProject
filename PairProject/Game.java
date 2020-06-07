@@ -57,7 +57,7 @@ public class Game extends JPanel {
 		while (width*3/4 > gd.getDisplayMode().getHeight())
 		    width = (int) (width - width*0.1);
 		//System.out.println(width);
-		width-=20;
+		width-=10;
 		SCREEN_WIDTH=width;
 		SCREEN_HEIGHT=width*3/4;
 		game = this;
@@ -438,18 +438,19 @@ public class Game extends JPanel {
 //		bufferedImage = texture;
 		
 		panelG.drawImage(bufferedImage, 0, 0, null);
-		
+		double scaleX=(double)SCREEN_WIDTH/1200;
+		double scaleY=(double)SCREEN_HEIGHT/900;
 		panelG.setColor(Color.RED);
-		panelG.setFont(new Font ("TimesRoman", Font.BOLD, 30));
-		panelG.drawString("HEALTH", 1050, 820);
-		panelG.drawRect(780, 830, 400, 30);
-		panelG.fillRect((int) (780+4*(100-playerShip.getHealth())), 830, (int) (4*playerShip.getHealth()), 30);
+		panelG.setFont(new Font ("TimesRoman", Font.BOLD, (int)(30*scaleX)));
+		panelG.drawString("HEALTH", (int)(1050*scaleX), (int)(820*scaleY));
+		panelG.drawRect(780, 830, (int)(400*scaleX), (int)(30*scaleY));
+		panelG.fillRect((int) ((780+4*(100-playerShip.getHealth()))*scaleX), (int)(830*scaleY), (int) ((4*playerShip.getHealth())*scaleX), (int)(30*scaleY));
 		
 		panelG.setColor(Color.CYAN);
-		panelG.setFont(new Font ("TimesRoman", Font.BOLD, 30));
-		panelG.drawString("ENERGY", 10, 820);
-		panelG.drawRect(10, 830, 400, 30);
-		panelG.fillRect(10, 830, (int) (4*playerShip.getEnergy()), 30);
+		panelG.setFont(new Font ("TimesRoman", Font.BOLD, (int)(30*scaleX)));
+		panelG.drawString("ENERGY", (int)(10*scaleX), (int)(820*scaleY));
+		panelG.drawRect((int)(10*scaleX), (int)(830*scaleY), (int)(400*scaleX), (int)(30*scaleY));
+		panelG.fillRect((int)(10*scaleX), (int)(830*scaleY), (int) ((4*playerShip.getEnergy())*scaleX), (int)(30*scaleY));
 	}
 	
 	private void drawTexturedTriangle (Triangle tri, BufferedImage image) {		
