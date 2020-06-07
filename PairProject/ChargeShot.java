@@ -16,7 +16,7 @@ public class ChargeShot extends Effect {
 			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
 					Matrix.multMatVec(rotMat, tri.getVert2()), 
 					Matrix.multMatVec(rotMat, tri.getVert3())});
-		translate(game.getPlayerShip().getPos());
-		setPos(game.getPlayerShip().getPos());
+		translate(game.getPlayerShip().getPos().plus(new Vector(3, 0.2, 0)));
+		setPos(game.getPlayerShip().getPos().plus(new Vector(3, 0.2, 0)));
 	}
 }

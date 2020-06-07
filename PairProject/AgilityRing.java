@@ -3,6 +3,7 @@ import java.util.*;
 public class AgilityRing extends Mesh {
 	private Vector position;
 	private static double[][] rotMat = Matrix.getRotMatX(Math.PI/72);
+	private int counter;
 	
 	public AgilityRing (Vector position) {
 		super();
@@ -13,18 +14,33 @@ public class AgilityRing extends Mesh {
 		translate(position);
 	}
 	
-	public void spin () {
+	public void spin (Game game) {
 		translate(position.clone().scale(-1));
-		for (Triangle tri : getTris())
-			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
-					Matrix.multMatVec(rotMat, tri.getVert2()), 
-					Matrix.multMatVec(rotMat, tri.getVert3())});
-		translate(position);
+		for (Triangle tri : getTris()) {
+			if (counter > 0)
+				tri.setVerts(new Vector[] {tri.getVert1().scale(0.8), tri.getVert2().scale(0.8), tri.getVert3().scale(0.8)});
+			else
+				tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
+						Matrix.multMatVec(rotMat, tri.getVert2()), 
+						Matrix.multMatVec(rotMat, tri.getVert3())});
+		}
+		if (counter > 0) {
+			translate(game.getPlayerShip().getPos());
+			position = game.getPlayerShip().getPos();
+		} else
+			translate(position);
+		if (counter == 10)
+			this.getTris().clear();
+		if (counter > 0) {
+			counter++;
+		}
 	}
 	
-	public boolean shipCollision (PlayerShip ship) {
-		if (position.clone().minus(ship.getPos()).magnitude() < (1.7 + 1.5))
+	public void shipCollision (PlayerShip ship) {
+		if (counter == 0 && position.clone().minus(ship.getPos()).magnitude() < (1.7 + 1.5)) {
 			System.out.println("collision");
-		return (position.clone().minus(ship.getPos()).magnitude() < (1.7 + 1.5));
+			counter++;
+		}
+//		return (position.clone().minus(ship.getPos()).magnitude() < (1.7 + 1.5));
 	}
 }

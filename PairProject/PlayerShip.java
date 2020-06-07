@@ -1,7 +1,8 @@
 public class PlayerShip extends SpaceShip {
 	private double health = 100, energy = 100;;
 	private int horizAngleState, vertAngleState;
-	private Vector playerVel = new Vector(0.1, 0, 0);
+	private static final double standardPlayerSpeed = 1;
+	private Vector playerVel = new Vector(standardPlayerSpeed, 0, 0);
 	
 	public void decreaseHealth (double amt) { health -= amt; }
 	public double getHealth () { return health; }
@@ -24,6 +25,8 @@ public class PlayerShip extends SpaceShip {
 		System.out.println(this.getTris().get(0).getTexture());
 		setCollisionRadius(2.5);
 	}
+	
+	public void destroy (Game game) {}
 	
 	public void update (Game game) {
 		update(0, 0, 0);
@@ -54,11 +57,11 @@ public class PlayerShip extends SpaceShip {
 		translate(getPos());
 		
 //		System.out.println("playerVel: " + playerVel);
-		if ((playerVel.getX() >= 0.3 && speed == 1) || (playerVel.getX() <= -0.3 && speed == -1))
+		if ((playerVel.getX() >= 0.3+standardPlayerSpeed && speed == 1) || (playerVel.getX() <= -0.3+standardPlayerSpeed && speed == -1))
 			speed = 0;
-		else if (speed == 0 && playerVel.getX() > 0)
+		else if (speed == 0 && playerVel.getX() > 0+standardPlayerSpeed)
 			speed = -0.25;
-		else if (speed == 0 && playerVel.getX() < 0)
+		else if (speed == 0 && playerVel.getX() < 0+standardPlayerSpeed)
 			speed = 0.25;
 		
 		if ((playerVel.getZ() <= -0.4 && horiz == 1) || (playerVel.getZ() >= 0.4 && horiz == -1))
