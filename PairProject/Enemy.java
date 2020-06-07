@@ -20,10 +20,9 @@ public class Enemy extends SpaceShip {
 	}
 	
 	public void update (Game game) {
-		if (ai==0) {
-			update0(game);
-		} else if (ai==1) {
-			update1(game);
+		switch (ai) {
+		case 0: update0(game); break;
+		case 1: update1(game); break;
 		}
 	}
 	
