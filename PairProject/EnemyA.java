@@ -15,8 +15,13 @@ public class EnemyA extends SpaceShip {
 	}
 	
 	public void update (Game game) {
-		this.translate(new Vector(game.getPlayerShip().getPos().getX()+10-getPos().getX(), 10*Math.cos(theta)-getPos().getY(), 10*Math.sin(theta)-getPos().getZ()));
-		this.setPos(new Vector(game.getPlayerShip().getPos().getX()+10, 10*Math.cos(theta), 10*Math.sin(theta)));
+		if (getPos().getX() > game.getPlayerShip().getPos().getX()+10) {
+			this.translate(new Vector(0, 10*Math.cos(theta)-getPos().getY(), 10*Math.sin(theta)-getPos().getZ()));
+			this.setPos(new Vector(getPos().getX(), 10*Math.cos(theta), 10*Math.sin(theta)));
+		} else {
+			this.translate(new Vector(game.getPlayerShip().getPos().getX()+10-getPos().getX(), 10*Math.cos(theta)-getPos().getY(), 10*Math.sin(theta)-getPos().getZ()));
+			this.setPos(new Vector(game.getPlayerShip().getPos().getX()+10, 10*Math.cos(theta), 10*Math.sin(theta)));
+		}
 		theta += Math.PI/80;
 		fireCounter++;
 		if (explosion == null) {
