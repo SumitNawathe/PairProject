@@ -5,7 +5,7 @@ public class Rocket extends Effect {
 		super();
 		setPos(pos);
 		try {
-			setTris(Mesh.loadFromObjFileNoTexture("Models/rocket2.obj").getTris());
+			setTris(Mesh.loadFromObjFile("Models/rocket3.obj", "Textures/RocketImage1.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading rocket2.obj"); }
 		translate(pos);
 	}
