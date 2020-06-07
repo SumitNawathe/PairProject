@@ -254,7 +254,7 @@ public class Game extends JPanel {
 				//yAngle = playerShip.getYAngle();
 				
 				for (AgilityRing ring : ringList)
-					ring.spin();
+					ring.spin(game);
 				
 				//theta += Math.PI/(18*18);
 				//double[][] matRotZ = Matrix.getRotMatZ(theta);
@@ -274,8 +274,14 @@ public class Game extends JPanel {
 				
 				light_direction = cameraForward.scale(-1);
 				
-				for (AgilityRing ring : ringList)
-					ring.shipCollision(playerShip);
+				for (int i = 0; i < ringList.size(); i++) {
+					ringList.get(i).shipCollision(playerShip);
+					if (ringList.get(i).getTris().size() == 0) {
+						meshList.remove(ringList.get(i));
+						ringList.remove(i);
+						i--;
+					}
+				}
 				
 				for (int i = 0; i < bulletList.size(); i++) {
 					bulletList.get(i).update();
