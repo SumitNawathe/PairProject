@@ -94,7 +94,7 @@ public class Level1 extends Level {
 			game.getRingList().addAll(set2);
 			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0));
+			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0);
 			game.getEnemyShips().add(enemy);
 			game.getMeshList().add(enemy);
 		} else if (getProgressState() == 1 && game.getPlayerShip().getPos().getX() > 1040) {
