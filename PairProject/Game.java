@@ -8,33 +8,34 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 public class Game extends JPanel {
-	JFrame frame;
-	ArrayList<Mesh> meshList;
+	private JFrame frame;
+	private ArrayList<Mesh> meshList;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
 	double FOV_ANGLE = Math.PI/2;
 	double Z_NEAR = 0.1, Z_FAR = 1000.0;
 	double[][] projMatrix = new double[4][4], worldMatrix = new double[4][4], viewMatrix = new double[4][4];
-	Vector translationVector = new Vector(0, 0, 8);
-	JPanel panel = this;
-	java.util.Timer timer;
+//	private Vector translationVector = new Vector(0, 0, 8);
+	private JPanel panel = this;
+	private java.util.Timer timer;
 	double theta = 0;
 	double yAngle = -Math.PI/2, xAngle = 0;
-	Vector cameraPos = new Vector(-5, 1.5, 0), cameraForward = new Vector(1, 0, 0), cameraRight = new Vector(0, 0, -1);
-	Vector light_direction = new Vector(0, 0, -1);
-	BufferedImage texture;
+	private Vector cameraPos = new Vector(-5, 1.5, 0), cameraForward = new Vector(1, 0, 0), cameraRight = new Vector(0, 0, -1);
+	private Vector light_direction = new Vector(0, 0, -1);
+	private BufferedImage texture;
 //	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
-	PlayerShip playerShip;
-	Vector velocity = new Vector(0.1, 0, 0);
-	ArrayList<AgilityRing> ringList = new ArrayList<AgilityRing>();
-	ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
-	ArrayList<SpaceShip> enemyShips = new ArrayList<SpaceShip>();
+	private PlayerShip playerShip;
+	private Vector velocity = new Vector(0.1, 0, 0);
+	private ArrayList<AgilityRing> ringList = new ArrayList<AgilityRing>();
+	private ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
+	private ArrayList<SpaceShip> enemyShips = new ArrayList<SpaceShip>();
 	private int moveHoriz, moveVert, moveForward;
-	Image backgroundImage;
-	Game game;
+	private Image backgroundImage;
+	private Game game;
 	double bigShotChargeCounter;
-	ChargeShot charge;
-	Rocket rocket;
-	Level level;
+	private ChargeShot charge;
+	private Rocket rocket;
+	private Level level;
+	private double counter;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -89,7 +90,7 @@ public class Game extends JPanel {
 			//meshList.add(Mesh.loadFromObjFileNoTexture("Models/ShipModel2.obj"));
 			//meshList.add(new MeshCube());
 			
-			playerShip = new PlayerShip(new Vector(0, 0, 0));
+			playerShip = new PlayerShip(new Vector(-80, 0, 0));
 			meshList.add(playerShip);
 			
 //			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
@@ -262,6 +263,7 @@ public class Game extends JPanel {
 				//double[][] transMatrix = Matrix.getTranslationMatrix(translationVector);
 				//worldMatrix = Matrix.mulMatMat(matRotZ, matRotX);
 				//worldMatrix = Matrix.mulMatMat(worldMatrix, transMatrix);
+				
 				worldMatrix = Matrix.getIdentityMatrix();
 				
 				viewMatrix = Matrix.getTranslationMatrix(cameraPos.clone().scale(-1));
