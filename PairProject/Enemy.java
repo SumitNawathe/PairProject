@@ -8,17 +8,30 @@ public class Enemy extends SpaceShip {
 	public double fireCounter;
 	private Vector pship, initPos;
 	private boolean[] firestage, movestage;
-	private int moveCounter, dist, d;
+	private int moveCounter, dist, d, ai;
 	
-	public Enemy (Vector pos, int dist) {
+	public Enemy (Vector pos, int dist, int ai) {
 		super();
 		setCollisionRadius(2);
 		firestage=new boolean[4];
 		movestage=new boolean[4];
 		this.dist=dist;
+		this.ai=ai;
 	}
 	
 	public void update (Game game) {
+		if (ai==0) {
+			update0(game);
+		} else if (ai==1) {
+			update1(game);
+		}
+	}
+	
+	/**
+	 * Standard difficulty AI.
+	 * @param game
+	 */
+	public void update0 (Game game) {
 		pship=game.getPlayerShip().getPos();
 		//System.out.println(game.getPlayerShip().getPos());
 		//System.out.println(getPos());
@@ -77,6 +90,33 @@ public class Enemy extends SpaceShip {
 				int randfire=rand.nextInt(firestage.length);
 				firestage[randfire]=true;
 				fire(game, randfire);
+			}
+		} else {
+			if (!explosion.update(getPos())) {
+				System.out.println("clear");
+				this.getTris().clear();
+			}
+		}
+	}
+	
+	/**
+	 * Simple AI to move in circles.
+	 * @param game
+	 */
+	public void update1 (Game game) {
+		if (getPos().getX() > game.getPlayerShip().getPos().getX()+10) {
+			this.translate(new Vector(0, 10*Math.cos(theta)-getPos().getY(), 10*Math.sin(theta)-getPos().getZ()));
+			this.setPos(new Vector(getPos().getX(), 10*Math.cos(theta), 10*Math.sin(theta)));
+		} else {
+			this.translate(new Vector(game.getPlayerShip().getPos().getX()+10-getPos().getX(), 10*Math.cos(theta)-getPos().getY(), 10*Math.sin(theta)-getPos().getZ()));
+			this.setPos(new Vector(game.getPlayerShip().getPos().getX()+10, 10*Math.cos(theta), 10*Math.sin(theta)));
+		}
+		theta += Math.PI/80;
+		fireCounter++;
+		if (explosion == null) {
+			if (fireCounter >= 10) {
+				game.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0), 0.3);
+				fireCounter = 0;
 			}
 		} else {
 			if (!explosion.update(getPos())) {

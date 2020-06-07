@@ -76,7 +76,7 @@ public class Level1 extends Level {
 		
 		if ((getProgressState() == 0 && game.getPlayerShip().getPos().getX() > 400) || (getProgressState() == 1 && game.getPlayerShip().getPos().getX() > 1040)) {
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0), 20);
+			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1);
 			game.getEnemyShips().add(enemy);
 			game.getMeshList().add(enemy);
 		}
