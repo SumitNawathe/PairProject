@@ -25,7 +25,7 @@ public class Game extends JPanel {
 //	double[][] depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 	PlayerShip playerShip;
 	Vector velocity = new Vector(0.1, 0, 0);
-	ArrayList<AgilityRing> ringList;
+	ArrayList<AgilityRing> ringList = new ArrayList<AgilityRing>();
 	ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
 	ArrayList<SpaceShip> enemyShips = new ArrayList<SpaceShip>();
 	private int moveHoriz, moveVert, moveForward;
@@ -33,9 +33,13 @@ public class Game extends JPanel {
 	Game game;
 	double bigShotChargeCounter;
 	ChargeShot charge;
+	Rocket rocket;
+	Level level;
 	
-	public ArrayList<Mesh> getMeshList () { return meshList; }
 	public PlayerShip getPlayerShip () { return playerShip; }
+	public ArrayList<Mesh> getMeshList () { return meshList; }
+	public ArrayList<AgilityRing> getRingList () { return ringList; }
+	public ArrayList<SpaceShip> getEnemyShips () { return enemyShips; }
 	
 	public void fireBullet (Vector pos, Vector vel, double collisionRadius) {
 		Bullet bullet = new Bullet(pos, vel, collisionRadius);
@@ -43,7 +47,7 @@ public class Game extends JPanel {
 		meshList.add(bullet);
 	}
 	
-	public Game () {
+	public Game (Level level) {
 		int width = SCREEN_WIDTH;
 		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -66,9 +70,18 @@ public class Game extends JPanel {
 		try {
 			System.out.println("a");
 			
-			ringList = new ArrayList<AgilityRing>();
-			ringList.add(new AgilityRing(new Vector(5, 0, -5)));
-			ringList.add(new AgilityRing(new Vector(5, 0, 5)));
+			this.level = level;
+			level.initializeGame(this);
+			
+//			ringList = new ArrayList<AgilityRing>();
+//			ringList.add(new AgilityRing(new Vector(5, 0, -5)));
+//			ringList.add(new AgilityRing(new Vector(25, 0, -5)));
+//			ringList.add(new AgilityRing(new Vector(45, 0, -5)));
+//			ringList.add(new AgilityRing(new Vector(65, 0, -5)));
+//			ringList.add(new AgilityRing(new Vector(85, 0, -5)));
+//			ringList.add(new AgilityRing(new Vector(105, 0, -5)));
+//			ringList.add(new AgilityRing(new Vector(125, 0, -5)));
+//			ringList.add(new AgilityRing(new Vector(5, 0, 5)));
 //			ringList.add(new AgilityRing(new Vector(8, 0, 0)));
 			meshList.addAll(ringList);
 			
@@ -82,9 +95,9 @@ public class Game extends JPanel {
 //			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
 //			meshList.add(bullet1);
 			
-			EnemyA enemy1 = new EnemyA(new Vector(10, 0, 0));
-			enemyShips.add(enemy1);
-			meshList.add(enemy1);
+//			EnemyA enemy1 = new EnemyA(new Vector(10, 0, 0));
+//			enemyShips.add(enemy1);
+			meshList.addAll(enemyShips);
 			
 //			meshList.add(Mesh.loadFromObjFile("Models/Ship Model 3.obj", "Textures/Ship Model 3 Map.png"));
 			
@@ -93,7 +106,10 @@ public class Game extends JPanel {
 //			meshList.add(moonMesh);
 			
 			charge = new ChargeShot(playerShip.getPos());
-//			meshList.add(charge);
+			rocket = new Rocket(playerShip.getPos());
+//			meshList.add(rocket);
+			
+			
 			
 			System.out.println("b");
 		} catch (Exception e) {
@@ -125,6 +141,9 @@ public class Game extends JPanel {
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
 					moveForward = 1;
+					if (!meshList.contains(rocket))
+						meshList.add(rocket);
+					
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
@@ -160,7 +179,7 @@ public class Game extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				if (event.getKeyCode() == KeyEvent.VK_F)
-					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(1, 0, 0), 0.3);
+					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(2, 0, 0), 0.3);
 				else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
 						meshList.add(charge);
@@ -175,6 +194,7 @@ public class Game extends JPanel {
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
 					moveForward = 0;
+					meshList.remove(rocket);
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
@@ -218,6 +238,8 @@ public class Game extends JPanel {
 				frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
 //				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
+				level.update(game);
+				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
 				playerShip.update(moveHoriz, moveVert, moveForward);
@@ -232,7 +254,7 @@ public class Game extends JPanel {
 				//yAngle = playerShip.getYAngle();
 				
 				for (AgilityRing ring : ringList)
-					ring.spin();
+					ring.spin(game);
 				
 				//theta += Math.PI/(18*18);
 				//double[][] matRotZ = Matrix.getRotMatZ(theta);
@@ -252,8 +274,14 @@ public class Game extends JPanel {
 				
 				light_direction = cameraForward.scale(-1);
 				
-				for (AgilityRing ring : ringList)
-					ring.shipCollision(playerShip);
+				for (int i = 0; i < ringList.size(); i++) {
+					ringList.get(i).shipCollision(playerShip);
+					if (ringList.get(i).getTris().size() == 0) {
+						meshList.remove(ringList.get(i));
+						ringList.remove(i);
+						i--;
+					}
+				}
 				
 				for (int i = 0; i < bulletList.size(); i++) {
 					bulletList.get(i).update();
@@ -284,6 +312,7 @@ public class Game extends JPanel {
 					playerShip.decreaseHealth(10);
 				
 				charge.update(game);
+				rocket.update(game);
 				
 				panel.repaint();
 			}
@@ -712,6 +741,6 @@ public class Game extends JPanel {
 	}
 	
 	public static void main (String[] args) {
-		Game game = new Game();
+		Game game = new Game(new Level1());
 	}
 }
