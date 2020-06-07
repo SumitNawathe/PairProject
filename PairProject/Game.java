@@ -33,6 +33,7 @@ public class Game extends JPanel {
 	Game game;
 	double bigShotChargeCounter;
 	ChargeShot charge;
+	Rocket rocket;
 	
 	public ArrayList<Mesh> getMeshList () { return meshList; }
 	public PlayerShip getPlayerShip () { return playerShip; }
@@ -99,7 +100,8 @@ public class Game extends JPanel {
 //			meshList.add(moonMesh);
 			
 			charge = new ChargeShot(playerShip.getPos());
-//			meshList.add(charge);
+			rocket = new Rocket(playerShip.getPos());
+//			meshList.add(rocket);
 			
 			System.out.println("b");
 		} catch (Exception e) {
@@ -131,6 +133,9 @@ public class Game extends JPanel {
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
 					moveForward = 1;
+					if (!meshList.contains(rocket))
+						meshList.add(rocket);
+					
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
@@ -181,6 +186,7 @@ public class Game extends JPanel {
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
 					moveForward = 0;
+					meshList.remove(rocket);
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
@@ -290,6 +296,7 @@ public class Game extends JPanel {
 					playerShip.decreaseHealth(10);
 				
 				charge.update(game);
+				rocket.update(game);
 				
 				panel.repaint();
 			}
