@@ -83,6 +83,12 @@ public class Enemy extends SpaceShip {
 			if (firecurrent!=-1) {
 				fireCounter++;
 				fire(game, firecurrent);
+			} else if (getPos().getX() > pship.getX()+dist) {
+				fireCounter=0;
+				Random rand=new Random();
+				int randfire=rand.nextInt(firestage.length-1);
+				firestage[randfire]=true;
+				fire(game, randfire);
 			} else {
 				fireCounter=0;
 				Random rand=new Random();

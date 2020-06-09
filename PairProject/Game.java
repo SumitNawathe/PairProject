@@ -71,6 +71,9 @@ public class Game extends JPanel {
 		try {
 			System.out.println("a");
 			
+			playerShip = new PlayerShip(new Vector(-160, 0, 0));
+			meshList.add(playerShip);
+			
 			this.level = level;
 			level.initializeGame(this);
 			
@@ -90,8 +93,7 @@ public class Game extends JPanel {
 			//meshList.add(Mesh.loadFromObjFileNoTexture("Models/ShipModel2.obj"));
 			//meshList.add(new MeshCube());
 			
-			playerShip = new PlayerShip(new Vector(-160, 0, 0));
-			meshList.add(playerShip);
+			
 			
 //			Bullet bullet1 = new Bullet(new Vector(0, 0, 0));
 //			meshList.add(bullet1);
@@ -340,7 +342,8 @@ public class Game extends JPanel {
 		g.setColor(Color.white);
 		ArrayList<Triangle> drawnTriangles = new ArrayList<Triangle>();
 		
-		for (Mesh mesh : meshList) {
+		for (int i = 0; i < meshList.size(); i++) {
+			Mesh mesh = meshList.get(i);
 			//System.out.println(mesh.getTris().size());
 			for (Triangle tri : mesh.getTris()) {
 				Triangle transformedTri = new Triangle(Matrix.multMatVec(worldMatrix, tri.getVert1()), 
@@ -364,7 +367,7 @@ public class Game extends JPanel {
 					//shadingValue = 1; //TODO remove
 					shadingValue /= 4;
 					shadingValue += 0.75;
-					Color color = new Color((int) (255*shadingValue), (int) (255*shadingValue), (int) (255*shadingValue));
+//					Color color = new Color((int) (255*shadingValue), (int) (255*shadingValue), (int) (255*shadingValue));
 					
 					//for (Triangle clippedTri : clipAgainstPlane(cameraPos.clone().plus(cameraForward.clone().unit().scale(10*Z_NEAR)), cameraForward.clone().unit(), transformedTri)) {
 						Triangle triViewed = new Triangle(Matrix.multMatVec(viewMatrix, transformedTri.getVert1()), 
@@ -453,6 +456,7 @@ public class Game extends JPanel {
 		panelG.drawImage(bufferedImage, 0, 0, null);
 		double scaleX=(double)SCREEN_WIDTH/1200;
 		double scaleY=(double)SCREEN_HEIGHT/900;
+		
 		panelG.setColor(Color.RED);
 		panelG.setFont(new Font ("TimesRoman", Font.BOLD, (int)(30*scaleX)));
 		panelG.drawString("HEALTH", (int)(1050*scaleX), (int)(820*scaleY));
@@ -464,6 +468,8 @@ public class Game extends JPanel {
 		panelG.drawString("ENERGY", (int)(10*scaleX), (int)(820*scaleY));
 		panelG.drawRect((int)(10*scaleX), (int)(830*scaleY), (int)(400*scaleX), (int)(30*scaleY));
 		panelG.fillRect((int)(10*scaleX), (int)(830*scaleY), (int) ((4*playerShip.getEnergy())*scaleX), (int)(30*scaleY));
+		
+		level.draw(game, panelG);
 	}
 	
 	private void drawTexturedTriangle (Triangle tri, BufferedImage image) {		
@@ -755,6 +761,6 @@ public class Game extends JPanel {
 	}
 	
 	public static void main (String[] args) {
-		Game game = new Game(new Level1());
+		Game game = new Game(new LevelBoss());
 	}
 }

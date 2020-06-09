@@ -1,4 +1,5 @@
 import java.util.*;
+import java.awt.*;
 
 public class Level1 extends Level {
 	Mesh moon, mars, earth;
@@ -117,4 +118,6 @@ public class Level1 extends Level {
 //		}
 		return false;
 	}
+	
+	public void draw (Game game, Graphics g) {}
 }
