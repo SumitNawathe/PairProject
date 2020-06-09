@@ -18,6 +18,7 @@ public class IntroScreen extends JPanel {
 		startGameButton.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
 				gameFrame.startLevel(new EnemyLevel1());
+//				gameFrame.goToLevelSelectScreen();
 			}
 		});
 		startGameButton.setSize(new Dimension(SCREEN_WIDTH/5, SCREEN_HEIGHT/20));
