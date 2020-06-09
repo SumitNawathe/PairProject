@@ -29,7 +29,7 @@ public class BossWeakness extends SpaceShip {
 		this.bossFrame = bossFrame;
 	}
 	
-	public void update(Game game) {
+	public void update(GraphicsPanel graphicsPanel) {
 		translate(getPos().clone().scale(-1));
 		for (Triangle tri : getTris())
 			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
@@ -46,7 +46,7 @@ public class BossWeakness extends SpaceShip {
 		hitTimer--;
 	}
 	
-	public void destroy(Game game) {
+	public void destroy(GraphicsPanel graphicsPanel) {
 		if (hitTimer < 0) {
 			health -= 10;
 			if (health < 0)
@@ -55,7 +55,7 @@ public class BossWeakness extends SpaceShip {
 		}
 		if (health <= 0 && explosion == null) {
 			explosion = new Explosion(this.getPos(), 20, 10);
-			game.getMeshList().add(explosion);
+			graphicsPanel.getMeshList().add(explosion);
 		}
 	}
 }

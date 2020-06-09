@@ -7,10 +7,10 @@ public class LevelBoss extends Level {
 	private double totalHealth;
 	private Explosion explosion;
 	
-	public void initializeGame(Game game) {		
-		bossFrame = new BossFrame(game);
-		game.getEnemyShips().add(bossFrame);
-		game.getMeshList().add(bossFrame);
+	public void initializeGame(GraphicsPanel graphicsPanel) {		
+		bossFrame = new BossFrame(graphicsPanel);
+		graphicsPanel.getEnemyShips().add(bossFrame);
+		graphicsPanel.getMeshList().add(bossFrame);
 		
 //		EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0);
 //		game.getEnemyShips().add(enemy);
@@ -18,8 +18,8 @@ public class LevelBoss extends Level {
 		
 		for (int i = 0; i < 4; i++) {
 			BossWeakness bossWeakness = new BossWeakness(bossFrame, i);
-			game.getEnemyShips().add(bossWeakness);
-			game.getMeshList().add(bossWeakness);
+			graphicsPanel.getEnemyShips().add(bossWeakness);
+			graphicsPanel.getMeshList().add(bossWeakness);
 			bossWeaknessList.add(bossWeakness);
 		}
 		
@@ -28,14 +28,14 @@ public class LevelBoss extends Level {
 //		game.getMeshList().add(enemy);
 	}
 
-	public boolean update(Game game) {
+	public boolean update(GraphicsPanel graphicsPanel) {
 		totalHealth = 0;
 		for (BossWeakness bossWeakness : bossWeaknessList)
 			totalHealth += bossWeakness.getHealth();
 		
 		if (totalHealth <= 0 && explosion == null) {
 			explosion = new Explosion(bossFrame.getPos(), 40, 1);
-			game.getMeshList().add(explosion);
+			graphicsPanel.getMeshList().add(explosion);
 		}
 		
 		if (explosion != null)
@@ -47,9 +47,9 @@ public class LevelBoss extends Level {
 		return false;
 	}
 	
-	public void draw (Game game, Graphics g) {
-		double scaleX=(double)game.SCREEN_WIDTH/1200;
-		double scaleY=(double)game.SCREEN_HEIGHT/900;
+	public void draw (GraphicsPanel graphicsPanel, Graphics g) {
+		double scaleX=(double)graphicsPanel.SCREEN_WIDTH/1200;
+		double scaleY=(double)graphicsPanel.SCREEN_HEIGHT/900;
 		
 		g.setColor(new Color(255, 0,255));
 		g.setFont(new Font ("TimesRoman", Font.BOLD, (int)(30*scaleX)));

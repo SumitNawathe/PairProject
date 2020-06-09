@@ -14,7 +14,7 @@ public class AgilityRing extends Mesh {
 		translate(position);
 	}
 	
-	public void spin (Game game) {
+	public void spin (GraphicsPanel graphicsPanel) {
 		translate(position.clone().scale(-1));
 		for (Triangle tri : getTris()) {
 			if (counter > 0)
@@ -25,8 +25,8 @@ public class AgilityRing extends Mesh {
 						Matrix.multMatVec(rotMat, tri.getVert3())});
 		}
 		if (counter > 0) {
-			translate(game.getPlayerShip().getPos());
-			position = game.getPlayerShip().getPos();
+			translate(graphicsPanel.getPlayerShip().getPos());
+			position = graphicsPanel.getPlayerShip().getPos();
 		} else
 			translate(position);
 		if (counter == 10)

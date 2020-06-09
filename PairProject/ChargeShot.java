@@ -10,13 +10,13 @@ public class ChargeShot extends Effect {
 		translate(position);
 	}	
 	
-	public void update(Game game) {
+	public void update(GraphicsPanel graphicsPanel) {
 		this.translate(getPos().clone().scale(-1));
 		for (Triangle tri : getTris())
 			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
 					Matrix.multMatVec(rotMat, tri.getVert2()), 
 					Matrix.multMatVec(rotMat, tri.getVert3())});
-		translate(game.getPlayerShip().getPos().plus(new Vector(3, 0.2, 0)));
-		setPos(game.getPlayerShip().getPos().plus(new Vector(3, 0.2, 0)));
+		translate(graphicsPanel.getPlayerShip().getPos().plus(new Vector(3, 0.2, 0)));
+		setPos(graphicsPanel.getPlayerShip().getPos().plus(new Vector(3, 0.2, 0)));
 	}
 }

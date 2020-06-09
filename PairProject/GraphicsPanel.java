@@ -7,7 +7,7 @@ import java.io.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-public class Game extends JPanel {
+public class GraphicsPanel extends JPanel {
 	private JFrame frame;
 	private ArrayList<Mesh> meshList;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
@@ -30,12 +30,13 @@ public class Game extends JPanel {
 	private ArrayList<SpaceShip> enemyShips = new ArrayList<SpaceShip>();
 	private int moveHoriz, moveVert, moveForward;
 	private Image backgroundImage;
-	private Game game;
+	private GraphicsPanel graphicsPanel;
 	double bigShotChargeCounter;
 	private ChargeShot charge;
 	private Rocket rocket;
 	private Level level;
 	private double counter;
+	private boolean fPressed;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -48,20 +49,24 @@ public class Game extends JPanel {
 		meshList.add(bullet);
 	}
 	
-	public Game (Level level) {
-		int width = SCREEN_WIDTH;
-		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		//System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
-		if (width > gd.getDisplayMode().getWidth())
-		    width = gd.getDisplayMode().getWidth();
-		while (width*3/4 > gd.getDisplayMode().getHeight())
-		    width = (int) (width - width*0.1);
-		//System.out.println(width);
-		width-=10;
-		SCREEN_WIDTH=width;
-		SCREEN_HEIGHT=width*3/4;
-		game = this;
+	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
+		fPressed = false;
+//		int width = SCREEN_WIDTH;
+//		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
+//		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+//		//System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
+//		if (width > gd.getDisplayMode().getWidth())
+//		    width = gd.getDisplayMode().getWidth();
+//		while (width*3/4 > gd.getDisplayMode().getHeight())
+//		    width = (int) (width - width*0.1);
+//		//System.out.println(width);
+//		width-=10;
+//		SCREEN_WIDTH=width;
+//		SCREEN_HEIGHT=width*3/4;
+		this.SCREEN_WIDTH = SCREEN_WIDTH;
+		this.SCREEN_HEIGHT = SCREEN_HEIGHT;
+		
+		graphicsPanel = this;
 		this.setBackground(Color.RED);
 		this.setOpaque(true);
 		
@@ -125,17 +130,18 @@ public class Game extends JPanel {
 		
 		projMatrix = Matrix.getProjMatrix((double) SCREEN_HEIGHT/SCREEN_WIDTH, 1/Math.tan(FOV_ANGLE/2), Z_NEAR, Z_FAR);
 		
-		frame = new JFrame();
-		frame.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setFocusable(true);
-		frame.setBounds(frame.getBounds().x, frame.getBounds().y, width, width*3/4);
-//		this.setBackground(Color.black);
+		frame = gameFrame;
+//		frame = new JFrame();
+//		frame.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setResizable(false);
+//		frame.setFocusable(true);
+//		frame.setBounds(frame.getBounds().x, frame.getBounds().y, SCREEN_WIDTH, SCREEN_WIDTH*3/4);
+////		this.setBackground(Color.black);
 		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-		frame.getContentPane().add(this);
-		frame.pack();
-		frame.setVisible(true);
+//		frame.getContentPane().add(this);
+//		frame.pack();
+//		frame.setVisible(true);
 		
 		frame.addKeyListener(new KeyListener () {
 			public void keyPressed (KeyEvent event) {
@@ -181,9 +187,10 @@ public class Game extends JPanel {
 				else if (event.getKeyCode() == KeyEvent.VK_A)
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
-				if (event.getKeyCode() == KeyEvent.VK_F)
-					fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(2, 0, 0), 0.3);
-				else if (event.getKeyCode() == KeyEvent.VK_D) {
+				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
+					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3);
+					fPressed = true;
+				} else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
 						meshList.add(charge);
 					bigShotChargeCounter++;
@@ -223,6 +230,9 @@ public class Game extends JPanel {
 					moveVert = 0;
 				}
 				
+				if (event.getKeyCode() == KeyEvent.VK_F && fPressed)
+					fPressed = false;
+				
 				if (event.getKeyCode() == KeyEvent.VK_D) {
 					meshList.remove(charge);
 					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
@@ -241,7 +251,7 @@ public class Game extends JPanel {
 				frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
 //				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
-				level.update(game);
+				level.update(graphicsPanel);
 				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
@@ -257,7 +267,7 @@ public class Game extends JPanel {
 				//yAngle = playerShip.getYAngle();
 				
 				for (AgilityRing ring : ringList)
-					ring.spin(game);
+					ring.spin(graphicsPanel);
 				
 				//theta += Math.PI/(18*18);
 				//double[][] matRotZ = Matrix.getRotMatZ(theta);
@@ -313,12 +323,12 @@ public class Game extends JPanel {
 						enemyShips.remove(i);
 						i--;
 					} else {
-						enemyShips.get(i).update(game);
+						enemyShips.get(i).update(graphicsPanel);
 						if (enemyShips.get(i).bulletCollision(bulletList)) {
 	//						meshList.remove(enemyShips.get(i));
 	//						enemyShips.remove(i);
 	//						i--;
-							enemyShips.get(i).destroy(game);
+							enemyShips.get(i).destroy(graphicsPanel);
 						}
 					}
 				}
@@ -326,8 +336,8 @@ public class Game extends JPanel {
 				if (playerShip.bulletCollision(bulletList))
 					playerShip.decreaseHealth(10);
 				
-				charge.update(game);
-				rocket.update(game);
+				charge.update(graphicsPanel);
+				rocket.update(graphicsPanel);
 				
 				panel.repaint();
 			}
@@ -469,7 +479,7 @@ public class Game extends JPanel {
 		panelG.drawRect((int)(10*scaleX), (int)(830*scaleY), (int)(400*scaleX), (int)(30*scaleY));
 		panelG.fillRect((int)(10*scaleX), (int)(830*scaleY), (int) ((4*playerShip.getEnergy())*scaleX), (int)(30*scaleY));
 		
-		level.draw(game, panelG);
+		level.draw(graphicsPanel, panelG);
 	}
 	
 	private void drawTexturedTriangle (Triangle tri, BufferedImage image) {		
@@ -763,4 +773,7 @@ public class Game extends JPanel {
 	public static void main (String[] args) {
 		Game game = new Game(new EnemyLevel1());
 	}
+//	public static void main (String[] args) {
+//		GraphicsPanel graphicsPanel = new GraphicsPanel(new LevelBoss());
+//	}
 }
