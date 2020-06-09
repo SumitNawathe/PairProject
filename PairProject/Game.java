@@ -761,6 +761,6 @@ public class Game extends JPanel {
 	}
 	
 	public static void main (String[] args) {
-		Game game = new Game(new LevelBoss());
+		Game game = new Game(new EnemyLevel1());
 	}
 }
