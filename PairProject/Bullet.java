@@ -12,7 +12,7 @@ public class Bullet extends Mesh {
 		this.vel = vel;
 		this.collisionRadius = collisionRadius;
 		try {
-			setTris(Mesh.loadFromObjFileNoTexture("Models/smallbulletsphere2.obj").getTris());
+			setTris(Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading smallbulletsphere2.obj"); }
 		for (Triangle tri : getTris())
 			tri.setVerts(new Vector[] {tri.getVert1().scale(collisionRadius/0.3), 
