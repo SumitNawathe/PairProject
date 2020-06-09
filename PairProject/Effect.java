@@ -3,5 +3,5 @@ public abstract class Effect extends Mesh {
 	public Vector getPos () { return pos; }
 	public void setPos (Vector pos) { this.pos = pos; }
 	
-	public abstract void update (Game game);
+	public abstract void update (GraphicsPanel graphicsPanel);
 }

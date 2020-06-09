@@ -5,7 +5,7 @@ public class Level1 extends Level {
 	Mesh moon, mars, earth;
 	ArrayList<AgilityRing> set1, set2, set3;
 	
-	public void initializeGame(Game game) {
+	public void initializeGame(GraphicsPanel graphicsPanel) {
 //		game.getRingList().add(new AgilityRing(new Vector(5, 0, -5)));
 //		game.getRingList().add(new AgilityRing(new Vector(25, 0, -5)));
 //		game.getRingList().add(new AgilityRing(new Vector(45, 0, -5)));
@@ -81,33 +81,33 @@ public class Level1 extends Level {
 		for (int i = 0; i < 5; i++)
 			set3.add(new AgilityRing(new Vector(1800+20*i, 0, 0)));
 		
-		game.getMeshList().add(moon);
-		game.getMeshList().add(mars);
-		game.getMeshList().add(earth);
-		game.getRingList().addAll(set1);
+		graphicsPanel.getMeshList().add(moon);
+		graphicsPanel.getMeshList().add(mars);
+		graphicsPanel.getMeshList().add(earth);
+		graphicsPanel.getRingList().addAll(set1);
 	}
 
-	public boolean update(Game game) {
-		if (getProgressState() == 0 && game.getPlayerShip().getPos().getX() > 400) {
-			game.getMeshList().removeAll(set1);
-			game.getRingList().removeAll(set1);
-			game.getMeshList().addAll(set2);
-			game.getRingList().addAll(set2);
+	public boolean update(GraphicsPanel graphicsPanel) {
+		if (getProgressState() == 0 && graphicsPanel.getPlayerShip().getPos().getX() > 400) {
+			graphicsPanel.getMeshList().removeAll(set1);
+			graphicsPanel.getRingList().removeAll(set1);
+			graphicsPanel.getMeshList().addAll(set2);
+			graphicsPanel.getRingList().addAll(set2);
 			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0);
-			game.getEnemyShips().add(enemy);
-			game.getMeshList().add(enemy);
-		} else if (getProgressState() == 1 && game.getPlayerShip().getPos().getX() > 1040) {
-			game.getMeshList().removeAll(set2);
-			game.getRingList().removeAll(set2);
-			game.getMeshList().addAll(set3);
-			game.getRingList().addAll(set3);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0);
+			graphicsPanel.getEnemyShips().add(enemy);
+			graphicsPanel.getMeshList().add(enemy);
+		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1040) {
+			graphicsPanel.getMeshList().removeAll(set2);
+			graphicsPanel.getRingList().removeAll(set2);
+			graphicsPanel.getMeshList().addAll(set3);
+			graphicsPanel.getRingList().addAll(set3);
 			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(game.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1);
-			game.getEnemyShips().add(enemy);
-			game.getMeshList().add(enemy);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1);
+			graphicsPanel.getEnemyShips().add(enemy);
+			graphicsPanel.getMeshList().add(enemy);
 		}
 		
 //		if ((getProgressState() == 0 && game.getPlayerShip().getPos().getX() > 400) || (getProgressState() == 1 && game.getPlayerShip().getPos().getX() > 1040)) {
@@ -119,5 +119,5 @@ public class Level1 extends Level {
 		return false;
 	}
 	
-	public void draw (Game game, Graphics g) {}
+	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}
 }

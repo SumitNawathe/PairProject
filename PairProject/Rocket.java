@@ -10,13 +10,13 @@ public class Rocket extends Effect {
 		translate(pos);
 	}
 	
-	public void update(Game game) {
+	public void update(GraphicsPanel graphicsPanel) {
 		this.translate(getPos().clone().scale(-1));
 		for (Triangle tri : getTris())
 			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
 					Matrix.multMatVec(rotMat, tri.getVert2()), 
 					Matrix.multMatVec(rotMat, tri.getVert3())});
-		this.translate(game.getPlayerShip().getPos().clone());
-		setPos(game.getPlayerShip().getPos());
+		this.translate(graphicsPanel.getPlayerShip().getPos().clone());
+		setPos(graphicsPanel.getPlayerShip().getPos());
 	}
 }
