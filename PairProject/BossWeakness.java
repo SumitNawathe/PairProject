@@ -22,8 +22,8 @@ public class BossWeakness extends SpaceShip {
 		
 		translate(bossFrame.getPos());
 		setCollisionRadius(5.0);
-		rotMat = Matrix.getRotMatX(10*Math.random());
-		rotMat = Matrix.mulMatMat(rotMat, Matrix.getRotMatZ(10*Math.random()));
+		rotMat = Matrix.getRotMatX(Math.random());
+		rotMat = Matrix.mulMatMat(rotMat, Matrix.getRotMatZ(Math.random()));
 		this.posNum = posNum;
 		this.bossFrame = bossFrame;
 	}
