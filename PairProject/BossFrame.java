@@ -17,12 +17,11 @@ public class BossFrame extends SpaceShip {
 			//			setTris(Mesh.loadFromObjFile("Models/BossWeaknessModel.obj", "Textures/BossWeakness.png").getTris());
 			//			setTris(Mesh.loadFromObjFile("Models/Ship Model 4.obj", "Textures/Ship Model 4 Map.png").getTris());
 		} catch (Exception e) { System.out.println("Error loading smallbulletsphere2.obj"); }
-
+		
 		for (Triangle tri : getTris())
 			tri.setVerts(new Vector[] {tri.getVert1().scale(5), 
 					tri.getVert2().scale(5), 
 					tri.getVert3().scale(5)});
-
 		translate(new Vector(game.getPlayerShip().getPos().getX()+20, 0, 0));
 		setCollisionRadius(0.0);
 		rotMat = Matrix.getRotMatX(Math.PI/2/120);
@@ -31,7 +30,7 @@ public class BossFrame extends SpaceShip {
 		fireCounters=new int[4];
 		pship=game.getPlayerShip().getPos();
 	}
-
+	
 	public void update(Game game) {
 		translate(getPos().clone().scale(-1));
 		for (Triangle tri : getTris())
@@ -118,7 +117,7 @@ public class BossFrame extends SpaceShip {
 			Arrays.fill(firestages[firePos], false);
 		}
 	}
-	
+
 	public void destroy(Game game) {
 
 	}
