@@ -2,6 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GameFrame extends JFrame{
+	private IntroScreen introScreen;
+	private LevelSelectScreen levelSelectScreen;
 	private GraphicsPanel graphicsPanel;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
 	
@@ -30,8 +32,26 @@ public class GameFrame extends JFrame{
 //		this.setVisible(true);
 //		startLevel(new LevelBoss());
 		
-		this.getContentPane().add(new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		goToIntroScreen();
+	}
+	
+	public void goToIntroScreen () {
+		this.getContentPane().removeAll();
+		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.getContentPane().add(introScreen);
 		this.pack();
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
+	}
+	
+	public void goToLevelSelectScreen () {
+		this.getContentPane().removeAll();
+		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.getContentPane().add(levelSelectScreen);
+		this.pack();
+		this.revalidate();
+		this.repaint();
 		this.setVisible(true);
 	}
 	
@@ -40,6 +60,8 @@ public class GameFrame extends JFrame{
 		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT);
 		this.getContentPane().add(graphicsPanel);
 		this.pack();
+		this.revalidate();
+		this.repaint();
 		this.setVisible(true);
 	}
 	

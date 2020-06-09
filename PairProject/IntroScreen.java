@@ -12,12 +12,13 @@ public class IntroScreen extends JPanel {
 		this.SCREEN_WIDTH = SCREEN_WIDTH;
 		this.SCREEN_HEIGHT = SCREEN_HEIGHT;
 		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-		
 		this.setLayout(null);
+		
 		startGameButton = new JButton("START GAME");
 		startGameButton.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
-				gameFrame.startLevel(new Level1());
+//				gameFrame.startLevel(new Level1());
+				gameFrame.goToLevelSelectScreen();
 			}
 		});
 		startGameButton.setSize(new Dimension(SCREEN_WIDTH/5, SCREEN_HEIGHT/20));
