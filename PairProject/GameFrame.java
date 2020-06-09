@@ -28,7 +28,7 @@ public class GameFrame extends JFrame{
 //		this.getContentPane().add(graphicsPanel);
 //		this.pack();
 //		this.setVisible(true);
-//		startLevel(new Level1());
+//		startLevel(new LevelBoss());
 		
 		this.getContentPane().add(new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.pack();
