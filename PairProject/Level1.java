@@ -102,8 +102,7 @@ public class Level1 extends Level {
 			graphicsPanel.getMeshList().removeAll(set2);
 			graphicsPanel.getRingList().removeAll(set2);
 			graphicsPanel.getMeshList().addAll(set3);
-			graphicsPanel.getRingList().addAll(set3);
-			
+			graphicsPanel.getRingList().addAll(set3);			
 			incrementProgressState();
 			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1);
 			graphicsPanel.getEnemyShips().add(enemy);

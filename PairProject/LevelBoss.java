@@ -32,7 +32,6 @@ public class LevelBoss extends Level {
 		totalHealth = 0;
 		for (BossWeakness bossWeakness : bossWeaknessList)
 			totalHealth += bossWeakness.getHealth();
-		
 		if (totalHealth <= 0 && explosion == null) {
 			explosion = new Explosion(bossFrame.getPos(), 40, 1);
 			graphicsPanel.getMeshList().add(explosion);

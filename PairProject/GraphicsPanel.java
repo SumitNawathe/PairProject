@@ -43,8 +43,8 @@ public class GraphicsPanel extends JPanel {
 	public ArrayList<AgilityRing> getRingList () { return ringList; }
 	public ArrayList<SpaceShip> getEnemyShips () { return enemyShips; }
 	
-	public void fireBullet (Vector pos, Vector vel, double collisionRadius) {
-		Bullet bullet = new Bullet(pos, vel, collisionRadius);
+	public void fireBullet (Vector pos, Vector vel, double collisionRadius, boolean enemy) {
+		Bullet bullet = new Bullet(pos, vel, collisionRadius, enemy);
 		bulletList.add(bullet);
 		meshList.add(bullet);
 	}
@@ -188,7 +188,7 @@ public class GraphicsPanel extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
-					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3);
+					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
 					fPressed = true;
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
@@ -237,7 +237,7 @@ public class GraphicsPanel extends JPanel {
 					meshList.remove(charge);
 					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
 						playerShip.decreaseEnergy(10);
-						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3);
+						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
 					}
 					bigShotChargeCounter = 0;
 				}
