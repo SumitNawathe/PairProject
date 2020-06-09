@@ -21,9 +21,9 @@ public class Level1 extends Level {
 //		} catch (Exception e) {}
 		
 		try {
-			moon = Mesh.loadFromObjFile("Models/moon2.obj", "Textures/Moon_Bump_2K.png").translate(new Vector(600, -300, -300));
-			mars = Mesh.loadFromObjFile("Models/mars1.obj", "Textures/Mars_Diffuse_2K.png").translate(new Vector(1400, 500, 500));
-			earth = Mesh.loadFromObjFile("Models/earth2.obj", "Textures/Earth_Diffuse_2K.png").translate(new Vector(2100, 600, -600));
+			moon = Mesh.loadFromObjFile("Models/Moon.obj", "Textures/Moon Map.png").translate(new Vector(600, -300, -300));
+			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(1400, 500, 500));
+			earth = Mesh.loadFromObjFile("Models/Earth.obj", "Textures/Earth Map.png").translate(new Vector(2100, 600, -600));
 		} catch (Exception e) {}
 		
 //		ArrayList<AgilityRing> ringList = game.getRingList();
