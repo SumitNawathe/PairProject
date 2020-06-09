@@ -16,6 +16,6 @@ public abstract class SpaceShip extends Mesh {
 		return false;
 	}
 	
-	public abstract void update (Game game);
-	public abstract void destroy (Game game);
+	public abstract void update (GraphicsPanel graphicsPanel);
+	public abstract void destroy (GraphicsPanel graphicsPanel);
 }
