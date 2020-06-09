@@ -10,6 +10,7 @@ public class BossWeakness extends SpaceShip {
 	public double getHealth () { return health; }
 	
 	public BossWeakness (BossFrame bossFrame, int posNum) {
+		System.out.println(bossFrame.getPos());
 		setPos(bossFrame.getPos());
 		try {
 			setTris(Mesh.loadFromObjFile("Models/BossWeaknessModel.obj", "Textures/BossWeakness.png").getTris());
