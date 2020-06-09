@@ -17,7 +17,7 @@ public class IntroScreen extends JPanel {
 		startGameButton = new JButton("START GAME");
 		startGameButton.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
-				gameFrame.startLevel(new LevelBoss());
+				gameFrame.startLevel(new EnemyLevel1());
 			}
 		});
 		startGameButton.setSize(new Dimension(SCREEN_WIDTH/5, SCREEN_HEIGHT/20));
@@ -26,7 +26,7 @@ public class IntroScreen extends JPanel {
 	}
 	public void paintComponent (Graphics g) {
 		try {
-			g.drawImage(ImageIO.read(new File("Textures/CoverImage1.png")), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, null);
+			g.drawImage(ImageIO.read(new File("Textures/CoverImage.png")), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, null);
 		} catch (Exception e) {}
 	}
 }
