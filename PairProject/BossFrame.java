@@ -38,8 +38,8 @@ public class BossFrame extends SpaceShip {
 			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
 					Matrix.multMatVec(rotMat, tri.getVert2()), 
 					Matrix.multMatVec(rotMat, tri.getVert3())});
-		translate(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+20, 0, 0));
-		setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+20, 0, 0));
+		translate(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+30, 0, 0));
+		setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+30, 0, 0));
 		theta += Math.PI/2/120;
 
 //		if (fireMod % 5 == 0) {
@@ -63,7 +63,7 @@ public class BossFrame extends SpaceShip {
 			} else {
 				fireCounters[j]=0;
 				Random rand=new Random();
-				int randfire=rand.nextInt(4);
+				int randfire=rand.nextInt(fireCounters.length);
 				firestages[j][randfire]=true;
 				fire(graphicsPanel, j, randfire);
 			}
@@ -85,7 +85,7 @@ public class BossFrame extends SpaceShip {
 			//if (firePos==0)
 			//System.out.println(pship.plus(new Vector(30,0,0)).minus(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4)))).unit().scale(0.5));
 			graphicsPanel.fireBullet(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4))), 
-					pship.plus(new Vector(30,0,0)).minus(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4)))).unit(), 0.3);
+					pship.plus(new Vector(30,0,0)).minus(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4)))).unit(), 0.3, true);
 //			game.fireBullet(getPos().plus(new Vector(-3, 0, 0)), 
 //					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3);
 		}
@@ -98,7 +98,7 @@ public class BossFrame extends SpaceShip {
 	private void fire1 (GraphicsPanel graphicsPanel, int firePos) {
 		if (fireCounters[firePos]%10==0) {
 			graphicsPanel.fireBullet(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4))),
-					new Vector(-1,0,0), 0.3);
+					new Vector(-1,0,0), 0.3, true);
 		}
 		if (fireCounters[firePos]==224) {
 			Arrays.fill(firestages[firePos], false);
@@ -114,12 +114,12 @@ public class BossFrame extends SpaceShip {
 	private void fire3 (GraphicsPanel graphicsPanel, int firePos) {
 		if (fireCounters[firePos]>50&&fireCounters[firePos]<80&&fireCounters[firePos]%5==0)
 			graphicsPanel.fireBullet(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4))), 
-					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3);
+					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3, true);
 		if (fireCounters[firePos]==119) {
 			Arrays.fill(firestages[firePos], false);
 		}
 	}
-
+	
 	public void destroy(GraphicsPanel graphicsPanel) {
 
 	}
