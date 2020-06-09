@@ -36,6 +36,7 @@ public class GraphicsPanel extends JPanel {
 	private Rocket rocket;
 	private Level level;
 	private double counter;
+	private boolean fPressed;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -49,6 +50,7 @@ public class GraphicsPanel extends JPanel {
 	}
 	
 	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
+		fPressed = false;
 //		int width = SCREEN_WIDTH;
 //		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
 //		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -185,9 +187,10 @@ public class GraphicsPanel extends JPanel {
 				else if (event.getKeyCode() == KeyEvent.VK_A)
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
-				if (event.getKeyCode() == KeyEvent.VK_F)
+				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
 					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3);
-				else if (event.getKeyCode() == KeyEvent.VK_D) {
+					fPressed = true;
+				} else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
 						meshList.add(charge);
 					bigShotChargeCounter++;
@@ -226,6 +229,9 @@ public class GraphicsPanel extends JPanel {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
 					moveVert = 0;
 				}
+				
+				if (event.getKeyCode() == KeyEvent.VK_F && fPressed)
+					fPressed = false;
 				
 				if (event.getKeyCode() == KeyEvent.VK_D) {
 					meshList.remove(charge);
