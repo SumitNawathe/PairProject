@@ -10,6 +10,7 @@ public class LevelSelectScreen extends JPanel {
 	private String SAVEDATA_LOCATION;
 	private GameFrame gameFrame;
 	private ArrayList<LevelOption> levelOptionList;
+	private ArrayList<String> introTexts;
 	private Image currentImage;
 	private String currentLevelIntroText;
 	private Level currentLevel;
@@ -32,11 +33,12 @@ public class LevelSelectScreen extends JPanel {
 			System.out.println("2");
 			StringTokenizer st = new StringTokenizer(file.readLine());
 			System.out.println("3");
-			levelOptionList.add(new LevelOption(new Level1(), "Textures/MarsImage1.jpg", "Hello.", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new Level1(), "Textures/MarsImage1.jpg", "Welcome, recruit! To serve in the legendary Arwing squadron you must first pass this training course in the orbit of Mars. "
+					+ "Your supervisor will provide you with instructions. Good luck!", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			System.out.println("4");
 			st = new StringTokenizer(file.readLine());
 			System.out.println("5");
-			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "Hi There.", SCREEN_WIDTH/2, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		
+			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.", SCREEN_WIDTH/2, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		
 			System.out.println("6");
 			file.close();
 		} catch (Exception e) { System.out.println(e); }
@@ -47,6 +49,7 @@ public class LevelSelectScreen extends JPanel {
 						currentImage = levelOption.getImage();
 						currentLevelIntroText = levelOption.getLevelIntroText();
 						currentLevel = levelOption.getLevel();
+						introTexts=breakText(currentLevelIntroText);
 						levelSelectScreen.repaint();
 						break;
 					}
@@ -72,6 +75,28 @@ public class LevelSelectScreen extends JPanel {
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
 		}
+		introTexts=breakText(currentLevelIntroText);
+	}
+	
+	private ArrayList<String> breakText(String string){
+		ArrayList<String> ret=new ArrayList<String>();
+		char[] text=string.toCharArray();
+		while (string.length()>28) {
+			boolean spaceFound=false;
+			int i;
+			for (i=28;i>0;i--) {
+				i--;
+				if (text[i]==' ') {
+					break;
+				}
+			}
+			String add=string.substring(0,i+1);
+			ret.add(add);
+			string=string.substring(i+1);
+			text=string.toCharArray();
+		}
+		ret.add(string);
+		return ret;
 	}
 	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
@@ -115,7 +140,10 @@ public class LevelSelectScreen extends JPanel {
 		}
 		if (currentLevelIntroText != null) {
 			g.setColor(Color.BLACK);
-			g.drawString(currentLevelIntroText, 16*SCREEN_WIDTH/21, 7*SCREEN_HEIGHT/21);
+			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+			for (int i=0;i<introTexts.size();i++) {
+				g.drawString(introTexts.get(i), 16*SCREEN_WIDTH/21, 7*SCREEN_HEIGHT/21+12*i);
+			}
 		}
 	}
 	
