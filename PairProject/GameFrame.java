@@ -48,6 +48,7 @@ public class GameFrame extends JFrame{
 	
 	public void goToIntroScreen () {
 		this.getContentPane().removeAll();
+		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 		this.getContentPane().add(introScreen);
 		this.pack();
 		this.revalidate();
