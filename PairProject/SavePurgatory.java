@@ -9,7 +9,7 @@ public class SavePurgatory extends JPanel {
 	private int save, SCREEN_WIDTH, SCREEN_HEIGHT;
 	private double scaleX, scaleY;
 	private ArrayList<String> texts;
-	private JButton cont, clear;
+	private JButton cont, clear, back;
 	public SavePurgatory (GameFrame gameFrame, int SCREEN_WIDTH, int SCREEN_HEIGHT, int save) {
 		this.SCREEN_WIDTH=SCREEN_WIDTH;
 		this.SCREEN_HEIGHT=SCREEN_HEIGHT;
@@ -50,13 +50,23 @@ public class SavePurgatory extends JPanel {
 			    	    }
 			    	    in.close();
 			    	    out.close();
-			    	} catch(Exception e) {System.out.println("Clear Save Failed.");}
+			    	} catch (Exception e) {System.out.println("Clear Save Failed.");}
 				gameFrame.goToIntroScreen();
 			}
 		});
 		this.add(clear);
 		clear.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));
 		clear.setLocation(SCREEN_WIDTH/21-(int)(20*scaleX), 17*SCREEN_HEIGHT/21);
+		
+		back=new JButton("BACK");
+		back.addActionListener(new ActionListener () {
+			public void actionPerformed (ActionEvent event) {
+				gameFrame.goToIntroScreen();
+			}
+		});
+		this.add(back);
+		back.setSize(new Dimension(3*SCREEN_WIDTH/21, SCREEN_HEIGHT/21));
+		back.setLocation(9*SCREEN_WIDTH/21-(int)(20*scaleX), 17*SCREEN_HEIGHT/21+(int)(15*scaleY));
 	}
 
 	public void paintComponent(Graphics g) {
