@@ -20,15 +20,15 @@ public class AgilityLevel2 extends Level {
 		set3 = new ArrayList<AgilityRing>();
 		
 		for (int i = 0; i < 20; i++) {
-			set1.add(new AgilityRing(new Vector(80+20*i, 10*Math.sin(i*Math.PI/10), 10*Math.cos(i*Math.PI/10))));
+			set1.add(new AgilityRing(new Vector(80+20*i, 10*Math.sin(i*Math.PI/10+Math.PI/2), 10*Math.cos(2*i*Math.PI/10))));
 		}
 		
 		for (int i = 0; i < 20; i++) {
-			set2.add(new AgilityRing(new Vector(660+20*i, 15*Math.cos(i*Math.PI/10), 15*Math.sin(i*Math.PI/10))));
+			set2.add(new AgilityRing(new Vector(700+20*i, 15*Math.cos(i*Math.PI/10+Math.PI/2), 15*Math.sin(2*i*Math.PI/10))));
 		}
 		
 		for (int i = 0; i < 20; i++) {
-			set3.add(new AgilityRing(new Vector(1200+20*i, 15*Math.random(), 15*Math.random())));
+			set3.add(new AgilityRing(new Vector(1300+40*i, 20*Math.random(), 20*Math.random())));
 		}
 		
 		graphicsPanel.getMeshList().add(mercury);
@@ -37,7 +37,7 @@ public class AgilityLevel2 extends Level {
 	}
 
 	public boolean update(GraphicsPanel graphicsPanel) {
-		if (getProgressState() == 0 && graphicsPanel.getPlayerShip().getPos().getX() > 480) {
+		if (getProgressState() == 0 && graphicsPanel.getPlayerShip().getPos().getX() > 500) {
 			graphicsPanel.getMeshList().removeAll(set1);
 			graphicsPanel.getRingList().removeAll(set1);
 			graphicsPanel.getMeshList().addAll(set2);
@@ -47,7 +47,7 @@ public class AgilityLevel2 extends Level {
 			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
-		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1000) {
+		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1100) {
 			graphicsPanel.getMeshList().removeAll(set2);
 			graphicsPanel.getRingList().removeAll(set2);
 			graphicsPanel.getMeshList().addAll(set3);
@@ -68,7 +68,7 @@ public class AgilityLevel2 extends Level {
 	}
 	
 	public double determineScore (GraphicsPanel graphicsPanel) {
-		return 100.0*(1.0 - graphicsPanel.getRingList().size()/59.0);
+		return 100.0*(1.0 - graphicsPanel.getRingList().size()/60.0);
 	}
 	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}
