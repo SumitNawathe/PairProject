@@ -49,7 +49,7 @@ public class InstructionScreen extends JPanel {
 		startButton = new JButton("BEGIN!");
 		startButton.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
-					gameFrame.startLevel(new Level1());
+					gameFrame.startLevel(new AgilityLevel1());
 			}
 		});
 		this.add(startButton);

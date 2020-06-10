@@ -27,26 +27,10 @@ public class IntroScreen extends JPanel {
 		startSave1=setButton(gameFrame, compareFiles(1), 1);
 		this.add(startSave1);
 
-		startSave2 = new JButton("START GAME 2");
-		startSave2.addActionListener(new ActionListener () {
-			public void actionPerformed (ActionEvent event) {
-				//				gameFrame.startLevel(new EnemyLevel1());
-				gameFrame.goToLevelSelectScreen("SaveFiles/SaveFile2.txt");
-			}
-		});
-		startSave2.setSize(new Dimension(SCREEN_WIDTH/5, SCREEN_HEIGHT/20));
-		startSave2.setLocation(SCREEN_WIDTH/2-SCREEN_WIDTH/5/2, 4*SCREEN_HEIGHT/5-SCREEN_HEIGHT/20/2);
+		startSave2=setButton(gameFrame, compareFiles(2), 2);
 		this.add(startSave2);
 
-		startSave3 = new JButton("START GAME 3");
-		startSave3.addActionListener(new ActionListener () {
-			public void actionPerformed (ActionEvent event) {
-				//				gameFrame.startLevel(new EnemyLevel1());
-				gameFrame.goToLevelSelectScreen("SaveFiles/SaveFile3.txt");
-			}
-		});
-		startSave3.setSize(new Dimension(SCREEN_WIDTH/5, SCREEN_HEIGHT/20));
-		startSave3.setLocation(3*SCREEN_WIDTH/4-SCREEN_WIDTH/5/2, 4*SCREEN_HEIGHT/5-SCREEN_HEIGHT/20/2);
+		startSave3=setButton(gameFrame, compareFiles(3), 3);
 		this.add(startSave3);
 	}
 
@@ -75,7 +59,7 @@ public class IntroScreen extends JPanel {
 			});	
 		}
 		ret.setSize(new Dimension(SCREEN_WIDTH/5, SCREEN_HEIGHT/20));
-		ret.setLocation(SCREEN_WIDTH/4-SCREEN_WIDTH/5/2, 4*SCREEN_HEIGHT/5-SCREEN_HEIGHT/20/2);
+		ret.setLocation(save*SCREEN_WIDTH/4-SCREEN_WIDTH/5/2, 4*SCREEN_HEIGHT/5-SCREEN_HEIGHT/20/2);
 		return ret;
 	}
 
