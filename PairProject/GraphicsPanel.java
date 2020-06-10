@@ -39,6 +39,7 @@ public class GraphicsPanel extends JPanel {
 	private boolean fPressed;
 	private boolean endAnimation;
 	private Explosion explosion;
+	private boolean dead;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -262,6 +263,7 @@ public class GraphicsPanel extends JPanel {
 				if (playerShip.getHealth() == 0 && !endAnimation) {
 					endAnimation = true;
 					counter = 79;
+					dead = true;
 				}
 				
 				if (endAnimation && counter == 0) {
@@ -304,11 +306,11 @@ public class GraphicsPanel extends JPanel {
 					else
 						counter++;
 					
-					if (endAnimation && counter == 20) {
+					if (endAnimation && counter == 20 && dead) {
 						explosion = new Explosion(playerShip.getPos(), 20, 0.1);
 						meshList.add(explosion);
-					} else if (endAnimation && counter < 20) {
-						explosion .update(playerShip.getPos());
+					} else if (endAnimation && counter < 20 && dead) {
+						explosion.update(playerShip.getPos());
 					}
 				} else {
 					yAngle = -Math.PI/2;

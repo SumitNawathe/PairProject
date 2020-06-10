@@ -13,6 +13,7 @@ public class LevelSelectScreen extends JPanel {
 	private ArrayList<String> introTexts;
 	private Image currentImage;
 	private String currentLevelIntroText;
+	private double currentBestHealth;
 	private Level currentLevel;
 	private JButton startButton;
 	LevelSelectScreen levelSelectScreen;
@@ -47,6 +48,7 @@ public class LevelSelectScreen extends JPanel {
 						currentLevel = levelOption.getLevel();
 						introTexts=breakText(currentLevelIntroText);
 						levelSelectScreen.repaint();
+						currentBestHealth = levelOption.getSAVEDATA_HEALTH();
 						break;
 					}
 			}
@@ -70,6 +72,7 @@ public class LevelSelectScreen extends JPanel {
 			currentImage = levelOptionList.get(0).getImage();
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
+			currentBestHealth = levelOptionList.get(0).getSAVEDATA_HEALTH();
 		}
 		introTexts=breakText(currentLevelIntroText);
 	}
@@ -100,6 +103,11 @@ public class LevelSelectScreen extends JPanel {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(SAVEDATA_LOCATION)));
 			for (int i = 0; i < levelOptionList.size(); i++) {
 				if (i == levelNum) {
+					completed = completed || levelOptionList.get(i).getSAVADATA_COMPLETED();
+					if (completed)
+						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_HEALTH());
+					else
+						health = 0.0;
 					out.write(completed + " " + health + "\n");
 					levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
 					levelOptionList.get(i).setSAVEDATA_HEALTH(health);
@@ -109,6 +117,7 @@ public class LevelSelectScreen extends JPanel {
 			}
 			out.close();
 		} catch (Exception e) {}
+		repaint();
 	}
 	
 	public void paintComponent (Graphics g) {
@@ -140,6 +149,13 @@ public class LevelSelectScreen extends JPanel {
 			for (int i=0;i<introTexts.size();i++) {
 				g.drawString(introTexts.get(i), 16*SCREEN_WIDTH/21, 7*SCREEN_HEIGHT/21+12*i);
 			}
+		}
+		
+		System.out.println(currentBestHealth);
+		if (currentBestHealth != 0.0) {
+			g.setColor(Color.RED);
+			g.drawString("Best Score: " + currentBestHealth, 17*SCREEN_WIDTH/21, 16*SCREEN_HEIGHT/21);
+			
 		}
 	}
 	
