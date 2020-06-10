@@ -7,6 +7,8 @@ public class LevelBoss extends Level {
 	private double totalHealth;
 	private Explosion explosion;
 	
+	public LevelBoss () { setLEVEL_NUM(1); }
+	
 	public void initializeGame(GraphicsPanel graphicsPanel) {		
 		bossFrame = new BossFrame(graphicsPanel);
 		graphicsPanel.getEnemyShips().add(bossFrame);
@@ -41,6 +43,7 @@ public class LevelBoss extends Level {
 			if (!explosion.update(bossFrame.getPos())) {
 				System.out.println("clear");
 				bossFrame.getTris().clear();
+				return true;
 			}
 		
 		return false;

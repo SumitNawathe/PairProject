@@ -6,6 +6,7 @@ public class GameFrame extends JFrame{
 	private LevelSelectScreen levelSelectScreen;
 	private GraphicsPanel graphicsPanel;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
+	String CURRENT_SAVEDATA_LOCATION;
 	
 	public GameFrame () {
 		int width = SCREEN_WIDTH;
@@ -32,12 +33,18 @@ public class GameFrame extends JFrame{
 //		this.setVisible(true);
 //		startLevel(new LevelBoss());
 		
+		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
+//		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
+		
 		goToIntroScreen();
+	}
+	
+	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
+		levelSelectScreen.updateSAVEDATA(levelNum, completed, health);
 	}
 	
 	public void goToIntroScreen () {
 		this.getContentPane().removeAll();
-		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 		this.getContentPane().add(introScreen);
 		this.pack();
 		this.revalidate();
@@ -45,14 +52,17 @@ public class GameFrame extends JFrame{
 		this.setVisible(true);
 	}
 	
-	public void goToLevelSelectScreen () {
+	public void goToLevelSelectScreen (String SAVEDATA_LOCATION) {
 		this.getContentPane().removeAll();
-		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
+		if (!SAVEDATA_LOCATION.equals(CURRENT_SAVEDATA_LOCATION)) {
+			levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, SAVEDATA_LOCATION);
+			CURRENT_SAVEDATA_LOCATION = SAVEDATA_LOCATION;
+		}
 		this.getContentPane().add(levelSelectScreen);
 		this.pack();
 		this.revalidate();
 		this.repaint();
-		this.setVisible(true);
+        this.setVisible(true);
 	}
 	
 	public void startLevel (Level level) {
