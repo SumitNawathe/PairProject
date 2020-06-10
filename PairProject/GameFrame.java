@@ -4,6 +4,7 @@ import javax.swing.*;
 public class GameFrame extends JFrame{
 	private IntroScreen introScreen;
 	private LevelSelectScreen levelSelectScreen;
+	private InstructionScreen instructionScreen;
 	private GraphicsPanel graphicsPanel;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
 	String CURRENT_SAVEDATA_LOCATION;
@@ -35,6 +36,7 @@ public class GameFrame extends JFrame{
 		
 		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 //		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
+		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 		goToIntroScreen();
 	}
@@ -59,6 +61,15 @@ public class GameFrame extends JFrame{
 			CURRENT_SAVEDATA_LOCATION = SAVEDATA_LOCATION;
 		}
 		this.getContentPane().add(levelSelectScreen);
+		this.pack();
+		this.revalidate();
+		this.repaint();
+        this.setVisible(true);
+	}
+	
+	public void goToInstructionScreen () {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(instructionScreen);
 		this.pack();
 		this.revalidate();
 		this.repaint();

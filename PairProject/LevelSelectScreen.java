@@ -63,7 +63,12 @@ public class LevelSelectScreen extends JPanel {
 		startButton = new JButton("START LEVEL");
 		startButton.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
-				gameFrame.startLevel(currentLevel);
+				System.out.println(currentLevelIntroText);
+				if (currentLevelIntroText.equals("Welcome, recruit! To serve in the legendary Arwing squadron you must first pass this training course in the orbit of Mars. "
+						+ "Your supervisor will provide you with instructions. Good luck!"))
+					gameFrame.goToInstructionScreen();
+				else
+					gameFrame.startLevel(currentLevel);
 			}
 		});
 		startButton.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));
@@ -108,7 +113,7 @@ public class LevelSelectScreen extends JPanel {
 					levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
 					levelOptionList.get(i).setSAVEDATA_HEALTH(health);
 				} else {
-					out.write(levelOptionList.get(i).getSAVADATA_COMPLETED() + " " + levelOptionList.get(i).getSAVEDATA_HEALTH() + "\n");
+					out.write(levelOptionList.get(i).getSAVEDATA_COMPLETED() + " " + levelOptionList.get(i).getSAVEDATA_HEALTH() + "\n");
 				}
 			}
 			out.close();
@@ -162,7 +167,7 @@ public class LevelSelectScreen extends JPanel {
 		public boolean clickedOnLevel (int x, int y) { return x0 < x && x < x0+SQUARE_SIZE && y0 < y && y < y0+SQUARE_SIZE; }
 		public int getX0 () { return x0; }
 		public int getY0 () { return y0; }
-		public boolean getSAVADATA_COMPLETED () { return SAVEDATA_COMPLETED; }
+		public boolean getSAVEDATA_COMPLETED () { return SAVEDATA_COMPLETED; }
 		public void setSAVEDATA_COMPLETED (boolean completed) { SAVEDATA_COMPLETED = completed; }
 		public double getSAVEDATA_HEALTH () { return SAVEDATA_HEALTH; }
 		public void setSAVEDATA_HEALTH (double health) { SAVEDATA_HEALTH = health; }
