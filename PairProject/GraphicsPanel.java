@@ -379,7 +379,7 @@ public class GraphicsPanel extends JPanel {
 				
 				panel.repaint();
 			}
-		}, 2000, 20);
+		}, 100, 20);
 	}
 	
 	public void paintComponent (Graphics panelG) {
