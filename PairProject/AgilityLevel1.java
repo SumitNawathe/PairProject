@@ -1,11 +1,11 @@
 import java.util.*;
 import java.awt.*;
 
-public class Level1 extends Level {
+public class AgilityLevel1 extends Level {
 	Mesh moon, mars, earth;
 	ArrayList<AgilityRing> set1, set2, set3;
 	
-	public Level1 () { setLEVEL_NUM(0); }
+	public AgilityLevel1 () { setLEVEL_NUM(0); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel) {
 //		game.getRingList().add(new AgilityRing(new Vector(5, 0, -5)));
