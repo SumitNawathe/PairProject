@@ -5,7 +5,7 @@ public class EnemyLevel1 extends Level {
 	//TODO: Maybe have rings that show up periodically that give back a little health.
 	public void initializeGame(GraphicsPanel graphicsPanel) {
 		try {
-			mars = Mesh.loadFromObjFile("Models/mars1.obj", "Textures/Mars_Diffuse_2K.png").translate(new Vector(2100, 600, -600));
+			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(2100, 600, -600));
 		} catch (Exception e) {}
 		graphicsPanel.getMeshList().add(mars);
 	}
