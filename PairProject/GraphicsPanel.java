@@ -38,6 +38,7 @@ public class GraphicsPanel extends JPanel {
 	private double counter;
 	private boolean fPressed;
 	private boolean endAnimation;
+	private Explosion explosion;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -253,8 +254,18 @@ public class GraphicsPanel extends JPanel {
 //				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
 //				if (level.update(graphicsPanel) && playerShip.getHealth() > 0) {
-				if (level.update(graphicsPanel)) {
-					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), true, playerShip.getHealth());
+				if (level.update(graphicsPanel) && !endAnimation) {
+					endAnimation = true;
+					counter = 79;
+				}
+				
+				if (playerShip.getHealth() == 0 && !endAnimation) {
+					endAnimation = true;
+					counter = 79;
+				}
+				
+				if (endAnimation && counter == 0) {
+					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), playerShip.getHealth()>0, playerShip.getHealth());
 					gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 					timer.cancel();
 					timer.purge();
@@ -288,7 +299,17 @@ public class GraphicsPanel extends JPanel {
 							playerShip.getPos().getY(), 
 							playerShip.getPos().getZ() - 14*Math.sin(Math.PI*counter/80));
 					yAngle = Math.PI/2 * (40-counter)/40.0;
-					counter++;
+					if (endAnimation)
+						counter--;
+					else
+						counter++;
+					
+					if (endAnimation && counter == 20) {
+						explosion = new Explosion(playerShip.getPos(), 20, 0.1);
+						meshList.add(explosion);
+					} else if (endAnimation && counter < 20) {
+						explosion .update(playerShip.getPos());
+					}
 				} else {
 					yAngle = -Math.PI/2;
 				}

@@ -117,7 +117,7 @@ public class Level1 extends Level {
 //			game.getEnemyShips().add(enemy);
 //			game.getMeshList().add(enemy);
 //		}
-		return graphicsPanel.getPlayerShip().getPos().getX()>2000;
+		return graphicsPanel.getPlayerShip().getPos().getX()>200;
 	}
 	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}
