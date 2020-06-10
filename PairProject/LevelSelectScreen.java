@@ -27,17 +27,13 @@ public class LevelSelectScreen extends JPanel {
 		
 		levelOptionList = new ArrayList<LevelOption>();
 		try {
-			System.out.println("1");
 			BufferedReader file = new BufferedReader(new FileReader(SAVEDATA_LOCATION));
-			System.out.println("2");
 			StringTokenizer st = new StringTokenizer(file.readLine());
-			System.out.println("3");
 			levelOptionList.add(new LevelOption(new Level1(), "Textures/MarsImage1.jpg", "Hello.", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
-			System.out.println("4");
 			st = new StringTokenizer(file.readLine());
-			System.out.println("5");
+			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "Hello.", SCREEN_WIDTH/5, SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			st = new StringTokenizer(file.readLine());
 			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "Hi There.", SCREEN_WIDTH/2, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		
-			System.out.println("6");
 			file.close();
 		} catch (Exception e) { System.out.println(e); }
 		this.addMouseListener(new MouseListener () {

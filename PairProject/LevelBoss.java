@@ -7,7 +7,7 @@ public class LevelBoss extends Level {
 	private double totalHealth;
 	private Explosion explosion;
 	
-	public LevelBoss () { setLEVEL_NUM(1); }
+	public LevelBoss () { setLEVEL_NUM(2); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel) {		
 		bossFrame = new BossFrame(graphicsPanel);

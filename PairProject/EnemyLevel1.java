@@ -10,6 +10,8 @@ public class EnemyLevel1 extends Level {
 		graphicsPanel.getMeshList().add(mars);
 	}
 
+	public EnemyLevel1 () { setLEVEL_NUM(1); }
+	
 	public boolean update(GraphicsPanel graphicsPanel) {
 		if (getProgressState()==0&&graphicsPanel.getPlayerShip().getPos().getX()>10) {
 			incrementProgressState();
@@ -46,7 +48,7 @@ public class EnemyLevel1 extends Level {
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		}
-		return false;
+		return getProgressState()==5 && graphicsPanel.getEnemyShips().size()==0;
 	}
 
 	public void draw(GraphicsPanel graphicsPanel, Graphics g) {}
