@@ -37,6 +37,7 @@ public class GraphicsPanel extends JPanel {
 	private Level level;
 	private double counter;
 	private boolean fPressed;
+	private boolean endAnimation;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -287,7 +288,6 @@ public class GraphicsPanel extends JPanel {
 							playerShip.getPos().getY(), 
 							playerShip.getPos().getZ() - 14*Math.sin(Math.PI*counter/80));
 					yAngle = Math.PI/2 * (40-counter)/40.0;
-//					yAngle = -Math.PI/2;
 					counter++;
 				} else {
 					yAngle = -Math.PI/2;
