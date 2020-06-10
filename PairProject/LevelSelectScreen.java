@@ -13,7 +13,7 @@ public class LevelSelectScreen extends JPanel {
 	private ArrayList<String> introTexts;
 	private Image currentImage;
 	private String currentLevelIntroText;
-	private double currentBestHealth;
+	private double currentBestScore;
 	private Level currentLevel;
 	private JButton startButton, backToIntroScreen;
 	LevelSelectScreen levelSelectScreen;
@@ -48,7 +48,7 @@ public class LevelSelectScreen extends JPanel {
 						currentLevel = levelOption.getLevel();
 						introTexts=breakText(currentLevelIntroText);
 						levelSelectScreen.repaint();
-						currentBestHealth = levelOption.getSAVEDATA_HEALTH();
+						currentBestScore = levelOption.getSAVEDATA_SCORE();
 						break;
 					}
 			}
@@ -82,7 +82,7 @@ public class LevelSelectScreen extends JPanel {
 			currentImage = levelOptionList.get(0).getImage();
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
-			currentBestHealth = levelOptionList.get(0).getSAVEDATA_HEALTH();
+			currentBestScore = levelOptionList.get(0).getSAVEDATA_SCORE();
 		}
 		introTexts=breakText(currentLevelIntroText);
 	}
@@ -115,19 +115,19 @@ public class LevelSelectScreen extends JPanel {
 				if (i == levelNum) {
 					completed = completed || levelOptionList.get(i).getSAVADATA_COMPLETED();
 					if (completed)
-						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_HEALTH());
+						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_SCORE());
 					else
 						health = 0.0;
 					out.write(completed + " " + health + "\n");
 					levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
-					levelOptionList.get(i).setSAVEDATA_HEALTH(health);
+					levelOptionList.get(i).setSAVEDATA_SCORE(health);
 				} else {
-					out.write(levelOptionList.get(i).getSAVADATA_COMPLETED() + " " + levelOptionList.get(i).getSAVEDATA_HEALTH() + "\n");
+					out.write(levelOptionList.get(i).getSAVADATA_COMPLETED() + " " + levelOptionList.get(i).getSAVEDATA_SCORE() + "\n");
 				}
 			}
 			out.close();
+			repaint();
 		} catch (Exception e) {}
-		repaint();
 	}
 	
 	public void paintComponent (Graphics g) {
@@ -165,17 +165,17 @@ public class LevelSelectScreen extends JPanel {
 			}
 		}
 		
-		System.out.println(currentBestHealth);
-		if (currentBestHealth != 0.0) {
+		System.out.println(currentBestScore);
+		if (currentBestScore != 0.0) {
 			g.setColor(Color.RED);
-			g.drawString("Best Score: " + currentBestHealth, 17*SCREEN_WIDTH/21, 16*SCREEN_HEIGHT/21);
+			g.drawString("Best Score: " + (int) currentBestScore, 17*SCREEN_WIDTH/21, 16*SCREEN_HEIGHT/21);
 			
 		}
 	}
 	
 	private class LevelOption {
 		private boolean SAVEDATA_COMPLETED;
-		private double SAVEDATA_HEALTH;
+		private double SAVEDATA_SCORE;
 		private Level level;
 		private String imagePath;
 		private String levelIntroText;
@@ -190,17 +190,17 @@ public class LevelSelectScreen extends JPanel {
 		public int getY0 () { return y0; }
 		public boolean getSAVADATA_COMPLETED () { return SAVEDATA_COMPLETED; }
 		public void setSAVEDATA_COMPLETED (boolean completed) { SAVEDATA_COMPLETED = completed; }
-		public double getSAVEDATA_HEALTH () { return SAVEDATA_HEALTH; }
-		public void setSAVEDATA_HEALTH (double health) { SAVEDATA_HEALTH = health; }
+		public double getSAVEDATA_SCORE () { return SAVEDATA_SCORE; }
+		public void setSAVEDATA_SCORE (double health) { SAVEDATA_SCORE = health; }
 		
-		public LevelOption (Level level, String imagePath, String levelIntroText, int x0, int y0, boolean SAVEDATA_COMPLETED, double SAVEDATA_HEALTH) {
+		public LevelOption (Level level, String imagePath, String levelIntroText, int x0, int y0, boolean SAVEDATA_COMPLETED, double SAVEDATA_SCORE) {
 			this.level = level;
 			this.imagePath = imagePath;
 			this.levelIntroText = levelIntroText;
 			this.x0 = x0;
 			this.y0 = y0;
 			this.SAVEDATA_COMPLETED = SAVEDATA_COMPLETED;
-			this.SAVEDATA_HEALTH = SAVEDATA_HEALTH;
+			this.SAVEDATA_SCORE = SAVEDATA_SCORE;
 		}
 	}
 }

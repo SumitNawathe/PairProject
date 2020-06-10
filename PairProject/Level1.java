@@ -120,5 +120,9 @@ public class Level1 extends Level {
 		return graphicsPanel.getPlayerShip().getPos().getX()>2000;
 	}
 	
+	public double determineScore (GraphicsPanel graphicsPanel) {
+		return 100.0*(1.0 - graphicsPanel.getRingList().size()/59.0);
+	}
+	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}
 }

@@ -51,6 +51,10 @@ public class EnemyLevel1 extends Level {
 		return getProgressState()==5 && graphicsPanel.getEnemyShips().size()==0;
 	}
 
+	public double determineScore (GraphicsPanel graphicsPanel) {
+		return graphicsPanel.getPlayerShip().getHealth();
+	}
+	
 	public void draw(GraphicsPanel graphicsPanel, Graphics g) {}
 
 }

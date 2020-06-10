@@ -269,7 +269,7 @@ public class GraphicsPanel extends JPanel {
 				}
 				
 				if (endAnimation && counter == 0) {
-					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), playerShip.getHealth()>0, playerShip.getHealth());
+					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), playerShip.getHealth()>0, level.determineScore(graphicsPanel));
 					gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 					timer.cancel();
 					timer.purge();
@@ -369,7 +369,7 @@ public class GraphicsPanel extends JPanel {
 				}
 				
 				if (playerShip.bulletCollision(bulletList))
-					playerShip.decreaseHealth(10);
+					playerShip.decreaseHealth(5);
 				
 				charge.update(graphicsPanel);
 				rocket.update(graphicsPanel);

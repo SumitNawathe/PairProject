@@ -49,6 +49,10 @@ public class LevelBoss extends Level {
 		return false;
 	}
 	
+	public double determineScore (GraphicsPanel graphicsPanel) {
+		return graphicsPanel.getPlayerShip().getHealth();
+	}
+	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {
 		double scaleX=(double)graphicsPanel.SCREEN_WIDTH/1200;
 		double scaleY=(double)graphicsPanel.SCREEN_HEIGHT/900;
