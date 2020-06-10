@@ -192,6 +192,7 @@ public class GraphicsPanel extends JPanel {
 				
 				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
 					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+					playerShip.decreaseEnergy(1);
 					fPressed = true;
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
@@ -240,7 +241,7 @@ public class GraphicsPanel extends JPanel {
 				if (event.getKeyCode() == KeyEvent.VK_D) {
 					meshList.remove(charge);
 					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-						playerShip.decreaseEnergy(10);
+						playerShip.decreaseEnergy(3);
 						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
 					}
 					bigShotChargeCounter = 0;
@@ -277,6 +278,10 @@ public class GraphicsPanel extends JPanel {
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
 				playerShip.update(moveHoriz, moveVert, moveForward);
+				
+				if (moveForward != 0)
+					playerShip.decreaseEnergy(0.1);
+				
 				double y =  playerShip.getPos().getY();
 				if (y < -5) y = -5;
 				if (y > 5) y = 5;
