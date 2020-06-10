@@ -34,9 +34,9 @@ public class LevelSelectScreen extends JPanel {
 			levelOptionList.add(new LevelOption(new Level1(), "Textures/MarsImage1.jpg", "Welcome, recruit! To serve in the legendary Arwing squadron you must first pass this training course in the orbit of Mars. "
 					+ "Your supervisor will provide you with instructions. Good luck!", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "Hello.", SCREEN_WIDTH/5, SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "Hello.", 4*SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.", SCREEN_WIDTH/2, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		
+			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.", 4*SCREEN_WIDTH/11, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		
 			file.close();
 		} catch (Exception e) { System.out.println(e); }
 		this.addMouseListener(new MouseListener () {
@@ -141,7 +141,11 @@ public class LevelSelectScreen extends JPanel {
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(5*SCREEN_WIDTH/7+4, 0+5,  2*SCREEN_WIDTH/7-14, SCREEN_HEIGHT-39);
 		
-//		g.setColor(Color.RED);
+		g.setColor(Color.YELLOW);
+		for (int i = 0; i < levelOptionList.size()-1; i++)
+			g.drawLine(levelOptionList.get(i).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i).getY0()+LevelOption.SQUARE_SIZE/2, 
+					levelOptionList.get(i+1).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i+1).getY0()+LevelOption.SQUARE_SIZE/2);
+		
 		for (LevelOption levelOption : levelOptionList) {
 			if (levelOption.SAVEDATA_COMPLETED)
 				g.setColor(Color.GREEN);
