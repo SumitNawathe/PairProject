@@ -44,6 +44,10 @@
 /IntroScreen$2.class
 /IntroScreen$3.class
 /InstructionScreen.class
-/LevelSelectScreen$3.class
-/AgilityLevel1.class
-/AgilityLevel2.class
+/InstructionScreen$1.class
+/EnemyLevel2.class
+/EnemyC.class
+/SavePurgatory.class
+/BreakString.class
+/SavePurgatory$1.class
+/SavePurgatory$2.class
