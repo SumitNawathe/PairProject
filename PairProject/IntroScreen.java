@@ -18,7 +18,7 @@ public class IntroScreen extends JPanel {
 		startSave1.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
 //				gameFrame.startLevel(new EnemyLevel1());
-				gameFrame.goToLevelSelectScreen("SaveFiles/SaveFile1.txt");
+				gameFrame.goToPurgatory(1);
 			}
 		});
 		startSave1.setSize(new Dimension(SCREEN_WIDTH/5, SCREEN_HEIGHT/20));

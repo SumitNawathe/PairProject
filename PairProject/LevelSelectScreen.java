@@ -49,7 +49,7 @@ public class LevelSelectScreen extends JPanel {
 						currentImage = levelOption.getImage();
 						currentLevelIntroText = levelOption.getLevelIntroText();
 						currentLevel = levelOption.getLevel();
-						introTexts=breakText(currentLevelIntroText);
+						introTexts=BreakString.breakText(currentLevelIntroText);
 						levelSelectScreen.repaint();
 						break;
 					}
@@ -80,29 +80,9 @@ public class LevelSelectScreen extends JPanel {
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
 		}
-		introTexts=breakText(currentLevelIntroText);
+		introTexts=BreakString.breakText(currentLevelIntroText);
 	}
-	
-	private ArrayList<String> breakText(String string){
-		ArrayList<String> ret=new ArrayList<String>();
-		char[] text=string.toCharArray();
-		while (string.length()>28) {
-			boolean spaceFound=false;
-			int i;
-			for (i=28;i>0;i--) {
-				i--;
-				if (text[i]==' ') {
-					break;
-				}
-			}
-			String add=string.substring(0,i+1);
-			ret.add(add);
-			string=string.substring(i+1);
-			text=string.toCharArray();
-		}
-		ret.add(string);
-		return ret;
-	}
+
 	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
 		try {

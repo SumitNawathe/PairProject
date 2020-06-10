@@ -3,6 +3,7 @@ import javax.swing.*;
 
 public class GameFrame extends JFrame{
 	private IntroScreen introScreen;
+	private SavePurgatory purgatory;
 	private LevelSelectScreen levelSelectScreen;
 	private InstructionScreen instructionScreen;
 	private GraphicsPanel graphicsPanel;
@@ -48,6 +49,15 @@ public class GameFrame extends JFrame{
 	public void goToIntroScreen () {
 		this.getContentPane().removeAll();
 		this.getContentPane().add(introScreen);
+		this.pack();
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
+	}
+	
+	public void goToPurgatory (int save) {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(new SavePurgatory(this, SCREEN_WIDTH, SCREEN_HEIGHT, save));
 		this.pack();
 		this.revalidate();
 		this.repaint();
