@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class PlayerShip extends SpaceShip {
 	private double health = 100, energy = 100;;
 	private int horizAngleState, vertAngleState;
@@ -24,6 +26,15 @@ public class PlayerShip extends SpaceShip {
 		translate(offset);
 		System.out.println(this.getTris().get(0).getTexture());
 		setCollisionRadius(2.5);
+	}
+	
+	public boolean bulletCollision(ArrayList<Bullet> bulletList) {
+		for (int i=0;i<bulletList.size();i++) {
+			if (bulletList.get(i).getEnemy()&&getPos().clone().minus(bulletList.get(i).getPos()).magnitude() < (bulletList.get(i).getCollisionRadius() + getCollisionRadius())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void destroy (GraphicsPanel graphicsPanel) {}

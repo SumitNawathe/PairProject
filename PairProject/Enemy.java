@@ -19,8 +19,8 @@ public class Enemy extends SpaceShip {
 	}
 	
 	public boolean bulletCollision (ArrayList<Bullet> bulletList) {
-		for (Bullet i : bulletList) {
-			if (!i.getEnemy()&&getPos().clone().minus(i.getPos()).magnitude() < (i.getCollisionRadius() + getCollisionRadius())) {
+		for (int i=0;i<bulletList.size();i++) {
+			if (!bulletList.get(i).getEnemy()&&getPos().clone().minus(bulletList.get(i).getPos()).magnitude() < (bulletList.get(i).getCollisionRadius() + getCollisionRadius())) {
 				return true;
 			}
 		}
