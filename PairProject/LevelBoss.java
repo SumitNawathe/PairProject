@@ -8,7 +8,7 @@ public class LevelBoss extends Level {
 	private Explosion explosion;
 	private int ringCounter = -100;
 	
-	public LevelBoss () { setLEVEL_NUM(3); }
+	public LevelBoss () { setLEVEL_NUM(4); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel) {		
 		bossFrame = new BossFrame(graphicsPanel);

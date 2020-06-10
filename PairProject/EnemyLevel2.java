@@ -1,6 +1,8 @@
 import java.awt.Graphics;
 
 public class EnemyLevel2 extends Level {
+	public EnemyLevel2 () { this.setLEVEL_NUM(3); }
+	
 	//TODO: Maybe have rings that show up periodically that give back a little health.
 	public void initializeGame(GraphicsPanel graphicsPanel) {
 		
@@ -45,6 +47,7 @@ public class EnemyLevel2 extends Level {
 		return false;
 	}
 
+	public double determineScore (GraphicsPanel graphicsPanel) { return graphicsPanel.getPlayerShip().getHealth(); }
+	
 	public void draw(GraphicsPanel graphicsPanel, Graphics g) {}
-
 }
