@@ -24,6 +24,8 @@ public class Level1 extends Level {
 		
 		try {
 			moon = Mesh.loadFromObjFile("Models/Moon.obj", "Textures/Moon Map.png").translate(new Vector(600, -300, -300));
+//			moon = Mesh.loadFromObjFile("Models/Mercury.obj", "Textures/Mercury_Diffuse_1K.png").translate(new Vector(600, -300, -300));
+//			moon = Mesh.loadFromObjFile("Models/venus2.obj", "Textures/Venus_Atmosphere_2K.png").translate(new Vector(600, -300, -300));
 			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(1400, 500, 500));
 			earth = Mesh.loadFromObjFile("Models/Earth.obj", "Textures/Earth Map.png").translate(new Vector(2100, 600, -600));
 		} catch (Exception e) {}
