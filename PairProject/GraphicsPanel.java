@@ -251,7 +251,13 @@ public class GraphicsPanel extends JPanel {
 				frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
 //				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
-				level.update(graphicsPanel);
+//				if (level.update(graphicsPanel) && playerShip.getHealth() > 0) {
+				if (level.update(graphicsPanel)) {
+					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), true, playerShip.getHealth());
+					gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
+					timer.cancel();
+					timer.purge();
+				}
 				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);

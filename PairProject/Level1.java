@@ -5,6 +5,8 @@ public class Level1 extends Level {
 	Mesh moon, mars, earth;
 	ArrayList<AgilityRing> set1, set2, set3;
 	
+	public Level1 () { setLEVEL_NUM(0); }
+	
 	public void initializeGame(GraphicsPanel graphicsPanel) {
 //		game.getRingList().add(new AgilityRing(new Vector(5, 0, -5)));
 //		game.getRingList().add(new AgilityRing(new Vector(25, 0, -5)));
@@ -115,7 +117,7 @@ public class Level1 extends Level {
 //			game.getEnemyShips().add(enemy);
 //			game.getMeshList().add(enemy);
 //		}
-		return false;
+		return graphicsPanel.getPlayerShip().getPos().getX()>2000;
 	}
 	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}
