@@ -4,9 +4,9 @@ public class PlayerShip extends SpaceShip {
 	private static final double standardPlayerSpeed = 1;
 	private Vector playerVel = new Vector(standardPlayerSpeed, 0, 0);
 	
-	public void decreaseHealth (double amt) { health -= amt; }
+	public void decreaseHealth (double amt) { health -= amt; if (health < 0) health = 0; if (health > 100) health = 100;}
 	public double getHealth () { return health; }
-	public void decreaseEnergy (double amt) { energy -= amt; }
+	public void decreaseEnergy (double amt) { energy -= amt; if (energy < 0) energy = 0; if (energy > 100) energy = 100;}
 	public double getEnergy () { return energy; }
 	
 	public void moveShipTo (Vector pos) {

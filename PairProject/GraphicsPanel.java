@@ -37,6 +37,9 @@ public class GraphicsPanel extends JPanel {
 	private Level level;
 	private double counter;
 	private boolean fPressed;
+	private boolean endAnimation;
+	private Explosion explosion;
+	private boolean dead;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -189,11 +192,13 @@ public class GraphicsPanel extends JPanel {
 				
 				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
 					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+					playerShip.decreaseEnergy(1);
 					fPressed = true;
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
 						meshList.add(charge);
-					bigShotChargeCounter++;
+					if (bigShotChargeCounter == 0)
+						bigShotChargeCounter++;
 				}
 				
 				panel.getIgnoreRepaint();
@@ -236,7 +241,7 @@ public class GraphicsPanel extends JPanel {
 				if (event.getKeyCode() == KeyEvent.VK_D) {
 					meshList.remove(charge);
 					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-						playerShip.decreaseEnergy(10);
+						playerShip.decreaseEnergy(3);
 						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
 					}
 					bigShotChargeCounter = 0;
@@ -252,8 +257,19 @@ public class GraphicsPanel extends JPanel {
 //				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
 				
 //				if (level.update(graphicsPanel) && playerShip.getHealth() > 0) {
-				if (level.update(graphicsPanel)) {
-					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), true, playerShip.getHealth());
+				if (level.update(graphicsPanel) && !endAnimation) {
+					endAnimation = true;
+					counter = 79;
+				}
+				
+				if (playerShip.getHealth() == 0 && !endAnimation) {
+					endAnimation = true;
+					counter = 79;
+					dead = true;
+				}
+				
+				if (endAnimation && counter == 0) {
+					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), playerShip.getHealth()>0, level.determineScore(graphicsPanel));
 					gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 					timer.cancel();
 					timer.purge();
@@ -262,6 +278,10 @@ public class GraphicsPanel extends JPanel {
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
 				playerShip.update(moveHoriz, moveVert, moveForward);
+				
+				if (moveForward != 0)
+					playerShip.decreaseEnergy(0.1);
+				
 				double y =  playerShip.getPos().getY();
 				if (y < -5) y = -5;
 				if (y > 5) y = 5;
@@ -287,8 +307,17 @@ public class GraphicsPanel extends JPanel {
 							playerShip.getPos().getY(), 
 							playerShip.getPos().getZ() - 14*Math.sin(Math.PI*counter/80));
 					yAngle = Math.PI/2 * (40-counter)/40.0;
-//					yAngle = -Math.PI/2;
-					counter++;
+					if (endAnimation)
+						counter--;
+					else
+						counter++;
+					
+					if (endAnimation && counter == 20 && dead) {
+						explosion = new Explosion(playerShip.getPos(), 20, 0.1);
+						meshList.add(explosion);
+					} else if (endAnimation && counter < 20 && dead) {
+						explosion.update(playerShip.getPos());
+					}
 				} else {
 					yAngle = -Math.PI/2;
 				}
@@ -340,10 +369,13 @@ public class GraphicsPanel extends JPanel {
 				}
 				
 				if (playerShip.bulletCollision(bulletList))
-					playerShip.decreaseHealth(10);
+					playerShip.decreaseHealth(5);
 				
 				charge.update(graphicsPanel);
 				rocket.update(graphicsPanel);
+				
+				if (bigShotChargeCounter > 0)
+					bigShotChargeCounter++;
 				
 				panel.repaint();
 			}

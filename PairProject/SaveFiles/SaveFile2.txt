@@ -1,2 +1,4 @@
-true 0
-false 0
+true 71.1864406779661
+true -100.0
+true -250.0
+false 0.0

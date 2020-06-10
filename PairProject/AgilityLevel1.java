@@ -1,11 +1,11 @@
 import java.util.*;
 import java.awt.*;
 
-public class Level1 extends Level {
+public class AgilityLevel1 extends Level {
 	Mesh moon, mars, earth;
 	ArrayList<AgilityRing> set1, set2, set3;
 	
-	public Level1 () { setLEVEL_NUM(0); }
+	public AgilityLevel1 () { setLEVEL_NUM(0); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel) {
 //		game.getRingList().add(new AgilityRing(new Vector(5, 0, -5)));
@@ -24,6 +24,8 @@ public class Level1 extends Level {
 		
 		try {
 			moon = Mesh.loadFromObjFile("Models/Moon.obj", "Textures/Moon Map.png").translate(new Vector(600, -300, -300));
+//			moon = Mesh.loadFromObjFile("Models/Mercury.obj", "Textures/Mercury_Diffuse_1K.png").translate(new Vector(600, -300, -300));
+//			moon = Mesh.loadFromObjFile("Models/venus2.obj", "Textures/Venus_Atmosphere_2K.png").translate(new Vector(600, -300, -300));
 			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(1400, 500, 500));
 			earth = Mesh.loadFromObjFile("Models/Earth.obj", "Textures/Earth Map.png").translate(new Vector(2100, 600, -600));
 		} catch (Exception e) {}
@@ -118,6 +120,10 @@ public class Level1 extends Level {
 //			game.getMeshList().add(enemy);
 //		}
 		return graphicsPanel.getPlayerShip().getPos().getX()>2000;
+	}
+	
+	public double determineScore (GraphicsPanel graphicsPanel) {
+		return 100.0*(1.0 - graphicsPanel.getRingList().size()/59.0);
 	}
 	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}

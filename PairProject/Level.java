@@ -10,4 +10,5 @@ public abstract class Level {
 	public abstract void initializeGame (GraphicsPanel graphicsPanel);
 	public abstract boolean update (GraphicsPanel graphicsPanel); // true if game has been won
 	public abstract void draw (GraphicsPanel graphicsPanel, Graphics g);
+	public abstract double determineScore (GraphicsPanel graphicsPanel);
 }
