@@ -2,8 +2,13 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GameFrame extends JFrame{
+	private IntroScreen introScreen;
+	private SavePurgatory purgatory;
+	private LevelSelectScreen levelSelectScreen;
+	private InstructionScreen instructionScreen;
 	private GraphicsPanel graphicsPanel;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
+	String CURRENT_SAVEDATA_LOCATION;
 	
 	public GameFrame () {
 		int width = SCREEN_WIDTH;
@@ -30,9 +35,56 @@ public class GameFrame extends JFrame{
 //		this.setVisible(true);
 //		startLevel(new LevelBoss());
 		
-		this.getContentPane().add(new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
+//		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
+		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
+		
+		goToIntroScreen();
+	}
+	
+	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
+		levelSelectScreen.updateSAVEDATA(levelNum, completed, health);
+	}
+	
+	public void goToIntroScreen () {
+		this.getContentPane().removeAll();
+		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.getContentPane().add(introScreen);
 		this.pack();
+		this.revalidate();
+		this.repaint();
 		this.setVisible(true);
+	}
+	
+	public void goToPurgatory (int save) {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(new SavePurgatory(this, SCREEN_WIDTH, SCREEN_HEIGHT, save));
+		this.pack();
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
+	}
+	
+	public void goToLevelSelectScreen (String SAVEDATA_LOCATION) {
+		this.getContentPane().removeAll();
+		if (!SAVEDATA_LOCATION.equals(CURRENT_SAVEDATA_LOCATION)) {
+			levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, SAVEDATA_LOCATION);
+			CURRENT_SAVEDATA_LOCATION = SAVEDATA_LOCATION;
+		}
+		this.getContentPane().add(levelSelectScreen);
+		this.pack();
+		this.revalidate();
+		this.repaint();
+        this.setVisible(true);
+	}
+	
+	public void goToInstructionScreen () {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(instructionScreen);
+		this.pack();
+		this.revalidate();
+		this.repaint();
+        this.setVisible(true);
 	}
 	
 	public void startLevel (Level level) {
@@ -40,6 +92,8 @@ public class GameFrame extends JFrame{
 		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT);
 		this.getContentPane().add(graphicsPanel);
 		this.pack();
+		this.revalidate();
+		this.repaint();
 		this.setVisible(true);
 	}
 	

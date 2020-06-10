@@ -1,0 +1,5 @@
+true 69.4915254237288
+false 0.0
+false 0.0
+false 0.0
+false 0.0

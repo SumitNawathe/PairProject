@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 public class Enemy extends SpaceShip {
 	
@@ -17,6 +16,15 @@ public class Enemy extends SpaceShip {
 		movestage=new boolean[4];
 		this.dist=dist;
 		this.ai=ai;
+	}
+	
+	public boolean bulletCollision (ArrayList<Bullet> bulletList) {
+		for (Bullet i : bulletList) {
+			if (!i.getEnemy()&&getPos().clone().minus(i.getPos()).magnitude() < (i.getCollisionRadius() + getCollisionRadius())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void update (GraphicsPanel graphicsPanel) {
@@ -120,7 +128,7 @@ public class Enemy extends SpaceShip {
 		fireCounter++;
 		if (explosion == null) {
 			if (fireCounter >= 10) {
-				graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0), 0.3);
+				graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0), 0.3, true);
 				fireCounter = 0;
 			}
 		} else {
@@ -147,7 +155,7 @@ public class Enemy extends SpaceShip {
 	 */
 	private void move0 (GraphicsPanel graphicsPanel, Vector init) {
 		theta += Math.PI/80;
-		this.translate(new Vector(pship.getX()+dist-getPos().getX(), d*(10-10*Math.cos(theta))-getPos().getY(), d*(10*Math.sin(theta))-getPos().getZ()));
+		this.translate(new Vector(pship.getX()+dist-getPos().getX(), d*(10-10*Math.cos(theta))-getPos().getY()+init.getY(), d*(10*Math.sin(theta))-getPos().getZ()+init.getZ()));
 		this.setPos(new Vector(pship.getX()+dist, d*(10-10*Math.cos(theta))+init.getY(), d*(10*Math.sin(theta))+init.getZ()));
 		if (moveCounter==159) {
 			Arrays.fill(movestage, false);
@@ -161,13 +169,13 @@ public class Enemy extends SpaceShip {
 	private void move1(GraphicsPanel graphicsPanel) {
 		if (moveCounter<40) {
 			this.translate(new Vector(pship.getX()+dist-getPos().getX(), d*10.0/40, 0));
-			this.setPos(new Vector(pship.getX()+dist, d*10.0/40+getPos().getY(), 0));
+			this.setPos(new Vector(pship.getX()+dist, d*10.0/40+getPos().getY(), getPos().getZ()));
 		} else if (moveCounter<120) {
 			this.translate(new Vector(pship.getX()+dist-getPos().getX(), -d*10.0/40, 0));
-			this.setPos(new Vector(pship.getX()+dist, -d*10.0/40+getPos().getY(), 0));
+			this.setPos(new Vector(pship.getX()+dist, -d*10.0/40+getPos().getY(), getPos().getZ()));
 		} else if (moveCounter<160) {
 			this.translate(new Vector(pship.getX()+dist-getPos().getX(), d*10.0/40, 0));
-			this.setPos(new Vector(pship.getX()+dist, d*10.0/40+getPos().getY(), 0));
+			this.setPos(new Vector(pship.getX()+dist, d*10.0/40+getPos().getY(), getPos().getZ()));
 		} else if (moveCounter==160) {
 			Arrays.fill(movestage, false);
 		}
@@ -180,13 +188,13 @@ public class Enemy extends SpaceShip {
 	private void move2(GraphicsPanel graphicsPanel) {
 		if (moveCounter<40) {
 			this.translate(new Vector(pship.getX()+dist-getPos().getX(), 0, d*10.0/40));
-			this.setPos(new Vector(pship.getX()+dist, 0, d*10.0/40+getPos().getZ()));
+			this.setPos(new Vector(pship.getX()+dist, getPos().getY(), d*10.0/40+getPos().getZ()));
 		} else if (moveCounter<120) {
 			this.translate(new Vector(pship.getX()+dist-getPos().getX(), 0, -d*10.0/40));
-			this.setPos(new Vector(pship.getX()+dist, 0, -d*10.0/40+getPos().getZ()));
+			this.setPos(new Vector(pship.getX()+dist, getPos().getY(), -d*10.0/40+getPos().getZ()));
 		} else if (moveCounter<160) {
 			this.translate(new Vector(pship.getX()+dist-getPos().getX(), 0, d*10.0/40));
-			this.setPos(new Vector(pship.getX()+dist, 0, d*10.0/40+getPos().getZ()));
+			this.setPos(new Vector(pship.getX()+dist, getPos().getY(), d*10.0/40+getPos().getZ()));
 		} else if (moveCounter==160) {
 			Arrays.fill(movestage, false);
 		}
@@ -219,9 +227,9 @@ public class Enemy extends SpaceShip {
 	 */
 	private void fire0 (GraphicsPanel graphicsPanel) {
 		//System.out.println(fireCounter);
-		if (fireCounter%25==0) {
+		if (fireCounter%15==0) {
 			graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), 
-					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3);
+					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3, true);
 		}
 		if (fireCounter==224) {
 			Arrays.fill(firestage, false);
@@ -234,8 +242,8 @@ public class Enemy extends SpaceShip {
 	 * @param graphicsPanel
 	 */
 	private void fire1 (GraphicsPanel graphicsPanel) {
-		if (fireCounter%25==0) {
-			graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1,0,0), 0.3);
+		if (fireCounter%15==0) {
+			graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1,0,0), 0.3, true);
 		}
 		if (fireCounter==224) {
 			Arrays.fill(firestage, false);
@@ -243,11 +251,11 @@ public class Enemy extends SpaceShip {
 	}
 
 	/**
-	 * Fires nothing for 124 game ticks
+	 * Fires nothing for set game ticks
 	 * @param graphicsPanel
 	 */
 	private void fire2 (GraphicsPanel graphicsPanel) {
-		if (fireCounter==124) {
+		if (fireCounter==84) {
 			Arrays.fill(firestage, false);
 		}
 	}
@@ -257,10 +265,10 @@ public class Enemy extends SpaceShip {
 	 * @param graphicsPanel
 	 */
 	private void fire3 (GraphicsPanel graphicsPanel) {
-		if (fireCounter>50&&fireCounter<80&&fireCounter%5==0)
+		if (fireCounter>25&&fireCounter<55&&fireCounter%5==0)
 			graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), 
-					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3);
-		if (fireCounter==119) {
+					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3, true);
+		if (fireCounter==85) {
 			Arrays.fill(firestage, false);
 		}
 	}

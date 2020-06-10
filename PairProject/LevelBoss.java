@@ -6,6 +6,9 @@ public class LevelBoss extends Level {
 	private ArrayList<BossWeakness> bossWeaknessList = new ArrayList<BossWeakness>();
 	private double totalHealth;
 	private Explosion explosion;
+	private int ringCounter = -100;
+	
+	public LevelBoss () { setLEVEL_NUM(4); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel) {		
 		bossFrame = new BossFrame(graphicsPanel);
@@ -32,7 +35,6 @@ public class LevelBoss extends Level {
 		totalHealth = 0;
 		for (BossWeakness bossWeakness : bossWeaknessList)
 			totalHealth += bossWeakness.getHealth();
-		
 		if (totalHealth <= 0 && explosion == null) {
 			explosion = new Explosion(bossFrame.getPos(), 40, 1);
 			graphicsPanel.getMeshList().add(explosion);
@@ -42,9 +44,22 @@ public class LevelBoss extends Level {
 			if (!explosion.update(bossFrame.getPos())) {
 				System.out.println("clear");
 				bossFrame.getTris().clear();
+				return true;
 			}
 		
+		ringCounter++;
+		if (ringCounter == 300) {
+			AgilityRing ring = new AgilityRing(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+300, 0, 0));
+			graphicsPanel.getRingList().add(ring);
+			graphicsPanel.getMeshList().add(ring);
+			ringCounter = 0;
+		}
+		
 		return false;
+	}
+	
+	public double determineScore (GraphicsPanel graphicsPanel) {
+		return graphicsPanel.getPlayerShip().getHealth();
 	}
 	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {
