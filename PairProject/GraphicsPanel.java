@@ -196,7 +196,8 @@ public class GraphicsPanel extends JPanel {
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
 						meshList.add(charge);
-					bigShotChargeCounter++;
+					if (bigShotChargeCounter == 0)
+						bigShotChargeCounter++;
 				}
 				
 				panel.getIgnoreRepaint();
@@ -367,6 +368,9 @@ public class GraphicsPanel extends JPanel {
 				
 				charge.update(graphicsPanel);
 				rocket.update(graphicsPanel);
+				
+				if (bigShotChargeCounter > 0)
+					bigShotChargeCounter++;
 				
 				panel.repaint();
 			}

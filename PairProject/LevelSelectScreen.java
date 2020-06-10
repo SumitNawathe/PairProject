@@ -15,7 +15,7 @@ public class LevelSelectScreen extends JPanel {
 	private String currentLevelIntroText;
 	private double currentBestHealth;
 	private Level currentLevel;
-	private JButton startButton;
+	private JButton startButton, backToIntroScreen;
 	LevelSelectScreen levelSelectScreen;
 	private String saveFileLocation;
 	
@@ -67,6 +67,16 @@ public class LevelSelectScreen extends JPanel {
 		startButton.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));
 		startButton.setLocation(16*SCREEN_WIDTH/21, 17*SCREEN_HEIGHT/21);
 		this.add(startButton);
+		
+		backToIntroScreen = new JButton("BACK");
+		backToIntroScreen.addActionListener(new ActionListener () {
+			public void actionPerformed (ActionEvent event) {
+				gameFrame.goToIntroScreen();
+			}
+		});
+		backToIntroScreen.setSize(new Dimension(2*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21));
+		backToIntroScreen.setLocation(0, 0);
+		this.add(backToIntroScreen);
 		
 		if (levelOptionList.size() > 0) {
 			currentImage = levelOptionList.get(0).getImage();
