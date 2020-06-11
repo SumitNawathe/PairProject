@@ -12,7 +12,7 @@ public class EnemyLevel1 extends Level {
 		this.difficulty=difficulty;
 	}
 
-	public EnemyLevel1 () { setLEVEL_NUM(1); }
+	public EnemyLevel1 () { super(); setLEVEL_NUM(1); }
 	
 	public boolean update(GraphicsPanel graphicsPanel) {
 		if (getProgressState()==0&&graphicsPanel.getPlayerShip().getPos().getX()>10) {
