@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.*;
 import java.io.*;
+import java.nio.file.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
@@ -42,6 +43,7 @@ public class GraphicsPanel extends JPanel {
 	private boolean dead;
 	private int difficulty;
 	private Mesh bulletMesh;
+	private boolean cannon, multi;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -57,8 +59,9 @@ public class GraphicsPanel extends JPanel {
 	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty, int abilityState) {
 		try {
 			bulletMesh = Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png");
+			cannon = Boolean.parseBoolean(Files.readAllLines(Paths.get(gameFrame.CURRENT_SAVEDATA_LOCATION)).get(4).split("\\s+")[0]);
+			System.out.println("Cannon: "+cannon);
 		} catch (Exception e) {}
-		
 		this.difficulty=difficulty;
 		fPressed = false;
 //		int width = SCREEN_WIDTH;
@@ -291,7 +294,6 @@ public class GraphicsPanel extends JPanel {
 			public void run () {
 				frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
 //				depthArray = new double[SCREEN_HEIGHT][SCREEN_WIDTH];
-				
 //				if (level.update(graphicsPanel) && playerShip.getHealth() > 0) {
 				if (level.update(graphicsPanel) && !endAnimation) {
 					endAnimation = true;
@@ -305,8 +307,12 @@ public class GraphicsPanel extends JPanel {
 				}
 				
 				if (endAnimation && counter == 0) {
+					if (level.getLEVEL_NUM()==2&&!cannon) {
+						gameFrame.goToAbilityScreen(0);
+					} else {
+						gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
+					}
 					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), playerShip.getHealth()>0, level.determineScore(graphicsPanel));
-					gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 					timer.cancel();
 					timer.purge();
 				}

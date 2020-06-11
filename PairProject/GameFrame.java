@@ -6,6 +6,7 @@ public class GameFrame extends JFrame{
 	private SavePurgatory purgatory;
 	private LevelSelectScreen levelSelectScreen;
 	private InstructionScreen instructionScreen;
+	private EnemyInstructionScreen enemyInstructionScreen;
 	private GraphicsPanel graphicsPanel;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
 	String CURRENT_SAVEDATA_LOCATION;
@@ -116,6 +117,26 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
+	public void goToEnemyInstructionScreen (int difficulty, int abilityState) {
+		this.getContentPane().removeAll();
+		enemyInstructionScreen = new EnemyInstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState);
+		this.getContentPane().add(enemyInstructionScreen);
+		this.pack();
+		this.revalidate();
+		this.repaint();
+        this.setVisible(true);
+	}
+	
+	public void goToAbilityScreen (int ability) {
+		this.getContentPane().removeAll();
+		if (ability==0)
+			this.getContentPane().add(new CannonScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		this.pack();
+		this.revalidate();
+		this.repaint();
+        this.setVisible(true);
+	}
+	
 	public void startLevel (Level level, int difficulty, int abilityState) {
 		this.getContentPane().removeAll();
 		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState);
@@ -126,7 +147,7 @@ public class GameFrame extends JFrame{
 		this.setVisible(true);
 	}
 	
-	public static void main (String[] args) 
+	public static void main (String[] args) {
 		GameFrame gameFrame = new GameFrame();
 	}
 }
