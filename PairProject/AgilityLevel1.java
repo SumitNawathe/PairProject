@@ -4,10 +4,13 @@ import java.awt.*;
 public class AgilityLevel1 extends Level {
 	Mesh moon, mars, earth;
 	ArrayList<AgilityRing> set1, set2, set3;
+	private int difficulty;
 	
 	public AgilityLevel1 () { setLEVEL_NUM(0); }
 	
-	public void initializeGame(GraphicsPanel graphicsPanel) {
+	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
+		System.out.println("diff: "+difficulty);
+		this.difficulty=difficulty;
 //		game.getRingList().add(new AgilityRing(new Vector(5, 0, -5)));
 //		game.getRingList().add(new AgilityRing(new Vector(25, 0, -5)));
 //		game.getRingList().add(new AgilityRing(new Vector(45, 0, -5)));
@@ -99,7 +102,7 @@ public class AgilityLevel1 extends Level {
 			graphicsPanel.getRingList().addAll(set2);
 			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1040) {
@@ -108,7 +111,7 @@ public class AgilityLevel1 extends Level {
 			graphicsPanel.getMeshList().addAll(set3);
 			graphicsPanel.getRingList().addAll(set3);			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 20, 0, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		}

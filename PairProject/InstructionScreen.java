@@ -13,7 +13,7 @@ public class InstructionScreen extends JPanel {
 	private Image shipBack1, shipRocket1, shipFire1;
 	private JButton startButton;
 
-	public InstructionScreen (GameFrame gameFrame, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
+	public InstructionScreen (GameFrame gameFrame, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty) {
 		this.SCREEN_WIDTH=SCREEN_WIDTH;
 		this.SCREEN_HEIGHT=SCREEN_HEIGHT;
 		scaleX=(double)SCREEN_WIDTH/1200;
@@ -49,7 +49,7 @@ public class InstructionScreen extends JPanel {
 		startButton = new JButton("BEGIN!");
 		startButton.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
-					gameFrame.startLevel(new AgilityLevel1());
+					gameFrame.startLevel(new AgilityLevel1(), difficulty);
 			}
 		});
 		this.add(startButton);

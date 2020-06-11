@@ -10,8 +10,8 @@ public class LevelBoss extends Level {
 	
 	public LevelBoss () { setLEVEL_NUM(4); }
 	
-	public void initializeGame(GraphicsPanel graphicsPanel) {		
-		bossFrame = new BossFrame(graphicsPanel);
+	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {		
+		bossFrame = new BossFrame(graphicsPanel, difficulty);
 		graphicsPanel.getEnemyShips().add(bossFrame);
 		graphicsPanel.getMeshList().add(bossFrame);
 		

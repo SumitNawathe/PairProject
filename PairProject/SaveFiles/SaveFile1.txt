@@ -1,4 +1,6 @@
+difficulty 0
 false 0.0
 false 0.0
-true 76.66666666666666
+false 0.0
+false 0.0
 false 0.0

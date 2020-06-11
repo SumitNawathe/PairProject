@@ -37,7 +37,6 @@ public class GameFrame extends JFrame{
 		
 		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 //		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
-		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 		goToIntroScreen();
 	}
@@ -65,6 +64,15 @@ public class GameFrame extends JFrame{
 		this.setVisible(true);
 	}
 	
+	public void goToDifficultyScreen(int save) {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(new DifficultyScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, save));
+		this.pack();
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
+	}
+	
 	public void goToLevelSelectScreen (String SAVEDATA_LOCATION) {
 		this.getContentPane().removeAll();
 		if (!SAVEDATA_LOCATION.equals(CURRENT_SAVEDATA_LOCATION)) {
@@ -78,8 +86,9 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
-	public void goToInstructionScreen () {
+	public void goToInstructionScreen (int difficulty) {
 		this.getContentPane().removeAll();
+		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty);
 		this.getContentPane().add(instructionScreen);
 		this.pack();
 		this.revalidate();
@@ -87,9 +96,9 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
-	public void startLevel (Level level) {
+	public void startLevel (Level level, int difficulty) {
 		this.getContentPane().removeAll();
-		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT);
+		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty);
 		this.getContentPane().add(graphicsPanel);
 		this.pack();
 		this.revalidate();

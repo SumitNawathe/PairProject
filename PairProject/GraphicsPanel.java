@@ -40,6 +40,7 @@ public class GraphicsPanel extends JPanel {
 	private boolean endAnimation;
 	private Explosion explosion;
 	private boolean dead;
+	private int difficulty;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -52,7 +53,8 @@ public class GraphicsPanel extends JPanel {
 		meshList.add(bullet);
 	}
 	
-	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
+	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty) {
+		this.difficulty=difficulty;
 		fPressed = false;
 //		int width = SCREEN_WIDTH;
 //		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
@@ -83,7 +85,7 @@ public class GraphicsPanel extends JPanel {
 			meshList.add(playerShip);
 			
 			this.level = level;
-			level.initializeGame(this);
+			level.initializeGame(this, difficulty);
 			
 //			ringList = new ArrayList<AgilityRing>();
 //			ringList.add(new AgilityRing(new Vector(5, 0, -5)));

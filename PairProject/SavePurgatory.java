@@ -23,41 +23,41 @@ public class SavePurgatory extends JPanel {
 		cont=new JButton("CONTINUE SAVE");
 		cont.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
-					gameFrame.goToLevelSelectScreen("SaveFiles/SaveFile"+save+".txt");
+				gameFrame.goToLevelSelectScreen("SaveFiles/SaveFile"+save+".txt");
 			}
 		});
 		this.add(cont);
 		cont.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));
 		cont.setLocation(16*SCREEN_WIDTH/21, 17*SCREEN_HEIGHT/21);
-		
+
 		clear=new JButton("CLEAR SAVE");
 		clear.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
 				FileInputStream in = null;
 				FileOutputStream out = null;
-			    	try{
-			    	    File inFile =new File("SaveFiles/ClearSave.txt");
-			    	    File outFile =new File("SaveFiles/SaveFile"+save+".txt");
-			 
-			    	    in = new FileInputStream(inFile);
-			    	    out = new FileOutputStream(outFile);
-			 
-			    	    byte[] buf = new byte[1024];
-			 
-			    	    int length;
-			    	    while ((length = in.read(buf)) > 0){
-			    	    	out.write(buf, 0, length);
-			    	    }
-			    	    in.close();
-			    	    out.close();
-			    	} catch (Exception e) {System.out.println("Clear Save Failed.");}
+				try{
+					File inFile =new File("SaveFiles/ClearSave.txt");
+					File outFile =new File("SaveFiles/SaveFile"+save+".txt");
+
+					in = new FileInputStream(inFile);
+					out = new FileOutputStream(outFile);
+
+					byte[] buf = new byte[1024];
+
+					int length;
+					while ((length = in.read(buf)) > 0){
+						out.write(buf, 0, length);
+					}
+					in.close();
+					out.close();
+				} catch (Exception e) {System.out.println("Clear Save Failed.");}
 				gameFrame.goToIntroScreen();
 			}
 		});
 		this.add(clear);
 		clear.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));
 		clear.setLocation(SCREEN_WIDTH/21-(int)(20*scaleX), 17*SCREEN_HEIGHT/21);
-		
+
 		back=new JButton("BACK");
 		back.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
@@ -94,11 +94,21 @@ public class SavePurgatory extends JPanel {
 			String text=saves.get(i);
 			String[] texts=text.split("\\s+");
 			boolean complete=Boolean.parseBoolean(texts[0]);
-			String score=texts[1];
-			if (complete)
-				ret.add("Level: "+(i+1)+"   Status: Complete    Score: "+score);
-			else
-				ret.add("Level: "+(i+1)+"   Status: Incomplete  Score: "+score);
+			if (i==0) {
+				int diff=Integer.parseInt(texts[1]);
+				if  (diff==0)
+				ret.add("Difficulty: Easy");
+				else if (diff==1)
+					ret.add("Difficulty: Medium");	
+				else
+					ret.add("Difficulty: Hard");
+			} else {
+				String score=texts[1];
+				if (complete)
+					ret.add("Level: "+i+"   Status: Complete    Score: "+score);
+				else
+					ret.add("Level: "+i+"   Status: Incomplete  Score: "+score);
+			}
 		}
 		return ret;
 	}

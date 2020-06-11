@@ -9,8 +9,10 @@ public class BossFrame extends SpaceShip {
 	private int[] fireCounters, fireCurrents;
 	private boolean[][] firestages;
 	private Vector pship;
-
-	public BossFrame (GraphicsPanel graphicsPanel) {
+	private int difficulty;
+	
+	public BossFrame (GraphicsPanel graphicsPanel, int difficulty) {
+		this.difficulty=difficulty;
 		setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+30, 0, 0));
 		try {
 			setTris(Mesh.loadFromObjFile("Models/Boss 1.obj", "Textures/Boss Map 1.png").getTris());
@@ -81,7 +83,14 @@ public class BossFrame extends SpaceShip {
 	
 	private void fire0 (GraphicsPanel graphicsPanel, int firePos) {
 		//System.out.println(fireCounter);
-		if (fireCounters[firePos]%10==0) {
+		int firespeed;
+		if (difficulty==0)
+			firespeed=16;
+		else if (difficulty==1)
+			firespeed=10;
+		else
+			firespeed=7;
+		if (fireCounters[firePos]%firespeed==0) {
 			//if (firePos==0)
 			//System.out.println(pship.plus(new Vector(30,0,0)).minus(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4)))).unit().scale(0.5));
 			graphicsPanel.fireBullet(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4))), 
@@ -96,7 +105,14 @@ public class BossFrame extends SpaceShip {
 	}
 
 	private void fire1 (GraphicsPanel graphicsPanel, int firePos) {
-		if (fireCounters[firePos]%10==0) {
+		int firespeed;
+		if (difficulty==0)
+			firespeed=16;
+		else if (difficulty==1)
+			firespeed=10;
+		else
+			firespeed=7;
+		if (fireCounters[firePos]%firespeed==0) {
 			graphicsPanel.fireBullet(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4))),
 					new Vector(-1,0,0), 0.3, true);
 		}
@@ -112,7 +128,14 @@ public class BossFrame extends SpaceShip {
 	}
 
 	private void fire3 (GraphicsPanel graphicsPanel, int firePos) {
-		if (fireCounters[firePos]>50&&fireCounters[firePos]<80&&fireCounters[firePos]%5==0)
+		int firespeed;
+		if (difficulty==0)
+			firespeed=7;
+		else if (difficulty==1)
+			firespeed=5;
+		else
+			firespeed=3;
+		if (fireCounters[firePos]>50&&fireCounters[firePos]<80&&fireCounters[firePos]%firespeed==0)
 			graphicsPanel.fireBullet(getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(firePos*Math.PI/2+theta+Math.PI/4), 5*3.5*Math.sin(firePos*Math.PI/2+theta+Math.PI/4))), 
 					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3, true);
 		if (fireCounters[firePos]==119) {

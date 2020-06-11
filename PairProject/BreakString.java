@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class BreakString {
-	public static ArrayList<String> breakText(String string){
+	public static ArrayList<String> breakText(String string) {
 		ArrayList<String> ret=new ArrayList<String>();
 		char[] text=string.toCharArray();
 		while (string.length()>28) {

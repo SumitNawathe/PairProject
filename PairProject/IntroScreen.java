@@ -23,7 +23,8 @@ public class IntroScreen extends JPanel {
 		try {
 			cs=Files.readAllBytes(clearSave.toPath());
 		} catch (Exception e) {System.out.println("Failed to read Clear Save");}
-
+		//System.out.println("cs: "+new String(new byte[] {cs[11]}));
+		
 		startSave1=setButton(gameFrame, compareFiles(1), 1);
 		this.add(startSave1);
 
@@ -48,7 +49,7 @@ public class IntroScreen extends JPanel {
 		if (compare) {
 			ret.addActionListener(new ActionListener () {
 				public void actionPerformed (ActionEvent event) {
-					gameFrame.goToLevelSelectScreen("SaveFiles/SaveFile"+save+".txt");
+					gameFrame.goToDifficultyScreen(save);
 				}
 			});	
 		} else {

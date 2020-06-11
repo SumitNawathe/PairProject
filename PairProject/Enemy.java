@@ -7,15 +7,16 @@ public class Enemy extends SpaceShip {
 	public double fireCounter;
 	private Vector pship, initPos;
 	private boolean[] firestage, movestage;
-	private int moveCounter, dist, d, ai;
+	private int moveCounter, dist, d, ai, difficulty;
 	
-	public Enemy (Vector pos, int dist, int ai) {
+	public Enemy (Vector pos, int dist, int ai, int difficulty) {
 		super();
 		setCollisionRadius(2);
 		firestage=new boolean[4];
 		movestage=new boolean[4];
 		this.dist=dist;
 		this.ai=ai;
+		this.difficulty=difficulty;
 	}
 	
 	public boolean bulletCollision (ArrayList<Bullet> bulletList) {
@@ -125,9 +126,16 @@ public class Enemy extends SpaceShip {
 			this.setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+10, 10*Math.cos(theta), 10*Math.sin(theta)));
 		}
 		theta += Math.PI/80;
+		int firespeed;
+		if (difficulty==0)
+			firespeed=16;
+		else if (difficulty==1)
+			firespeed=10;
+		else
+			firespeed=7;
 		fireCounter++;
 		if (explosion == null) {
-			if (fireCounter >= 10) {
+			if (fireCounter >= firespeed) {
 				graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1, 0, 0), 0.3, true);
 				fireCounter = 0;
 			}
@@ -227,7 +235,14 @@ public class Enemy extends SpaceShip {
 	 */
 	private void fire0 (GraphicsPanel graphicsPanel) {
 		//System.out.println(fireCounter);
-		if (fireCounter%15==0) {
+		int firespeed;
+		if (difficulty==0)
+			firespeed=20;
+		else if (difficulty==1)
+			firespeed=15;
+		else
+			firespeed=10;
+		if (fireCounter%firespeed==0) {
 			graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), 
 					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3, true);
 		}
@@ -242,7 +257,14 @@ public class Enemy extends SpaceShip {
 	 * @param graphicsPanel
 	 */
 	private void fire1 (GraphicsPanel graphicsPanel) {
-		if (fireCounter%15==0) {
+		int firespeed;
+		if (difficulty==0)
+			firespeed=20;
+		else if (difficulty==1)
+			firespeed=15;
+		else
+			firespeed=10;
+		if (fireCounter%firespeed==0) {
 			graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), new Vector(-1,0,0), 0.3, true);
 		}
 		if (fireCounter==224) {
@@ -265,7 +287,14 @@ public class Enemy extends SpaceShip {
 	 * @param graphicsPanel
 	 */
 	private void fire3 (GraphicsPanel graphicsPanel) {
-		if (fireCounter>25&&fireCounter<55&&fireCounter%5==0)
+		int firespeed;
+		if (difficulty==0)
+			firespeed=7;
+		else if (difficulty==1)
+			firespeed=5;
+		else
+			firespeed=4;
+		if (fireCounter>25&&fireCounter<55&&fireCounter%firespeed==0)
 			graphicsPanel.fireBullet(getPos().plus(new Vector(-3, 0, 0)), 
 					pship.plus(new Vector(30,0,0)).minus(getPos().plus(new Vector(-3,0,0))).unit().scale(0.5), 0.3, true);
 		if (fireCounter==85) {
