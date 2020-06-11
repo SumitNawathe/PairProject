@@ -211,7 +211,7 @@ public class GraphicsPanel extends JPanel {
 				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
 					if (playerShip.getEnergy() > 0) {
 						fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-						//playerShip.decreaseEnergy(1);
+						playerShip.decreaseEnergy(1);
 					}
 					fPressed = true;
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {

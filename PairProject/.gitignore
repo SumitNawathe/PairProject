@@ -62,5 +62,7 @@
 /DifficultyScreen$3.class
 /LevelSelectScreen$4.class
 /LevelSelectScreen$5.class
-/AgilityLevel3.class
-/AgilityLevel4.class
+/EnemyLevel3.class
+/EnemyLevel.class
+/EnemyLevel4.class
+/EnemyLevel5.class

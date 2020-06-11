@@ -17,7 +17,7 @@ public class LevelSelectScreen extends JPanel {
 	private Image currentImage;
 	private String currentLevelIntroText;
 	private Level currentLevel;
-	private int currentScore;
+	private double currentScore;
 	private JButton startButton, backToIntroScreen;
 	LevelSelectScreen levelSelectScreen;
 	private String saveFileLocation;
@@ -72,7 +72,7 @@ public class LevelSelectScreen extends JPanel {
 						currentImage = levelOption.getImage();
 						currentLevelIntroText = levelOption.getLevelIntroText();
 						currentLevel = levelOption.getLevel();
-						currentScore = (int)levelOption.getSAVEDATA_HEALTH();
+						currentScore = levelOption.getSAVEDATA_HEALTH();
 						introTexts=BreakString.breakText(currentLevelIntroText);
 						levelSelectScreen.repaint();
 						break;
@@ -112,7 +112,7 @@ public class LevelSelectScreen extends JPanel {
 			currentImage = levelOptionList.get(0).getImage();
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
-			currentScore = (int)levelOptionList.get(0).getSAVEDATA_HEALTH();
+			currentScore = levelOptionList.get(0).getSAVEDATA_HEALTH();
 		}
 		introTexts=BreakString.breakText(currentLevelIntroText);
 		
@@ -164,7 +164,6 @@ public class LevelSelectScreen extends JPanel {
 						
 						completed = true;
 						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_HEALTH());
-						health*=10;
 						out.write(completed + " " + health + "\n");
 						levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
 						levelOptionList.get(i).setSAVEDATA_HEALTH(health);
@@ -197,7 +196,7 @@ public class LevelSelectScreen extends JPanel {
 		//		g.setColor(Color.RED);
 		for (int i=0;i<levelOptionList.size();i++) {
 			LevelOption levelOption=levelOptionList.get(i);
-			if (levelOption.SAVEDATA_COMPLETED) {
+			if (levelOption.SAVEDATA_COMPLETED&&i!=levelOptionList.size()-1) {
 				g.setColor(Color.BLACK);
 				g.setStroke(new BasicStroke(6));
 				if (i != levelOptionList.size()-1)
@@ -221,8 +220,8 @@ public class LevelSelectScreen extends JPanel {
 			for (int i=0;i<introTexts.size();i++) {
 				g.drawString(introTexts.get(i), 16*SCREEN_WIDTH/21, 7*SCREEN_HEIGHT/21+12*i);
 			}
-			System.out.println(currentScore);
-			g.drawString("High Score: "+currentScore,17*SCREEN_WIDTH/21-(int)(20*scaleX), 7*SCREEN_HEIGHT/21+(int)(12*34*scaleY));
+			//System.out.println(currentScore);
+			g.drawString("High Score: "+(int)(10*currentScore),17*SCREEN_WIDTH/21-(int)(20*scaleX), 7*SCREEN_HEIGHT/21+(int)(12*34*scaleY));
 		}
 	}
 

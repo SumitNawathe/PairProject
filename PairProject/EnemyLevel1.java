@@ -1,9 +1,8 @@
 import java.awt.Graphics;
 
-public class EnemyLevel1 extends Level {
+public class EnemyLevel1 extends EnemyLevel {
 	private Mesh mars;
 	private int difficulty;
-	//TODO: Maybe have rings that show up periodically that give back a little health.
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		try {
 			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(2100, 600, -600));
@@ -12,9 +11,10 @@ public class EnemyLevel1 extends Level {
 		this.difficulty=difficulty;
 	}
 
-	public EnemyLevel1 () { super(); setLEVEL_NUM(1); }
+	public EnemyLevel1 () { super(); setLEVEL_NUM(2); }
 	
 	public boolean update(GraphicsPanel graphicsPanel) {
+		spawnRings(graphicsPanel);		
 		if (getProgressState()==0&&graphicsPanel.getPlayerShip().getPos().getX()>10) {
 			incrementProgressState();
 			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+150, -10, -10), 10, 0, difficulty);
@@ -52,11 +52,5 @@ public class EnemyLevel1 extends Level {
 		}
 		return getProgressState()==5 && graphicsPanel.getEnemyShips().size()==0;
 	}
-
-	public double determineScore (GraphicsPanel graphicsPanel) {
-		return graphicsPanel.getPlayerShip().getHealth();
-	}
-	
-	public void draw(GraphicsPanel graphicsPanel, Graphics g) {}
 
 }
