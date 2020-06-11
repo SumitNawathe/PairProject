@@ -1,5 +1,5 @@
-difficulty -1
-false 0.0
+difficulty 0
+true 542.3728813559321
 false 0.0
 false 0.0
 false 0.0
