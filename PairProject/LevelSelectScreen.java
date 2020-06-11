@@ -121,6 +121,14 @@ public class LevelSelectScreen extends JPanel {
 			}
 			out.close();
 		} catch (Exception e) {}
+		
+//		LevelSelectScreen lss = this;
+//		(new java.util.Timer()).schedule(new TimerTask () {
+//			public void run () {
+//				System.out.println("hello");
+//				lss.repaint();
+//			}
+//		}, 2000);
 	}
 
 	public void paintComponent (Graphics g1) {

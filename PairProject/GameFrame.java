@@ -80,6 +80,7 @@ public class GameFrame extends JFrame{
 			CURRENT_SAVEDATA_LOCATION = SAVEDATA_LOCATION;
 		}
 		this.getContentPane().add(levelSelectScreen);
+		levelSelectScreen.repaint();
 		this.pack();
 		this.revalidate();
 		this.repaint();
