@@ -158,7 +158,7 @@ public class GraphicsPanel extends JPanel {
 					if (!meshList.contains(rocket))
 						meshList.add(rocket);
 					
-				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
+				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {//TODO: Pretty sure this is not supposed to be here.
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
 					//System.out.println("Shift");
