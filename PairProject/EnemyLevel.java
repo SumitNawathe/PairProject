@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.util.Random;
 
 public abstract class EnemyLevel extends Level {
 	private int ringCounter;
@@ -10,8 +11,11 @@ public abstract class EnemyLevel extends Level {
 
 	public void spawnRings(GraphicsPanel graphicsPanel) {
 		ringCounter++;
-		if (ringCounter == 150+150*difficulty) {
-			AgilityRing ring = new AgilityRing(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+300, (int)(15*Math.random()), (int)(15*Math.random())));
+		if (ringCounter == 100+100*difficulty) {
+			Random rand=new Random();
+			int a=rand.nextInt(15+15)-15;
+			int b=rand.nextInt(15+15)-15;
+			AgilityRing ring = new AgilityRing(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+300, a, b));
 			graphicsPanel.getRingList().add(ring);
 			graphicsPanel.getMeshList().add(ring);
 			ringCounter = 0;

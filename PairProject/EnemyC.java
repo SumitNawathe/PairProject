@@ -9,6 +9,10 @@ public class EnemyC extends Enemy {
 	private int moveCounter, dist, d, ai, difficulty;
 	public EnemyC (Vector pos, int dist, int ai, int difficulty) {
 		super(pos, dist, ai, difficulty);
+		firestage=new boolean[4];
+		movestage=new boolean[4];
+		this.dist=dist;
+		this.difficulty=difficulty;
 		setPos(pos);
 		try {
 			setTris(Mesh.loadFromObjFile("Models/Ship Model 2.obj", "Textures/Ship Model 2 Map.png").getTris());
