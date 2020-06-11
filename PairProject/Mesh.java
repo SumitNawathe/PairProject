@@ -117,4 +117,13 @@ public class Mesh {
 		
 		return mesh;
 	}
+	
+	public Mesh clone () {
+		ArrayList<Triangle> newTris = new ArrayList<Triangle>();
+		for (Triangle tri : tris)
+			newTris.add(tri.clone());
+		Mesh newMesh = new Mesh();
+		newMesh.setTris(newTris);
+		return newMesh;
+	}
 }

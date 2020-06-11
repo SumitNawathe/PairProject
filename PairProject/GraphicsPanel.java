@@ -41,6 +41,7 @@ public class GraphicsPanel extends JPanel {
 	private Explosion explosion;
 	private boolean dead;
 	private int difficulty;
+	private Mesh bulletMesh;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -48,12 +49,16 @@ public class GraphicsPanel extends JPanel {
 	public ArrayList<SpaceShip> getEnemyShips () { return enemyShips; }
 	
 	public void fireBullet (Vector pos, Vector vel, double collisionRadius, boolean enemy) {
-		Bullet bullet = new Bullet(pos, vel, collisionRadius, enemy);
+		Bullet bullet = new Bullet(bulletMesh.clone(), pos, vel, collisionRadius, enemy);
 		bulletList.add(bullet);
 		meshList.add(bullet);
 	}
 	
 	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty) {
+		try {
+			bulletMesh = Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png");
+		} catch (Exception e) {}
+		
 		this.difficulty=difficulty;
 		fPressed = false;
 //		int width = SCREEN_WIDTH;
