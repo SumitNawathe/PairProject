@@ -154,15 +154,19 @@ public class GraphicsPanel extends JPanel {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
-					moveForward = 1;
-					if (!meshList.contains(rocket))
-						meshList.add(rocket);
+					if (playerShip.getEnergy() > 0) {
+						moveForward = 1;
+						if (!meshList.contains(rocket))
+							meshList.add(rocket);
+					}
 					
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {//TODO: Pretty sure this is not supposed to be here.
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
 					//System.out.println("Shift");
-					moveForward = -1;
+					if (playerShip.getEnergy() > 0) {
+						moveForward = -1;
+					}
 				}
 				
 				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -200,8 +204,10 @@ public class GraphicsPanel extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
-					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-					playerShip.decreaseEnergy(1);
+					if (playerShip.getEnergy() > 0) {
+						fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+						playerShip.decreaseEnergy(1);
+					}
 					fPressed = true;
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {
 					if (!meshList.contains(charge))
@@ -218,7 +224,8 @@ public class GraphicsPanel extends JPanel {
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
 					moveForward = 0;
-					meshList.remove(rocket);
+					if (meshList.contains(rocket))
+						meshList.remove(rocket);
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
@@ -286,6 +293,13 @@ public class GraphicsPanel extends JPanel {
 				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
+				
+				if (playerShip.getEnergy() <= 0) {
+					moveForward = 0;
+					if (meshList.contains(rocket))
+						meshList.remove(rocket);
+				}
+				
 				playerShip.update(moveHoriz, moveVert, moveForward);
 				
 				if (moveForward != 0)
