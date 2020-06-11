@@ -1,9 +1,9 @@
 import java.awt.Graphics;
 
-public class EnemyLevel2 extends Level {
+public class EnemyLevel3 extends Level {
 	private int difficulty;
 	private int ringCounter;
-	public EnemyLevel2 () { this.setLEVEL_NUM(3); }
+	public EnemyLevel3 () { this.setLEVEL_NUM(3); }//TODO: This is wrong.
 	
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		this.difficulty=difficulty;

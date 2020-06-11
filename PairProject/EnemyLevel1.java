@@ -16,8 +16,8 @@ public class EnemyLevel1 extends Level {
 	
 	public boolean update(GraphicsPanel graphicsPanel) {
 		ringCounter++;
-		if (ringCounter == 300) {
-			AgilityRing ring = new AgilityRing(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+300, (int)(30*Math.random()), (int)(30*Math.random())));
+		if (ringCounter == 200+100*difficulty) {
+			AgilityRing ring = new AgilityRing(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+300, (int)(15*Math.random()), (int)(15*Math.random())));
 			graphicsPanel.getRingList().add(ring);
 			graphicsPanel.getMeshList().add(ring);
 			ringCounter = 0;

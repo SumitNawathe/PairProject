@@ -41,6 +41,10 @@ public class GameFrame extends JFrame{
 		goToIntroScreen();
 	}
 	
+	public GameFrame (Level level, int difficulty, int abilityState) {
+		startLevel(level, difficulty, abilityState);
+	}
+	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
 		levelSelectScreen.updateSAVEDATA(levelNum, completed, health);
 	}
@@ -106,6 +110,6 @@ public class GameFrame extends JFrame{
 	}
 	
 	public static void main (String[] args) {
-		GameFrame gameFrame = new GameFrame();
+		GameFrame gameFrame = new GameFrame(new EnemyLevel3(), 1, 1);
 	}
 }
