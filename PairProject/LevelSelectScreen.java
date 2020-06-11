@@ -60,6 +60,9 @@ public class LevelSelectScreen extends JPanel {
 			levelOptionList.add(new LevelOption(new AgilityLevel3(), "Textures/strangeplanet2.jpg", "Hello.", 3*SCREEN_WIDTH/11, 1*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new AgilityLevel4(), "Textures/strangeplanet3.jpg", "Hello.", 2*SCREEN_WIDTH/11, 3*SCREEN_HEIGHT/10, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
 			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.", 4*SCREEN_WIDTH/11, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		file.close();
 		} catch (Exception e) { System.out.println(e); }
 		this.addMouseListener(new MouseListener () {
