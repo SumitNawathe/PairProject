@@ -2,15 +2,21 @@ import java.awt.Graphics;
 
 public class EnemyLevel2 extends Level {
 	private int difficulty;
-	
+	private int ringCounter;
 	public EnemyLevel2 () { this.setLEVEL_NUM(3); }
 	
-	//TODO: Maybe have rings that show up periodically that give back a little health.
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		this.difficulty=difficulty;
 	}
 
 	public boolean update(GraphicsPanel graphicsPanel) {
+		ringCounter++;
+		if (ringCounter == 300) {
+			AgilityRing ring = new AgilityRing(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+300, (int)(30*Math.random()), (int)(30*Math.random())));
+			graphicsPanel.getRingList().add(ring);
+			graphicsPanel.getMeshList().add(ring);
+			ringCounter = 0;
+		}
 		if (getProgressState()==0&&graphicsPanel.getPlayerShip().getPos().getX()>10) {
 			incrementProgressState();
 			EnemyC enemy = new EnemyC(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+150, -10, -10), 10, 0, difficulty);
@@ -46,7 +52,7 @@ public class EnemyLevel2 extends Level {
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		}
-		return false;
+		return getProgressState()==5 && graphicsPanel.getEnemyShips().size()==0;
 	}
 
 	public double determineScore (GraphicsPanel graphicsPanel) { return graphicsPanel.getPlayerShip().getHealth(); }

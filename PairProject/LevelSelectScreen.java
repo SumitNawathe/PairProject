@@ -166,7 +166,7 @@ public class LevelSelectScreen extends JPanel {
 		//		g.setColor(Color.RED);
 		for (int i=0;i<levelOptionList.size();i++) {
 			LevelOption levelOption=levelOptionList.get(i);
-			if (levelOption.SAVEDATA_COMPLETED) {
+			if (levelOption.SAVEDATA_COMPLETED&&i!=levelOptionList.size()-1) {
 				g.setColor(Color.BLACK);
 				g.setStroke(new BasicStroke(6));
 				g.drawLine(levelOption.getX0()+LevelOption.SQUARE_SIZE/2, levelOption.getY0()+LevelOption.SQUARE_SIZE/2, 

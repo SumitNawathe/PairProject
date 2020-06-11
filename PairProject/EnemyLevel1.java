@@ -3,7 +3,7 @@ import java.awt.Graphics;
 public class EnemyLevel1 extends Level {
 	private Mesh mars;
 	private int difficulty;
-	//TODO: Maybe have rings that show up periodically that give back a little health.
+	private int ringCounter;
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		try {
 			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(2100, 600, -600));
@@ -15,6 +15,14 @@ public class EnemyLevel1 extends Level {
 	public EnemyLevel1 () { setLEVEL_NUM(1); }
 	
 	public boolean update(GraphicsPanel graphicsPanel) {
+		ringCounter++;
+		if (ringCounter == 300) {
+			AgilityRing ring = new AgilityRing(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+300, (int)(30*Math.random()), (int)(30*Math.random())));
+			graphicsPanel.getRingList().add(ring);
+			graphicsPanel.getMeshList().add(ring);
+			ringCounter = 0;
+		}
+		
 		if (getProgressState()==0&&graphicsPanel.getPlayerShip().getPos().getX()>10) {
 			incrementProgressState();
 			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+150, -10, -10), 10, 0, difficulty);
