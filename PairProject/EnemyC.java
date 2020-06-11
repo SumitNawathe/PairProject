@@ -1,7 +1,7 @@
 
 public class EnemyC extends Enemy{
-	public EnemyC (Vector pos, int dist, int ai) {
-		super(pos, dist, ai);
+	public EnemyC (Vector pos, int dist, int ai, int difficulty) {
+		super(pos, dist, ai, difficulty);
 		setPos(pos);
 		try {
 			setTris(Mesh.loadFromObjFile("Models/Ship Model 2.obj", "Textures/Ship Model 2 Map.png").getTris());

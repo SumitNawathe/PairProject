@@ -4,11 +4,12 @@ import java.awt.*;
 public class AgilityLevel2 extends Level {
 	Mesh mercury, venus;
 	ArrayList<AgilityRing> set1, set2, set3;
+	private int difficulty;
 	
-	public AgilityLevel2 () { setLEVEL_NUM(2); }
+	public AgilityLevel2 () { super(); setLEVEL_NUM(2); }
 	
-	public void initializeGame(GraphicsPanel graphicsPanel) {
-		
+	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
+		this.difficulty=difficulty;
 		try {
 			mercury = Mesh.loadFromObjFile("Models/Mercury.obj", "Textures/Mercury_Diffuse_1K.png").translate(new Vector(600, -300, -300));
 			venus = Mesh.loadFromObjFile("Models/venus2.obj", "Textures/Venus_Atmosphere_2K.png").translate(new Vector(1400, 500, 500));
@@ -44,7 +45,7 @@ public class AgilityLevel2 extends Level {
 			graphicsPanel.getRingList().addAll(set2);
 			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1100) {
@@ -53,7 +54,7 @@ public class AgilityLevel2 extends Level {
 			graphicsPanel.getMeshList().addAll(set3);
 			graphicsPanel.getRingList().addAll(set3);			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		}
@@ -64,7 +65,7 @@ public class AgilityLevel2 extends Level {
 //			game.getEnemyShips().add(enemy);
 //			game.getMeshList().add(enemy);
 //		}
-		return graphicsPanel.getPlayerShip().getPos().getX()>1600;
+		return graphicsPanel.getPlayerShip().getPos().getX()>2140;
 	}
 	
 	public double determineScore (GraphicsPanel graphicsPanel) {

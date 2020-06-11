@@ -8,10 +8,10 @@ public class LevelBoss extends Level {
 	private Explosion explosion;
 	private int ringCounter = -100;
 	
-	public LevelBoss () { setLEVEL_NUM(4); }
+	public LevelBoss () { super(); setLEVEL_NUM(4); }
 	
-	public void initializeGame(GraphicsPanel graphicsPanel) {		
-		bossFrame = new BossFrame(graphicsPanel);
+	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {		
+		bossFrame = new BossFrame(graphicsPanel, difficulty);
 		graphicsPanel.getEnemyShips().add(bossFrame);
 		graphicsPanel.getMeshList().add(bossFrame);
 		

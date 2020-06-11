@@ -60,7 +60,7 @@ public class BossWeakness extends SpaceShip {
 					5*3.5*Math.sin(posNum*Math.PI/2+bossFrame.getTheta()))));
 //			EnemyB enemy = new EnemyB(bossFrame.getPos().clone().plus(new Vector(0, 5*3.5*Math.cos(posNum*Math.PI/2+bossFrame.getTheta()), 
 //					5*3.5*Math.sin(posNum*Math.PI/2+bossFrame.getTheta()))), 20, 0);
-			EnemyB enemy = new EnemyB(new Vector(bossFrame.getPos().getX(), 0, 0), 20, 0);
+			EnemyB enemy = new EnemyB(new Vector(bossFrame.getPos().getX(), 0, 0), 20, 0, 1);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		}
