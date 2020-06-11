@@ -78,8 +78,9 @@ public class LevelSelectScreen extends JPanel {
 		} catch (Exception e) { System.out.println(e); }
 		this.addMouseListener(new MouseListener () {
 			public void mousePressed (MouseEvent event) {
-				for (LevelOption levelOption : levelOptionList)
-					if (levelOption.clickedOnLevel(event.getX(), event.getY())) {
+				for (int i = 0; i < levelOptionList.size(); i++) {
+					LevelOption levelOption = levelOptionList.get(i);
+					if (levelOption.clickedOnLevel(event.getX(), event.getY()) && ((i == 0) || (i != 0 && levelOptionList.get(i-1).SAVEDATA_COMPLETED))) {
 						currentImage = levelOption.getImage();
 						currentLevelIntroText = levelOption.getLevelIntroText();
 						currentLevel = levelOption.getLevel();
@@ -88,6 +89,7 @@ public class LevelSelectScreen extends JPanel {
 						levelSelectScreen.repaint();
 						break;
 					}
+				}
 			}
 			public void mouseReleased (MouseEvent event) {}
 			public void mouseClicked (MouseEvent event) {}
@@ -250,7 +252,9 @@ public class LevelSelectScreen extends JPanel {
 		public Level getLevel () { return level; }
 		public Image getImage () { try { return ImageIO.read(new File(imagePath)); } catch (Exception e) { return null; } }
 		public String getLevelIntroText () { return levelIntroText; }
-		public boolean clickedOnLevel (int x, int y) { return x0 < x && x < x0+SQUARE_SIZE && y0 < y && y < y0+SQUARE_SIZE; }
+		public boolean clickedOnLevel (int x, int y) {
+			return (x0 < x && x < x0+SQUARE_SIZE) && (y0 < y && y < y0+SQUARE_SIZE);
+		}
 		public int getX0 () { return x0; }
 		public int getY0 () { return y0; }
 		public boolean getSAVEDATA_COMPLETED () { return SAVEDATA_COMPLETED; }

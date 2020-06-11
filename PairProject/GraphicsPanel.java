@@ -155,131 +155,135 @@ public class GraphicsPanel extends JPanel {
 		
 		frame.addKeyListener(new KeyListener () {
 			public void keyPressed (KeyEvent event) {
-				if (event.getKeyCode() == KeyEvent.VK_SPACE) {
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
-					//velocity = velocity.plus(new Vector(0.1, 0, 0));
-					//System.out.println("Space");
-					if (playerShip.getEnergy() > 0) {
-						moveForward = 1;
-						if (!meshList.contains(rocket))
-							meshList.add(rocket);
+				if (counter >= 80) {
+					if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
+						//velocity = velocity.plus(new Vector(0.1, 0, 0));
+						//System.out.println("Space");
+						if (playerShip.getEnergy() > 0) {
+							moveForward = 1;
+							if (!meshList.contains(rocket))
+								meshList.add(rocket);
+						}
+						
+					} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {//TODO: Pretty sure this is not supposed to be here.
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
+						//velocity = velocity.plus(new Vector(-0.1, 0, 0));
+						//System.out.println("Shift");
+						if (playerShip.getEnergy() > 0) {
+							moveForward = -1;
+						}
 					}
 					
-				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {//TODO: Pretty sure this is not supposed to be here.
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
-					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
-					//System.out.println("Shift");
-					if (playerShip.getEnergy() > 0) {
-						moveForward = -1;
+					if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+						//yAngle -= Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
+						moveHoriz = 1;
+						
+						if (meshList.contains(rocket)) {
+							playerShip.startRightRoll();
+						}
+					} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+						//yAngle += Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
+						moveHoriz = -1;
+						
+						if (meshList.contains(rocket))
+							playerShip.startRollLeft();
+					} else if (event.getKeyCode() == KeyEvent.VK_UP) {
+						//xAngle -= Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
+						moveVert = 1;
+					} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+						//xAngle += Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
+						moveVert = -1;
 					}
-				}
-				
-				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-					//yAngle -= Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
-					moveHoriz = 1;
 					
-					if (meshList.contains(rocket)) {
-						playerShip.startRightRoll();
-					}
-				} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-					//yAngle += Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
-					moveHoriz = -1;
+					if (event.getKeyCode() == KeyEvent.VK_W)
+						cameraPos = cameraPos.plus(cameraForward.scale(0.5));
+					else if (event.getKeyCode() == KeyEvent.VK_S)
+						cameraPos = cameraPos.minus(cameraForward.scale(0.5));
+					else if (event.getKeyCode() == KeyEvent.VK_D)
+						cameraPos = cameraPos.minus(cameraRight.scale(-0.5));
+					else if (event.getKeyCode() == KeyEvent.VK_A)
+						cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 					
-					if (meshList.contains(rocket))
-						playerShip.startRollLeft();
-				} else if (event.getKeyCode() == KeyEvent.VK_UP) {
-					//xAngle -= Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
-					moveVert = 1;
-				} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-					//xAngle += Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
-					moveVert = -1;
-				}
-				
-				if (event.getKeyCode() == KeyEvent.VK_W)
-					cameraPos = cameraPos.plus(cameraForward.scale(0.5));
-				else if (event.getKeyCode() == KeyEvent.VK_S)
-					cameraPos = cameraPos.minus(cameraForward.scale(0.5));
-				else if (event.getKeyCode() == KeyEvent.VK_D)
-					cameraPos = cameraPos.minus(cameraRight.scale(-0.5));
-				else if (event.getKeyCode() == KeyEvent.VK_A)
-					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
-				
-				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
-					if (playerShip.getEnergy() > 0) {
-						fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-						playerShip.decreaseEnergy(1);
+					if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
+						if (playerShip.getEnergy() > 0) {
+							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+							playerShip.decreaseEnergy(1);
+						}
+						fPressed = true;
+					} else if (event.getKeyCode() == KeyEvent.VK_D) {
+						if (abilityState == 1 || abilityState == 2) {
+							if (!meshList.contains(charge))
+								meshList.add(charge);
+							if (bigShotChargeCounter == 0)
+								bigShotChargeCounter++;
+						}
 					}
-					fPressed = true;
-				} else if (event.getKeyCode() == KeyEvent.VK_D) {
-					if (abilityState == 1 || abilityState == 2) {
-						if (!meshList.contains(charge))
-							meshList.add(charge);
-						if (bigShotChargeCounter == 0)
-							bigShotChargeCounter++;
-					}
+					
+					panel.getIgnoreRepaint();
 				}
-				
-				panel.getIgnoreRepaint();
 			}
 			public void keyReleased (KeyEvent event) {
-				if (event.getKeyCode() == KeyEvent.VK_SPACE) {
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
-					//velocity = velocity.plus(new Vector(0.1, 0, 0));
-					//System.out.println("Space");
-					moveForward = 0;
-					if (meshList.contains(rocket))
-						meshList.remove(rocket);
-				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
-					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
-					//System.out.println("Shift");
-					moveForward = 0;
-				}
-				
-				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-					//yAngle -= Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
-					moveHoriz = 0;
-				} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-					//yAngle += Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
-					moveHoriz = 0;
-				} else if (event.getKeyCode() == KeyEvent.VK_UP) {
-					//xAngle -= Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
-					moveVert = 0;
-				} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-					//xAngle += Math.PI/(18*3);
-					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
-					moveVert = 0;
-				}
-				
-				if (event.getKeyCode() == KeyEvent.VK_F && fPressed)
-					fPressed = false;
-				
-				if (event.getKeyCode() == KeyEvent.VK_D) {
-					if (abilityState == 1) {
-						meshList.remove(charge);
-						if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-							playerShip.decreaseEnergy(3);
-							fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
+				if (counter >= 80) {
+					if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
+						//velocity = velocity.plus(new Vector(0.1, 0, 0));
+						//System.out.println("Space");
+						moveForward = 0;
+						if (meshList.contains(rocket))
+							meshList.remove(rocket);
+					} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
+						//velocity = velocity.plus(new Vector(-0.1, 0, 0));
+						//System.out.println("Shift");
+						moveForward = 0;
+					}
+					
+					if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+						//yAngle -= Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
+						moveHoriz = 0;
+					} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+						//yAngle += Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
+						moveHoriz = 0;
+					} else if (event.getKeyCode() == KeyEvent.VK_UP) {
+						//xAngle -= Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
+						moveVert = 0;
+					} else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+						//xAngle += Math.PI/(18*3);
+						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -0.5, 0)));
+						moveVert = 0;
+					}
+					
+					if (event.getKeyCode() == KeyEvent.VK_F && fPressed)
+						fPressed = false;
+					
+					if (event.getKeyCode() == KeyEvent.VK_D) {
+						if (abilityState == 1) {
+							meshList.remove(charge);
+							if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+								playerShip.decreaseEnergy(3);
+								fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
+							}
+							bigShotChargeCounter = 0;
+						} else if (abilityState == 2) {
+							meshList.remove(charge);
+							if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+								playerShip.decreaseEnergy(7);
+								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+								for (int i = 0; i < 6; i++)
+									fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
+	//							for (int i = 0; i < 12; i++)
+	//								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.5*Math.cos(i*Math.PI/6+Math.PI/12), 0.5*Math.sin(i*Math.PI/6+Math.PI/12)), 0.3, false);
+							}
+							bigShotChargeCounter = 0;
 						}
-						bigShotChargeCounter = 0;
-					} else if (abilityState == 2) {
-						meshList.remove(charge);
-						if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-							playerShip.decreaseEnergy(7);
-							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-							for (int i = 0; i < 6; i++)
-								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
-//							for (int i = 0; i < 12; i++)
-//								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.5*Math.cos(i*Math.PI/6+Math.PI/12), 0.5*Math.sin(i*Math.PI/6+Math.PI/12)), 0.3, false);
-						}
-						bigShotChargeCounter = 0;
 					}
 				}
 			}
