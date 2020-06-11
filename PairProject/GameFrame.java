@@ -127,6 +127,7 @@ public class GameFrame extends JFrame{
 	}
 	
 	public static void main (String[] args) {
-		GameFrame gameFrame = new GameFrame(new EnemyLevel5(), 1, 1);
+//		GameFrame gameFrame = new GameFrame(new EnemyLevel5(), 1, 1);
+		GameFrame gameFrame = new GameFrame();
 	}
 }

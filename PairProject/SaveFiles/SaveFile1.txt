@@ -1,6 +1,11 @@
-difficulty 0
-true 593.2203389830509
-true 940.0
-true 683.3333333333333
-true 650.0
-true 790.0
+difficulty 3
+true 100.0
+true 100.0
+true 100.0
+true 100.0
+true 100.0
+true 100.0
+true 100.0
+true 100.0
+true 100.0
+true 100.0
