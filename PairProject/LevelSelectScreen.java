@@ -174,14 +174,6 @@ public class LevelSelectScreen extends JPanel {
 			}
 			out.close();
 		} catch (Exception e) {System.out.println("Updating save data failed. "+SAVEDATA_LOCATION);}
-		
-//		LevelSelectScreen lss = this;
-//		(new java.util.Timer()).schedule(new TimerTask () {
-//			public void run () {
-//				System.out.println("hello");
-//				lss.repaint();
-//			}
-//		}, 2000);
 	}
 
 	public void paintComponent (Graphics g1) {
@@ -197,13 +189,14 @@ public class LevelSelectScreen extends JPanel {
 		g.fillRect(5*SCREEN_WIDTH/7+4, 0+5,  2*SCREEN_WIDTH/7-14, SCREEN_HEIGHT-39);
 
 		//		g.setColor(Color.RED);
-		for (int i=0;i<levelOptionList.size()-1;i++) {
+		for (int i=0;i<levelOptionList.size();i++) {
 			LevelOption levelOption=levelOptionList.get(i);
 			if (levelOption.SAVEDATA_COMPLETED) {
 				g.setColor(Color.BLACK);
 				g.setStroke(new BasicStroke(6));
-				g.drawLine(levelOption.getX0()+LevelOption.SQUARE_SIZE/2, levelOption.getY0()+LevelOption.SQUARE_SIZE/2, 
-						levelOptionList.get(i+1).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i+1).getY0()+LevelOption.SQUARE_SIZE/2);
+				if (i != levelOptionList.size()-1)
+					g.drawLine(levelOption.getX0()+LevelOption.SQUARE_SIZE/2, levelOption.getY0()+LevelOption.SQUARE_SIZE/2, 
+							levelOptionList.get(i+1).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i+1).getY0()+LevelOption.SQUARE_SIZE/2);
 				g.setColor(Color.GREEN);
 				g.fillRect(levelOption.getX0(), levelOption.getY0(), LevelOption.SQUARE_SIZE, LevelOption.SQUARE_SIZE);
 			} else {
