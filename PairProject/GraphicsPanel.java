@@ -41,6 +41,7 @@ public class GraphicsPanel extends JPanel {
 	private Explosion explosion;
 	private boolean dead;
 	private int difficulty;
+	private Mesh bulletMesh;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -48,12 +49,16 @@ public class GraphicsPanel extends JPanel {
 	public ArrayList<SpaceShip> getEnemyShips () { return enemyShips; }
 	
 	public void fireBullet (Vector pos, Vector vel, double collisionRadius, boolean enemy) {
-		Bullet bullet = new Bullet(pos, vel, collisionRadius, enemy);
+		Bullet bullet = new Bullet(bulletMesh.clone(), pos, vel, collisionRadius, enemy);
 		bulletList.add(bullet);
 		meshList.add(bullet);
 	}
 	
-	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty) {
+	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty, int abilityState) {
+		try {
+			bulletMesh = Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png");
+		} catch (Exception e) {}
+		
 		this.difficulty=difficulty;
 		fPressed = false;
 //		int width = SCREEN_WIDTH;
@@ -154,15 +159,19 @@ public class GraphicsPanel extends JPanel {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 1, 0)));
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
-					moveForward = 1;
-					if (!meshList.contains(rocket))
-						meshList.add(rocket);
+					if (playerShip.getEnergy() > 0) {
+						moveForward = 1;
+						if (!meshList.contains(rocket))
+							meshList.add(rocket);
+					}
 					
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {//TODO: Pretty sure this is not supposed to be here.
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
 					//System.out.println("Shift");
-					moveForward = -1;
+					if (playerShip.getEnergy() > 0) {
+						moveForward = -1;
+					}
 				}
 				
 				if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -200,14 +209,18 @@ public class GraphicsPanel extends JPanel {
 					cameraPos = cameraPos.minus(cameraRight.scale(0.5));
 				
 				if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
-					fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-					playerShip.decreaseEnergy(1);
+					if (playerShip.getEnergy() > 0) {
+						fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+						playerShip.decreaseEnergy(1);
+					}
 					fPressed = true;
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {
-					if (!meshList.contains(charge))
-						meshList.add(charge);
-					if (bigShotChargeCounter == 0)
-						bigShotChargeCounter++;
+					if (abilityState == 1 || abilityState == 2) {
+						if (!meshList.contains(charge))
+							meshList.add(charge);
+						if (bigShotChargeCounter == 0)
+							bigShotChargeCounter++;
+					}
 				}
 				
 				panel.getIgnoreRepaint();
@@ -218,7 +231,8 @@ public class GraphicsPanel extends JPanel {
 					//velocity = velocity.plus(new Vector(0.1, 0, 0));
 					//System.out.println("Space");
 					moveForward = 0;
-					meshList.remove(rocket);
+					if (meshList.contains(rocket))
+						meshList.remove(rocket);
 				} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 					//velocity = velocity.plus(new Vector(-0.1, 0, 0));
@@ -248,12 +262,25 @@ public class GraphicsPanel extends JPanel {
 					fPressed = false;
 				
 				if (event.getKeyCode() == KeyEvent.VK_D) {
-					meshList.remove(charge);
-					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-						playerShip.decreaseEnergy(3);
-						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
+					if (abilityState == 1) {
+						meshList.remove(charge);
+						if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+							playerShip.decreaseEnergy(3);
+							fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
+						}
+						bigShotChargeCounter = 0;
+					} else if (abilityState == 2) {
+						meshList.remove(charge);
+						if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+							playerShip.decreaseEnergy(3);
+							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+							for (int i = 0; i < 6; i++)
+								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
+							for (int i = 0; i < 12; i++)
+								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.5*Math.cos(i*Math.PI/6+Math.PI/12), 0.5*Math.sin(i*Math.PI/6+Math.PI/12)), 0.3, false);
+						}
+						bigShotChargeCounter = 0;
 					}
-					bigShotChargeCounter = 0;
 				}
 			}
 			public void keyTyped (KeyEvent event) {}
@@ -286,6 +313,13 @@ public class GraphicsPanel extends JPanel {
 				
 				//playerShip.moveShipTo(playerShip.getPlayerPos().plus(velocity));
 //				System.out.println(moveHoriz + " " + moveVert);
+				
+				if (playerShip.getEnergy() <= 0) {
+					moveForward = 0;
+					if (meshList.contains(rocket))
+						meshList.remove(rocket);
+				}
+				
 				playerShip.update(moveHoriz, moveVert, moveForward);
 				
 				if (moveForward != 0)
