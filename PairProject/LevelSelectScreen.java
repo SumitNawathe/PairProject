@@ -20,6 +20,7 @@ public class LevelSelectScreen extends JPanel {
 	LevelSelectScreen levelSelectScreen;
 	private String saveFileLocation;
 	private int currentDifficulty;
+	private int abilityState;
 
 	public LevelSelectScreen (GameFrame gameFrame, int SCREEN_WIDTH, int SCREEN_HEIGHT, String SAVEDATA_LOCATION) {
 		levelSelectScreen = this;
@@ -75,9 +76,9 @@ public class LevelSelectScreen extends JPanel {
 			public void actionPerformed (ActionEvent event) {
 				System.out.println(currentLevelIntroText);
 				if (currentLevel.getLEVEL_NUM()==0)
-					gameFrame.goToInstructionScreen(currentDifficulty);
+					gameFrame.goToInstructionScreen(currentDifficulty, abilityState);
 				else
-					gameFrame.startLevel(currentLevel, currentDifficulty);
+					gameFrame.startLevel(currentLevel, currentDifficulty, abilityState);
 			}
 		});
 		startButton.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));
@@ -113,9 +114,21 @@ public class LevelSelectScreen extends JPanel {
 			out.write(first+"\n");
 			for (int i = 0; i < levelOptionList.size(); i++) {
 				if (i == levelNum) {
-					out.write(completed + " " + health + "\n");
-					levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
-					levelOptionList.get(i).setSAVEDATA_HEALTH(health);
+					if (levelOptionList.get(i).getSAVEDATA_COMPLETED() || completed) {
+						if (completed && levelNum == 1)
+							abilityState = 1;							
+						
+						completed = true;
+						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_HEALTH());
+						out.write(completed + " " + health + "\n");
+						levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
+						levelOptionList.get(i).setSAVEDATA_HEALTH(health);
+					} else {
+						health = 0.0;
+						out.write(completed + " " + health + "\n");
+						levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
+						levelOptionList.get(i).setSAVEDATA_HEALTH(health);
+					}
 				} else {
 					out.write(levelOptionList.get(i).getSAVEDATA_COMPLETED() + " " + levelOptionList.get(i).getSAVEDATA_HEALTH() + "\n");
 				}

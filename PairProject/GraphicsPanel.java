@@ -54,7 +54,7 @@ public class GraphicsPanel extends JPanel {
 		meshList.add(bullet);
 	}
 	
-	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty) {
+	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty, int abilityState) {
 		try {
 			bulletMesh = Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png");
 		} catch (Exception e) {}
@@ -215,10 +215,12 @@ public class GraphicsPanel extends JPanel {
 					}
 					fPressed = true;
 				} else if (event.getKeyCode() == KeyEvent.VK_D) {
-					if (!meshList.contains(charge))
-						meshList.add(charge);
-					if (bigShotChargeCounter == 0)
-						bigShotChargeCounter++;
+					if (abilityState == 1 || abilityState == 2) {
+						if (!meshList.contains(charge))
+							meshList.add(charge);
+						if (bigShotChargeCounter == 0)
+							bigShotChargeCounter++;
+					}
 				}
 				
 				panel.getIgnoreRepaint();
@@ -260,23 +262,25 @@ public class GraphicsPanel extends JPanel {
 					fPressed = false;
 				
 				if (event.getKeyCode() == KeyEvent.VK_D) {
-//					meshList.remove(charge);
-//					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-//						playerShip.decreaseEnergy(3);
-//						fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
-//					}
-//					bigShotChargeCounter = 0;
-					
-					meshList.remove(charge);
-					if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-						playerShip.decreaseEnergy(3);
-						fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-						for (int i = 0; i < 6; i++)
-							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
-						for (int i = 0; i < 12; i++)
-							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.5*Math.cos(i*Math.PI/6+Math.PI/12), 0.5*Math.sin(i*Math.PI/6+Math.PI/12)), 0.3, false);
+					if (abilityState == 1) {
+						meshList.remove(charge);
+						if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+							playerShip.decreaseEnergy(3);
+							fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
+						}
+						bigShotChargeCounter = 0;
+					} else if (abilityState == 2) {
+						meshList.remove(charge);
+						if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
+							playerShip.decreaseEnergy(3);
+							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
+							for (int i = 0; i < 6; i++)
+								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
+							for (int i = 0; i < 12; i++)
+								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.5*Math.cos(i*Math.PI/6+Math.PI/12), 0.5*Math.sin(i*Math.PI/6+Math.PI/12)), 0.3, false);
+						}
+						bigShotChargeCounter = 0;
 					}
-					bigShotChargeCounter = 0;
 				}
 			}
 			public void keyTyped (KeyEvent event) {}
