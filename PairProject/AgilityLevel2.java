@@ -6,7 +6,7 @@ public class AgilityLevel2 extends Level {
 	ArrayList<AgilityRing> set1, set2, set3;
 	private int difficulty;
 	
-	public AgilityLevel2 () { setLEVEL_NUM(2); }
+	public AgilityLevel2 () { super(); setLEVEL_NUM(2); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		this.difficulty=difficulty;
@@ -65,7 +65,7 @@ public class AgilityLevel2 extends Level {
 //			game.getEnemyShips().add(enemy);
 //			game.getMeshList().add(enemy);
 //		}
-		return graphicsPanel.getPlayerShip().getPos().getX()>1600;
+		return graphicsPanel.getPlayerShip().getPos().getX()>2140;
 	}
 	
 	public double determineScore (GraphicsPanel graphicsPanel) {

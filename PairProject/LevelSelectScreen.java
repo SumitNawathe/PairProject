@@ -23,6 +23,8 @@ public class LevelSelectScreen extends JPanel {
 	private String saveFileLocation;
 	private int currentDifficulty;
 	private int abilityState;
+	private boolean canChangeAbilities;
+	private JButton useCannonShot, useMultiShot;
 
 	public LevelSelectScreen (GameFrame gameFrame, int SCREEN_WIDTH, int SCREEN_HEIGHT, String SAVEDATA_LOCATION) {
 		levelSelectScreen = this;
@@ -107,9 +109,35 @@ public class LevelSelectScreen extends JPanel {
 			currentScore = (int)levelOptionList.get(0).getSAVEDATA_HEALTH();
 		}
 		introTexts=BreakString.breakText(currentLevelIntroText);
+		
+		if (levelOptionList.get(1).SAVEDATA_COMPLETED)
+			abilityState = 1;
+		if (levelOptionList.get(3).SAVEDATA_COMPLETED)
+			addAbilityButtons();
 	}
-
-
+	
+	public void addAbilityButtons () {
+		useCannonShot = new JButton("Use Cannon Shot");
+		useCannonShot.addActionListener(new ActionListener () {
+			public void actionPerformed (ActionEvent event) {
+				abilityState = 1;
+			}
+		});
+		useCannonShot.setSize(new Dimension(3*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21));
+		useCannonShot.setLocation(12*SCREEN_WIDTH/21, 0);
+		levelSelectScreen.add(useCannonShot);
+		
+		useMultiShot = new JButton("Use MultiShot");
+		useMultiShot.addActionListener(new ActionListener () {
+			public void actionPerformed (ActionEvent event) {
+				abilityState = 2;
+			}
+		});
+		useMultiShot.setSize(new Dimension(3*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21));
+		useMultiShot.setLocation(12*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21);
+		levelSelectScreen.add(useMultiShot);
+	}
+	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
 		try {
 			Scanner scan=new Scanner(new File(SAVEDATA_LOCATION));
@@ -120,8 +148,13 @@ public class LevelSelectScreen extends JPanel {
 			for (int i = 0; i < levelOptionList.size(); i++) {
 				if (i == levelNum) {
 					if (levelOptionList.get(i).getSAVEDATA_COMPLETED() || completed) {
-						if (completed && levelNum == 1)
-							abilityState = 1;							
+						if (completed && levelNum == 1 && !canChangeAbilities)
+							abilityState = 1;
+						else if (completed && levelNum == 3 && !canChangeAbilities) {
+							abilityState = 2;
+							canChangeAbilities = true;
+							addAbilityButtons();
+						}
 						
 						completed = true;
 						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_HEALTH());
