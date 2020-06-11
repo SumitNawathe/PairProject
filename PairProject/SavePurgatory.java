@@ -103,7 +103,7 @@ public class SavePurgatory extends JPanel {
 				else
 					ret.add("Difficulty: Hard");
 			} else {
-				String score=texts[1];
+				int score=(int)Double.parseDouble(texts[1]);
 				if (complete)
 					ret.add("Level: "+i+"   Status: Complete    Score: "+score);
 				else

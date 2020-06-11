@@ -9,6 +9,7 @@ import javax.swing.*;
 
 public class LevelSelectScreen extends JPanel {
 	private int SCREEN_WIDTH, SCREEN_HEIGHT;
+	private double scaleX, scaleY;
 	private String SAVEDATA_LOCATION;
 	private GameFrame gameFrame;
 	private ArrayList<LevelOption> levelOptionList;
@@ -16,6 +17,7 @@ public class LevelSelectScreen extends JPanel {
 	private Image currentImage;
 	private String currentLevelIntroText;
 	private Level currentLevel;
+	private int currentScore;
 	private JButton startButton, backToIntroScreen;
 	LevelSelectScreen levelSelectScreen;
 	private String saveFileLocation;
@@ -26,6 +28,8 @@ public class LevelSelectScreen extends JPanel {
 		levelSelectScreen = this;
 		this.SCREEN_WIDTH = SCREEN_WIDTH;
 		this.SCREEN_HEIGHT = SCREEN_HEIGHT;
+		scaleX=SCREEN_WIDTH/1200.0;
+		scaleY=SCREEN_HEIGHT/900.0;
 		this.SAVEDATA_LOCATION = SAVEDATA_LOCATION;
 		try {
 			currentDifficulty=Integer.parseInt(new String(new byte[] {Files.readAllBytes(new File(SAVEDATA_LOCATION).toPath())[11]}));
@@ -60,6 +64,7 @@ public class LevelSelectScreen extends JPanel {
 						currentImage = levelOption.getImage();
 						currentLevelIntroText = levelOption.getLevelIntroText();
 						currentLevel = levelOption.getLevel();
+						currentScore = (int)levelOption.getSAVEDATA_HEALTH();
 						introTexts=BreakString.breakText(currentLevelIntroText);
 						levelSelectScreen.repaint();
 						break;
@@ -99,6 +104,8 @@ public class LevelSelectScreen extends JPanel {
 			currentImage = levelOptionList.get(0).getImage();
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
+			currentScore = (int)levelOptionList.get(0).getSAVEDATA_HEALTH();
+			System.out.println("current"+currentScore);
 		}
 		introTexts=BreakString.breakText(currentLevelIntroText);
 	}
@@ -119,6 +126,7 @@ public class LevelSelectScreen extends JPanel {
 						
 						completed = true;
 						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_HEALTH());
+						health*=10;
 						out.write(completed + " " + health + "\n");
 						levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
 						levelOptionList.get(i).setSAVEDATA_HEALTH(health);
@@ -182,6 +190,8 @@ public class LevelSelectScreen extends JPanel {
 			for (int i=0;i<introTexts.size();i++) {
 				g.drawString(introTexts.get(i), 16*SCREEN_WIDTH/21, 7*SCREEN_HEIGHT/21+12*i);
 			}
+			System.out.println(currentScore);
+			g.drawString("High Score: "+currentScore,17*SCREEN_WIDTH/21-(int)(20*scaleX), 7*SCREEN_HEIGHT/21+(int)(12*34*scaleY));
 		}
 	}
 

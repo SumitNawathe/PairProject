@@ -75,10 +75,8 @@ public class GameFrame extends JFrame{
 	
 	public void goToLevelSelectScreen (String SAVEDATA_LOCATION) {
 		this.getContentPane().removeAll();
-		if (!SAVEDATA_LOCATION.equals(CURRENT_SAVEDATA_LOCATION)) {
-			levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, SAVEDATA_LOCATION);
-			CURRENT_SAVEDATA_LOCATION = SAVEDATA_LOCATION;
-		}
+		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, SAVEDATA_LOCATION);
+		CURRENT_SAVEDATA_LOCATION = SAVEDATA_LOCATION;
 		this.getContentPane().add(levelSelectScreen);
 		levelSelectScreen.repaint();
 		this.pack();
