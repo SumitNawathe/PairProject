@@ -6,7 +6,7 @@ public class AgilityLevel2 extends Level {
 	ArrayList<AgilityRing> set1, set2, set3;
 	private int difficulty;
 	
-	public AgilityLevel2 () { super(); setLEVEL_NUM(2); }
+	public AgilityLevel2 () { super(); setLEVEL_NUM(1); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		this.difficulty=difficulty;

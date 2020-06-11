@@ -128,11 +128,11 @@ public class Enemy extends SpaceShip {
 		theta += Math.PI/80;
 		int firespeed;
 		if (difficulty==0)
-			firespeed=16;
+			firespeed=32;
 		else if (difficulty==1)
-			firespeed=10;
+			firespeed=20;
 		else
-			firespeed=7;
+			firespeed=14;
 		fireCounter++;
 		if (explosion == null) {
 			if (fireCounter >= firespeed) {
