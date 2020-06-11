@@ -1,9 +1,5 @@
 difficulty 0
-false 0.0
-false 0.0
-false 0.0
-false 0.0
-false 0.0
+true 93.22033898305084
 false 0.0
 false 0.0
 false 0.0
