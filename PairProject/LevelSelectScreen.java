@@ -105,10 +105,10 @@ public class LevelSelectScreen extends JPanel {
 
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
 		try {
-			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(SAVEDATA_LOCATION)));
 			Scanner scan=new Scanner(new File(SAVEDATA_LOCATION));
 			String first=scan.nextLine();
 			scan.close();
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(SAVEDATA_LOCATION)));
 			out.write(first+"\n");
 			for (int i = 0; i < levelOptionList.size(); i++) {
 				if (i == levelNum) {
@@ -120,7 +120,7 @@ public class LevelSelectScreen extends JPanel {
 				}
 			}
 			out.close();
-		} catch (Exception e) {}
+		} catch (Exception e) {System.out.println("Updating save data failed. "+SAVEDATA_LOCATION);}
 	}
 
 	public void paintComponent (Graphics g1) {
