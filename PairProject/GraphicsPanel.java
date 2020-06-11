@@ -169,10 +169,17 @@ public class GraphicsPanel extends JPanel {
 					//yAngle -= Math.PI/(18*3);
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
 					moveHoriz = 1;
+					
+					if (meshList.contains(rocket)) {
+						playerShip.startRightRoll();
+					}
 				} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
 					//yAngle += Math.PI/(18*3);
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
 					moveHoriz = -1;
+					
+					if (meshList.contains(rocket))
+						playerShip.startRollLeft();
 				} else if (event.getKeyCode() == KeyEvent.VK_UP) {
 					//xAngle -= Math.PI/(18*3);
 					//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0.5, 0)));
@@ -381,7 +388,7 @@ public class GraphicsPanel extends JPanel {
 				
 				panel.repaint();
 			}
-		}, 2000, 20);
+		}, 100, 20);
 	}
 	
 	public void paintComponent (Graphics panelG) {
