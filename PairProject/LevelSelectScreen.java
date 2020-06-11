@@ -57,6 +57,12 @@ public class LevelSelectScreen extends JPanel {
 			levelOptionList.add(new LevelOption(new EnemyLevel2(), "Textures/strangeplanet.jpg", "Hello.", 5*SCREEN_WIDTH/11, 1*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 
 			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new AgilityLevel3(), "Textures/strangeplanet2.jpg", "Hello.", 3*SCREEN_WIDTH/11, 1*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new AgilityLevel4(), "Textures/strangeplanet3.jpg", "Hello.", 2*SCREEN_WIDTH/11, 3*SCREEN_HEIGHT/10, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
 			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.", 4*SCREEN_WIDTH/11, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		file.close();
 		} catch (Exception e) { System.out.println(e); }
 		this.addMouseListener(new MouseListener () {
@@ -173,14 +179,6 @@ public class LevelSelectScreen extends JPanel {
 			}
 			out.close();
 		} catch (Exception e) {System.out.println("Updating save data failed. "+SAVEDATA_LOCATION);}
-		
-//		LevelSelectScreen lss = this;
-//		(new java.util.Timer()).schedule(new TimerTask () {
-//			public void run () {
-//				System.out.println("hello");
-//				lss.repaint();
-//			}
-//		}, 2000);
 	}
 
 	public void paintComponent (Graphics g1) {
@@ -201,8 +199,9 @@ public class LevelSelectScreen extends JPanel {
 			if (levelOption.SAVEDATA_COMPLETED&&i!=levelOptionList.size()-1) {
 				g.setColor(Color.BLACK);
 				g.setStroke(new BasicStroke(6));
-				g.drawLine(levelOption.getX0()+LevelOption.SQUARE_SIZE/2, levelOption.getY0()+LevelOption.SQUARE_SIZE/2, 
-						levelOptionList.get(i+1).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i+1).getY0()+LevelOption.SQUARE_SIZE/2);
+				if (i != levelOptionList.size()-1)
+					g.drawLine(levelOption.getX0()+LevelOption.SQUARE_SIZE/2, levelOption.getY0()+LevelOption.SQUARE_SIZE/2, 
+							levelOptionList.get(i+1).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i+1).getY0()+LevelOption.SQUARE_SIZE/2);
 				g.setColor(Color.GREEN);
 				g.fillRect(levelOption.getX0(), levelOption.getY0(), LevelOption.SQUARE_SIZE, LevelOption.SQUARE_SIZE);
 			} else {
