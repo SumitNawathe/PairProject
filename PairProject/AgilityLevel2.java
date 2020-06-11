@@ -65,7 +65,7 @@ public class AgilityLevel2 extends Level {
 //			game.getEnemyShips().add(enemy);
 //			game.getMeshList().add(enemy);
 //		}
-		return graphicsPanel.getPlayerShip().getPos().getX()>1600;
+		return graphicsPanel.getPlayerShip().getPos().getX()>2140;
 	}
 	
 	public double determineScore (GraphicsPanel graphicsPanel) {
