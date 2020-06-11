@@ -107,7 +107,6 @@ public class LevelSelectScreen extends JPanel {
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
 			currentScore = (int)levelOptionList.get(0).getSAVEDATA_HEALTH();
-			System.out.println("current"+currentScore);
 		}
 		introTexts=BreakString.breakText(currentLevelIntroText);
 		
