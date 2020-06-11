@@ -1,6 +1,6 @@
 difficulty 1
-false 0.0
-false 0.0
+true 898.3050847457628
+true 700.0
 false 0.0
 false 0.0
 false 0.0
