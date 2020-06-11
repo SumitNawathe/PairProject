@@ -2,7 +2,7 @@ import java.awt.Graphics;
 
 public class EnemyLevel3 extends EnemyLevel {
 	private int difficulty;
-	public EnemyLevel3 () { this.setLEVEL_NUM(3); }//TODO: This is wrong.
+	public EnemyLevel3 () { this.setLEVEL_NUM(5); }
 
 	public boolean update(GraphicsPanel graphicsPanel) {
 		spawnRings(graphicsPanel);

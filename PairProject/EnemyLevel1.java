@@ -11,7 +11,7 @@ public class EnemyLevel1 extends EnemyLevel {
 		this.difficulty=difficulty;
 	}
 
-	public EnemyLevel1 () { super(); setLEVEL_NUM(1); }
+	public EnemyLevel1 () { super(); setLEVEL_NUM(2); }
 	
 	public boolean update(GraphicsPanel graphicsPanel) {
 		spawnRings(graphicsPanel);		

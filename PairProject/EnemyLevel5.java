@@ -1,6 +1,6 @@
 public class EnemyLevel5 extends EnemyLevel {
 	private int difficulty;
-	public EnemyLevel5 () { this.setLEVEL_NUM(3); }//TODO: This is wrong.
+	public EnemyLevel5 () { this.setLEVEL_NUM(8); }
 
 	public boolean update(GraphicsPanel graphicsPanel) {
 		spawnRings(graphicsPanel);

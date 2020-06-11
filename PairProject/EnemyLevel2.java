@@ -2,7 +2,7 @@ import java.awt.Graphics;
 
 public class EnemyLevel2 extends EnemyLevel {
 	private int difficulty;
-	public EnemyLevel2 () { this.setLEVEL_NUM(3); }
+	public EnemyLevel2 () { this.setLEVEL_NUM(4); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		this.difficulty=difficulty;
