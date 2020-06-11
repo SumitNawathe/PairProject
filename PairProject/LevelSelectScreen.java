@@ -129,8 +129,10 @@ public class LevelSelectScreen extends JPanel {
 		
 		if (levelOptionList.get(1).SAVEDATA_COMPLETED)
 			abilityState = 1;
-		if (levelOptionList.get(3).SAVEDATA_COMPLETED)
+		if (levelOptionList.get(3).SAVEDATA_COMPLETED) {
+			abilityState = 2;
 			addAbilityButtons();
+		}
 	}
 	
 	public void addAbilityButtons () {
@@ -207,7 +209,7 @@ public class LevelSelectScreen extends JPanel {
 		//		g.setColor(Color.RED);
 		for (int i=0;i<levelOptionList.size();i++) {
 			LevelOption levelOption=levelOptionList.get(i);
-			if (levelOption.SAVEDATA_COMPLETED&&i!=levelOptionList.size()-1) {
+			if (levelOption.SAVEDATA_COMPLETED&&i!=levelOptionList.size()) {
 				g.setColor(Color.BLACK);
 				g.setStroke(new BasicStroke(6));
 				if (i != levelOptionList.size()-1)

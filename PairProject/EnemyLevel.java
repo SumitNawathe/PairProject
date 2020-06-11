@@ -11,7 +11,7 @@ public abstract class EnemyLevel extends Level {
 
 	public void spawnRings(GraphicsPanel graphicsPanel) {
 		ringCounter++;
-		if (ringCounter == 100+100*difficulty) {
+		if (ringCounter == 25+50*difficulty) {
 			Random rand=new Random();
 			int a=rand.nextInt(15+15)-15;
 			int b=rand.nextInt(15+15)-15;
