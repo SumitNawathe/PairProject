@@ -1,4 +1,4 @@
-difficulty 3
+difficulty 0
 true 100.0
 true 100.0
 true 100.0
