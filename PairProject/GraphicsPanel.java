@@ -435,6 +435,8 @@ public class GraphicsPanel extends JPanel {
 	}
 
 	// Thanks to javidx9 for inspiration for projection mathematics
+	// Thanks to Gerhald3D for several planetary models
+	
 	public void paintComponent (Graphics panelG) {
 		super.paintComponent(panelG);
 		panelG.drawImage(backgroundImage, 0, 0, null);
