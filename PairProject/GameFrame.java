@@ -126,7 +126,7 @@ public class GameFrame extends JFrame{
 		this.setVisible(true);
 	}
 	
-	public static void main (String[] args) 
+	public static void main (String[] args) { 
 		GameFrame gameFrame = new GameFrame();
 	}
 }
