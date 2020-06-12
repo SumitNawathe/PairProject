@@ -559,7 +559,7 @@ public class GraphicsPanel extends JPanel {
 		panelG.setColor(Color.RED);
 		panelG.setFont(new Font ("TimesRoman", Font.BOLD, (int)(30*scaleX)));
 		panelG.drawString("HEALTH", (int)(1050*scaleX), (int)(820*scaleY));
-		panelG.drawRect(780, 830, (int)(400*scaleX), (int)(30*scaleY));
+		panelG.drawRect((int) (780*scaleX), (int)(830*scaleY), (int)(400*scaleX), (int)(30*scaleY));
 		panelG.fillRect((int) ((780+4*(100-playerShip.getHealth()))*scaleX), (int)(830*scaleY), (int) ((4*playerShip.getHealth())*scaleX), (int)(30*scaleY));
 
 		panelG.setColor(Color.CYAN);
