@@ -2,22 +2,43 @@ import java.util.ArrayList;
 
 public class BreakString {
 	public static ArrayList<String> breakText(String string) {
-		ArrayList<String> ret=new ArrayList<String>();
-		char[] text=string.toCharArray();
-		while (string.length()>28) {
-			int i;
-			for (i=28;i>0;i--) {
-				i--;
-				if (text[i]==' ') {
-					break;
-				}
-			}
-			String add=string.substring(0,i+1);
-			ret.add(add);
-			string=string.substring(i+1);
-			text=string.toCharArray();
-		}
-		ret.add(string);
-		return ret;
+		    ArrayList <String> ret = new ArrayList<String>();
+		    String newLine = "";
+		    char character = ' ';
+		    String cut = "";
+		    int cutAdd = 0;
+		    char cutChar = ' ';
+		    int read = -1;
+		    for (int i = 0; i < string.length(); i++){
+		        read++;
+		        character = string.charAt(i);
+		        if(read >= 26 && i > 1){
+		            if (character == ' ' || character == ','){
+		                newLine += character;
+		                ret.add(newLine);
+		                newLine = "";
+		            }
+		            else{
+		                cutChar = character;
+		                while(cutChar != ' ' && i > 0){
+		                    i--;
+		                    cutChar = string.charAt(i);
+		                    newLine = newLine.substring(0, newLine.length() - 1);
+		                }
+		                ret.add(newLine);
+		                newLine = "";
+		            } 
+
+		            read = 0;
+		        }
+
+		        else if (i == (string.length() - 1)){
+		            newLine += character;
+		            ret.add(newLine);
+		        }		        else{
+		            newLine += character;
+		        }
+		    }
+		    return ret;
 	}
 }
