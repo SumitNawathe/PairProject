@@ -8,7 +8,7 @@ public class GameFrame extends JFrame{
 	private InstructionScreen instructionScreen;
 	private EnemyInstructionScreen enemyInstructionScreen;
 	private GraphicsPanel graphicsPanel;
-	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
+	int SCREEN_WIDTH = 3000, SCREEN_HEIGHT = 900;
 	String CURRENT_SAVEDATA_LOCATION;
 	
 	public GameFrame () {
@@ -19,9 +19,13 @@ public class GameFrame extends JFrame{
 		    width = gd.getDisplayMode().getWidth();
 		while (width*3/4 > gd.getDisplayMode().getHeight())
 		    width = (int) (width - width*0.1);
-		width-=10;
+		width-=20;
 		SCREEN_WIDTH=width;
 		SCREEN_HEIGHT=width*3/4;
+		
+		System.out.println("Environment: " + GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth());
+		System.out.println("SCREEN_WIDTH: " + SCREEN_WIDTH);
+		System.out.println("SCREEN_HEIGHT: " + SCREEN_HEIGHT);
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,6 +33,8 @@ public class GameFrame extends JFrame{
 		this.setFocusable(true);
 		this.setBounds(this.getBounds().x, this.getBounds().y, width, width*3/4);
 		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+		
+		System.out.println(this.getWidth());
 		
 //		graphicsPanel = new GraphicsPanel(this, new Level1(), SCREEN_WIDTH, SCREEN_HEIGHT);
 //		this.getContentPane().add(graphicsPanel);

@@ -204,7 +204,7 @@ public class GraphicsPanel extends JPanel {
 					if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
 						if (playerShip.getEnergy() > 0) {
 							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-							playerShip.decreaseEnergy(1);
+							playerShip.decreaseEnergy(0.5);
 						}
 						fPressed = true;
 					} else if (event.getKeyCode() == KeyEvent.VK_D) {
@@ -260,19 +260,19 @@ public class GraphicsPanel extends JPanel {
 						if (abilityState == 1) {
 							meshList.remove(charge);
 							if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-								playerShip.decreaseEnergy(3);
+								playerShip.decreaseEnergy(2);
 								fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
 							}
 							bigShotChargeCounter = 0;
 						} else if (abilityState == 2) {
 							meshList.remove(charge);
 							if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-								playerShip.decreaseEnergy(5);
+								playerShip.decreaseEnergy(4);
 								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
 								for (int i = 0; i < 6; i++)
 									fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
-								//							for (int i = 0; i < 12; i++)
-								//								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.5*Math.cos(i*Math.PI/6+Math.PI/12), 0.5*Math.sin(i*Math.PI/6+Math.PI/12)), 0.3, false);
+								for (int i = 0; i < 12; i++)
+									fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.5*Math.cos(i*Math.PI/6+Math.PI/12), 0.5*Math.sin(i*Math.PI/6+Math.PI/12)), 0.3, false);
 							}
 							bigShotChargeCounter = 0;
 						}
@@ -421,7 +421,7 @@ public class GraphicsPanel extends JPanel {
 				}
 
 				if (playerShip.bulletCollision(bulletList))
-					playerShip.decreaseHealth(1);
+					playerShip.decreaseHealth(0.5+0.25*difficulty);
 
 				charge.update(graphicsPanel);
 				rocket.update(graphicsPanel);
@@ -434,6 +434,9 @@ public class GraphicsPanel extends JPanel {
 		}, 300, 20);
 	}
 
+	// Thanks to javidx9 for inspiration for projection mathematics
+	// Thanks to Gerhald3D for several planetary models
+	
 	public void paintComponent (Graphics panelG) {
 		super.paintComponent(panelG);
 		panelG.drawImage(backgroundImage, 0, 0, null);
@@ -559,7 +562,7 @@ public class GraphicsPanel extends JPanel {
 		panelG.setColor(Color.RED);
 		panelG.setFont(new Font ("TimesRoman", Font.BOLD, (int)(30*scaleX)));
 		panelG.drawString("HEALTH", (int)(1050*scaleX), (int)(820*scaleY));
-		panelG.drawRect(780, 830, (int)(400*scaleX), (int)(30*scaleY));
+		panelG.drawRect((int) (780*scaleX), (int)(830*scaleY), (int)(400*scaleX), (int)(30*scaleY));
 		panelG.fillRect((int) ((780+4*(100-playerShip.getHealth()))*scaleX), (int)(830*scaleY), (int) ((4*playerShip.getHealth())*scaleX), (int)(30*scaleY));
 
 		panelG.setColor(Color.CYAN);
