@@ -204,6 +204,12 @@ public class LevelSelectScreen extends JPanel {
 					}
 				} else {
 					out.write(levelOptionList.get(i).getSAVEDATA_COMPLETED() + " " + levelOptionList.get(i).getSAVEDATA_HEALTH() + "\n");
+					if (levelOptionList.get(i).getSAVEDATA_COMPLETED()) {
+						if (levelNum == levelOptionList.size()-1)
+							focusOnLevel(levelNum);
+						else
+							focusOnLevel(levelNum+1);
+					}
 				}
 			}
 			out.close();
