@@ -312,6 +312,8 @@ public class GraphicsPanel extends JPanel {
 						} else {
 							gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 						}
+					} else {
+						gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 					}
 					gameFrame.updateSAVEDATA(level.getLEVEL_NUM(), playerShip.getHealth()>0, level.determineScore(graphicsPanel));
 					timer.cancel();
