@@ -13,7 +13,7 @@ public class BossFrame extends SpaceShip {
 	
 	public BossFrame (GraphicsPanel graphicsPanel, int difficulty) {
 		this.difficulty=difficulty;
-		setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+30, 0, 0));
+		setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+50, 0, 0));
 		try {
 			setTris(Mesh.loadFromObjFile("Models/Boss 1.obj", "Textures/Boss Map 1.png").getTris());
 			//			setTris(Mesh.loadFromObjFile("Models/BossWeaknessModel.obj", "Textures/BossWeakness.png").getTris());
@@ -24,7 +24,7 @@ public class BossFrame extends SpaceShip {
 			tri.setVerts(new Vector[] {tri.getVert1().scale(5), 
 					tri.getVert2().scale(5), 
 					tri.getVert3().scale(5)});
-		translate(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+30, 0, 0));
+		translate(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+50, 0, 0));
 		setCollisionRadius(0.0);
 		rotMat = Matrix.getRotMatX(Math.PI/2/120);
 		firestages=new boolean[4][4];
@@ -40,8 +40,8 @@ public class BossFrame extends SpaceShip {
 			tri.setVerts(new Vector[] {Matrix.multMatVec(rotMat, tri.getVert1()), 
 					Matrix.multMatVec(rotMat, tri.getVert2()), 
 					Matrix.multMatVec(rotMat, tri.getVert3())});
-		translate(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+30, 0, 0));
-		setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+30, 0, 0));
+		translate(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+50, 0, 0));
+		setPos(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+50, 0, 0));
 		theta += Math.PI/2/120;
 
 //		if (fireMod % 5 == 0) {
