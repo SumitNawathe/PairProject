@@ -9,6 +9,7 @@ public class EnemyB extends Enemy{
 	private int moveCounter, dist, d, difficulty;
 	public EnemyB (Vector pos, int dist, int ai, int difficulty) {
 		super(pos, dist, ai, difficulty);
+		setCollisionRadius(3);
 		firestage=new boolean[4];
 		movestage=new boolean[4];
 		this.dist=dist;

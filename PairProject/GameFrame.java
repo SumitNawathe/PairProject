@@ -23,6 +23,8 @@ public class GameFrame extends JFrame{
 		SCREEN_WIDTH=width;
 		SCREEN_HEIGHT=width*3/4;
 		
+		System.out.println("SCREEN_WIDTH: " + SCREEN_WIDTH);
+		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
