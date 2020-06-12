@@ -434,6 +434,7 @@ public class GraphicsPanel extends JPanel {
 		}, 300, 20);
 	}
 
+	// Thanks to javidx9 for inspiration for projection mathematics
 	public void paintComponent (Graphics panelG) {
 		super.paintComponent(panelG);
 		panelG.drawImage(backgroundImage, 0, 0, null);
