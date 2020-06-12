@@ -204,7 +204,7 @@ public class GraphicsPanel extends JPanel {
 					if (event.getKeyCode() == KeyEvent.VK_F && !fPressed) {
 						if (playerShip.getEnergy() > 0) {
 							fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
-							playerShip.decreaseEnergy(1);
+							playerShip.decreaseEnergy(0.5);
 						}
 						fPressed = true;
 					} else if (event.getKeyCode() == KeyEvent.VK_D) {
@@ -260,14 +260,14 @@ public class GraphicsPanel extends JPanel {
 						if (abilityState == 1) {
 							meshList.remove(charge);
 							if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-								playerShip.decreaseEnergy(3);
+								playerShip.decreaseEnergy(2);
 								fireBullet(playerShip.getPos().plus(new Vector(3, 0, 0)), new Vector(3, 0, 0), 3, false);
 							}
 							bigShotChargeCounter = 0;
 						} else if (abilityState == 2) {
 							meshList.remove(charge);
 							if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-								playerShip.decreaseEnergy(7);
+								playerShip.decreaseEnergy(4);
 								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
 								for (int i = 0; i < 6; i++)
 									fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
@@ -421,7 +421,7 @@ public class GraphicsPanel extends JPanel {
 				}
 
 				if (playerShip.bulletCollision(bulletList))
-					playerShip.decreaseHealth(1);
+					playerShip.decreaseHealth(0.5+0.25*difficulty);
 
 				charge.update(graphicsPanel);
 				rocket.update(graphicsPanel);
