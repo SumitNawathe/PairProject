@@ -2,7 +2,7 @@ import java.util.*;
 import java.awt.*;
 
 public class AgilityLevel3 extends Level {
-	Mesh firevenus, moon, mars;
+	Mesh firevenus, moon, sun;
 	ArrayList<AgilityRing> set1, set2, set3;
 	private int difficulty;
 	
@@ -13,7 +13,7 @@ public class AgilityLevel3 extends Level {
 		try {
 			firevenus = Mesh.loadFromObjFile("Models/firevenus2.obj", "Textures/firevenustexture.jpg").translate(new Vector(800, -400, -400));
 			moon = Mesh.loadFromObjFile("Models/Moon.obj", "Textures/Moon Map.png").translate(new Vector(1600, 300, -300));
-			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(2400, 500, 500));
+			sun = Mesh.loadFromObjFile("Models/Sun.obj", "Textures/Sun Map.png").translate(new Vector(2900, 500, 500));
 		} catch (Exception e) {}
 		
 //		ArrayList<AgilityRing> ringList = game.getRingList();
@@ -35,7 +35,7 @@ public class AgilityLevel3 extends Level {
 		
 		graphicsPanel.getMeshList().add(firevenus);
 		graphicsPanel.getMeshList().add(moon);
-		graphicsPanel.getMeshList().add(mars);
+		graphicsPanel.getMeshList().add(sun);
 		
 		graphicsPanel.getRingList().addAll(set1);
 	}

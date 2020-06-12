@@ -2,7 +2,7 @@ import java.util.*;
 import java.awt.*;
 
 public class AgilityLevel4 extends Level {
-	Mesh moon, mars, earth;
+	Mesh sun, mars, quasar;
 	ArrayList<AgilityRing> set1, set2, set3;
 	private int difficulty;
 	
@@ -26,9 +26,9 @@ public class AgilityLevel4 extends Level {
 //		} catch (Exception e) {}
 		
 		try {
-			moon = Mesh.loadFromObjFile("Models/Moon.obj", "Textures/Moon Map.png").translate(new Vector(600, -300, -300));
-			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(1400, 500, 500));
-			earth = Mesh.loadFromObjFile("Models/Earth.obj", "Textures/Earth Map.png").translate(new Vector(2100, 600, -600));
+			sun = Mesh.loadFromObjFile("Models/Sun.obj", "Textures/Sun Map.png").translate(new Vector(1000, -500, -500));
+			mars = Mesh.loadFromObjFile("Models/Mars.obj", "Textures/Mars Map.png").translate(new Vector(1600, 500, 500));
+			quasar = Mesh.loadFromObjFile("Models/Quasar.obj", "Textures/Quasar Map.png").translate(new Vector(5400, 700, -700));
 		} catch (Exception e) {}
 		
 //		ArrayList<AgilityRing> ringList = game.getRingList();
@@ -73,9 +73,9 @@ public class AgilityLevel4 extends Level {
 //			game.getMeshList().add(Mesh.loadFromObjFile("Models/earth2.obj", "Textures/Earth_Diffuse_2K.png").translate(new Vector(2100, 600, -600)));
 //		} catch (Exception e) {}
 		
-		graphicsPanel.getMeshList().add(moon);
+		graphicsPanel.getMeshList().add(sun);
 		graphicsPanel.getMeshList().add(mars);
-		graphicsPanel.getMeshList().add(earth);
+		graphicsPanel.getMeshList().add(quasar);
 		graphicsPanel.getRingList().addAll(set1);
 	}
 

@@ -60,33 +60,33 @@ public class AgilityLevel1 extends Level {
 //			game.getMeshList().add(Mesh.loadFromObjFile("Models/moon2.obj", "Textures/Moon_Bump_2K.png").translate(new Vector(600, -300, -300)));
 //		} catch (Exception e) {}
 		
-		set2.add(new AgilityRing(new Vector(720, 0, 0)));
-		set2.add(new AgilityRing(new Vector(740, -5, 0)));
-		set2.add(new AgilityRing(new Vector(760, -10, -5)));
-		set2.add(new AgilityRing(new Vector(780, -15, -10)));
-		set2.add(new AgilityRing(new Vector(800, -15, -10)));
-		set2.add(new AgilityRing(new Vector(840, 5, 5)));
+		set2.add(new AgilityRing(new Vector(520, 0, 0)));
+		set2.add(new AgilityRing(new Vector(540, -5, 0)));
+		set2.add(new AgilityRing(new Vector(560, -10, -5)));
+		set2.add(new AgilityRing(new Vector(580, -15, -10)));
+		set2.add(new AgilityRing(new Vector(600, -15, -10)));
+		set2.add(new AgilityRing(new Vector(640, 5, 5)));
 		
-		set2.add(new AgilityRing(new Vector(920, 0, 0)));
-		set2.add(new AgilityRing(new Vector(940, 5, 0)));
-		set2.add(new AgilityRing(new Vector(960, 10, 5)));
-		set2.add(new AgilityRing(new Vector(980, 15, 10)));
-		set2.add(new AgilityRing(new Vector(1000, 15, 10)));
-		set2.add(new AgilityRing(new Vector(1040, -5, -5)));
+		set2.add(new AgilityRing(new Vector(720, 0, 0)));
+		set2.add(new AgilityRing(new Vector(740, 5, 0)));
+		set2.add(new AgilityRing(new Vector(760, 10, 5)));
+		set2.add(new AgilityRing(new Vector(780, 15, 10)));
+		set2.add(new AgilityRing(new Vector(800, 15, 10)));
+		set2.add(new AgilityRing(new Vector(840, -5, -5)));
 		
 //		try {
 //			game.getMeshList().add(Mesh.loadFromObjFile("Models/mars1.obj", "Textures/Mars_Diffuse_2K.png").translate(new Vector(1400, 500, 500)));
 //		} catch (Exception e) {}
 		
 		for (int theta1 = 0; theta1 < 24; theta1++)
-			set3.add(new AgilityRing(new Vector(1300+20*theta1, 10*Math.cos(theta1*Math.PI/6), 10*Math.sin(theta1*Math.PI/6))));
+			set3.add(new AgilityRing(new Vector(940+20*theta1, 10*Math.cos(theta1*Math.PI/6), 10*Math.sin(theta1*Math.PI/6))));
 		
 //		try {
 //			game.getMeshList().add(Mesh.loadFromObjFile("Models/earth2.obj", "Textures/Earth_Diffuse_2K.png").translate(new Vector(2100, 600, -600)));
 //		} catch (Exception e) {}
 		
 		for (int i = 0; i < 5; i++)
-			set3.add(new AgilityRing(new Vector(1800+20*i, 0, 0)));
+			set3.add(new AgilityRing(new Vector(1440+20*i, 0, 0)));
 		
 		graphicsPanel.getMeshList().add(moon);
 		graphicsPanel.getMeshList().add(mars);
@@ -102,18 +102,18 @@ public class AgilityLevel1 extends Level {
 			graphicsPanel.getRingList().addAll(set2);
 			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 10, 1, difficulty);
-			graphicsPanel.getEnemyShips().add(enemy);
-			graphicsPanel.getMeshList().add(enemy);
-		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1040) {
+//			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 10, 1, difficulty);
+//			graphicsPanel.getEnemyShips().add(enemy);
+//			graphicsPanel.getMeshList().add(enemy);
+		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 840) {
 			graphicsPanel.getMeshList().removeAll(set2);
 			graphicsPanel.getRingList().removeAll(set2);
 			graphicsPanel.getMeshList().addAll(set3);
 			graphicsPanel.getRingList().addAll(set3);			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 20, 1, difficulty);
-			graphicsPanel.getEnemyShips().add(enemy);
-			graphicsPanel.getMeshList().add(enemy);
+//			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 20, 1, difficulty);
+//			graphicsPanel.getEnemyShips().add(enemy);
+//			graphicsPanel.getMeshList().add(enemy);
 		}
 		
 //		if ((getProgressState() == 0 && game.getPlayerShip().getPos().getX() > 400) || (getProgressState() == 1 && game.getPlayerShip().getPos().getX() > 1040)) {
@@ -122,7 +122,7 @@ public class AgilityLevel1 extends Level {
 //			game.getEnemyShips().add(enemy);
 //			game.getMeshList().add(enemy);
 //		}
-		return graphicsPanel.getPlayerShip().getPos().getX()>2000;
+		return graphicsPanel.getPlayerShip().getPos().getX()>1560;
 	}
 	
 	public double determineScore (GraphicsPanel graphicsPanel) {

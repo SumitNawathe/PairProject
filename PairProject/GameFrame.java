@@ -43,7 +43,7 @@ public class GameFrame extends JFrame{
 		goToAbilityScreen(2);
 	}
 	
-	public GameFrame (Level level, int difficulty, int abilityState) {
+	public GameFrame (Level level, int difficulty, int abilityState, boolean canRoll) {
 		int width = SCREEN_WIDTH;
 		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -61,7 +61,7 @@ public class GameFrame extends JFrame{
 		this.setFocusable(true);
 		this.setBounds(this.getBounds().x, this.getBounds().y, width, width*3/4);
 		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-		startLevel(level, difficulty, abilityState);
+		startLevel(level, difficulty, abilityState, canRoll);
 	}
 	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
@@ -108,9 +108,9 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
-	public void goToInstructionScreen (int difficulty, int abilityState) {
+	public void goToInstructionScreen (int difficulty, int abilityState, boolean canRoll) {
 		this.getContentPane().removeAll();
-		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState);
+		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState, canRoll);
 		this.getContentPane().add(instructionScreen);
 		this.pack();
 		this.revalidate();
@@ -118,9 +118,9 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
-	public void goToEnemyInstructionScreen (int difficulty, int abilityState) {
+	public void goToEnemyInstructionScreen (int difficulty, int abilityState, boolean canRoll) {
 		this.getContentPane().removeAll();
-		enemyInstructionScreen = new EnemyInstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState);
+		enemyInstructionScreen = new EnemyInstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState, canRoll);
 		this.getContentPane().add(enemyInstructionScreen);
 		this.pack();
 		this.revalidate();
@@ -142,9 +142,9 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
-	public void startLevel (Level level, int difficulty, int abilityState) {
+	public void startLevel (Level level, int difficulty, int abilityState, boolean canRoll) {
 		this.getContentPane().removeAll();
-		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState);
+		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState, canRoll);
 		this.getContentPane().add(graphicsPanel);
 		this.pack();
 		this.revalidate();
