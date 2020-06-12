@@ -111,7 +111,7 @@ public class AgilityLevel4 extends Level {
 	}
 	
 	public double determineScore (GraphicsPanel graphicsPanel) {
-		return 100.0*(1.0 - graphicsPanel.getRingList().size()/59.0);
+		return 100.0*(1.0 - graphicsPanel.getRingList().size()/104.0);
 	}
 	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}
