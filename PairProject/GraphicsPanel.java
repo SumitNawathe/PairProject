@@ -43,7 +43,7 @@ public class GraphicsPanel extends JPanel {
 	private boolean dead;
 	private int difficulty;
 	private Mesh bulletMesh;
-	private boolean cannon, multi;
+	private boolean cannon, multi, dodge;
 	
 	public PlayerShip getPlayerShip () { return playerShip; }
 	public ArrayList<Mesh> getMeshList () { return meshList; }
@@ -61,7 +61,8 @@ public class GraphicsPanel extends JPanel {
 			bulletMesh = Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png");
 			cannon = Boolean.parseBoolean(Files.readAllLines(Paths.get(gameFrame.CURRENT_SAVEDATA_LOCATION)).get(4).split("\\s+")[0]);
 			multi = Boolean.parseBoolean(Files.readAllLines(Paths.get(gameFrame.CURRENT_SAVEDATA_LOCATION)).get(8).split("\\s+")[0]);
-		} catch (Exception e) {}
+			dodge = Boolean.parseBoolean(Files.readAllLines(Paths.get(gameFrame.CURRENT_SAVEDATA_LOCATION)).get(3).split("\\s+")[0]);
+		} catch (Exception e) {System.out.println("Failed to load booleans in GraphicsPanel");}
 		this.difficulty=difficulty;
 		fPressed = false;
 //		int width = SCREEN_WIDTH;
@@ -315,6 +316,10 @@ public class GraphicsPanel extends JPanel {
 						gameFrame.goToAbilityScreen(0);
 					} else if (level.getLEVEL_NUM()==6&&!multi) {
 						gameFrame.goToAbilityScreen(1);
+					} else if (level.getLEVEL_NUM()==1&&!dodge) {
+						gameFrame.goToAbilityScreen(2);
+					} else if (level.getLEVEL_NUM()==9) {
+						gameFrame.goToVictoryScreen();
 					} else {
 						gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 					}

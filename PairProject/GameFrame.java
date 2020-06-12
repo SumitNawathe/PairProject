@@ -39,8 +39,7 @@ public class GameFrame extends JFrame{
 		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 //		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
 		
-		//goToIntroScreen();
-		goToAbilityScreen(2);
+		goToIntroScreen();
 	}
 	
 	public GameFrame (Level level, int difficulty, int abilityState, boolean canRoll) {
@@ -140,6 +139,15 @@ public class GameFrame extends JFrame{
 		this.revalidate();
 		this.repaint();
         this.setVisible(true);
+	}
+	
+	public void goToVictoryScreen() {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(new VictoryScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		this.pack();
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
 	}
 	
 	public void startLevel (Level level, int difficulty, int abilityState, boolean canRoll) {
