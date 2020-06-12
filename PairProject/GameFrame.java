@@ -13,7 +13,7 @@ public class GameFrame extends JFrame{
 	
 	public GameFrame () {
 		int width = SCREEN_WIDTH;
-		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
+		//Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		if (width > gd.getDisplayMode().getWidth())
 		    width = gd.getDisplayMode().getWidth();
@@ -40,27 +40,6 @@ public class GameFrame extends JFrame{
 //		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
 		
 		goToIntroScreen();
-	}
-	
-	public GameFrame (Level level, int difficulty, int abilityState, boolean canRoll) {
-		int width = SCREEN_WIDTH;
-		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		if (width > gd.getDisplayMode().getWidth())
-		    width = gd.getDisplayMode().getWidth();
-		while (width*3/4 > gd.getDisplayMode().getHeight())
-		    width = (int) (width - width*0.1);
-		width-=10;
-		SCREEN_WIDTH=width;
-		SCREEN_HEIGHT=width*3/4;
-		
-		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.setFocusable(true);
-		this.setBounds(this.getBounds().x, this.getBounds().y, width, width*3/4);
-		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-		startLevel(level, difficulty, abilityState, canRoll);
 	}
 	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
