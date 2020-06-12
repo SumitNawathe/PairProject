@@ -1,6 +1,6 @@
-difficulty 1
-true 59.32203389830508
-true 80.0
+difficulty 3
+false 0.0
+false 0.0
 false 0.0
 false 0.0
 false 0.0

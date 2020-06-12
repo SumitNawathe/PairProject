@@ -267,7 +267,7 @@ public class GraphicsPanel extends JPanel {
 						} else if (abilityState == 2) {
 							meshList.remove(charge);
 							if (bigShotChargeCounter > 15 && playerShip.getEnergy() >= 10) {
-								playerShip.decreaseEnergy(7);
+								playerShip.decreaseEnergy(5);
 								fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0, 0), 0.3, false);
 								for (int i = 0; i < 6; i++)
 									fireBullet(playerShip.getPos().plus(new Vector(4, 0, 0)), new Vector(2, 0.25*Math.cos(i*Math.PI/3), 0.25*Math.sin(i*Math.PI/3)), 0.3, false);
