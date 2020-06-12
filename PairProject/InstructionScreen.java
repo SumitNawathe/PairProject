@@ -68,7 +68,9 @@ public class InstructionScreen extends JPanel {
 		g2d.drawImage(shipRing1, (int)(10*scaleX), (int)(570*scaleY), null);
 		g2d.drawString("Arrow keys to move", (int)(550*scaleX), (int)(140*scaleY));
 		g2d.drawString("Space to boost", (int)(540*scaleX), (int)(400*scaleY));
-		g2d.drawString("(Move forwards twice as fast)", (int)(540*scaleX), (int)(440*scaleY));
+		g2d.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+		g2d.drawString("(Move forwards twice as fast but uses energy)", (int)(540*scaleX), (int)(440*scaleY));
+		g2d.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 		g2d.drawString("Move through rings to collect them.", (int)(540*scaleX), (int)(640*scaleY));
 		g2d.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 		g2d.drawString("Rings replenish your energy, which you need to fire.", (int)(540*scaleX), (int)(673*scaleY));
