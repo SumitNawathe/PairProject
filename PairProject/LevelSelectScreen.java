@@ -44,7 +44,7 @@ public class LevelSelectScreen extends JPanel {
 			BufferedReader file = new BufferedReader(new FileReader(SAVEDATA_LOCATION));
 			file.readLine();
 			StringTokenizer st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new AgilityLevel1(), "Textures/MarsImage1.jpg", "Welcome, recruit! To serve in the legendary B-wing squadron you must first pass this training course in the orbit of Mars. "
+			levelOptionList.add(new LevelOption(new AgilityLevel1(), "Textures/MarsImage1.jpg", "Welcome, sergeant! To serve in the legendary B-wing squadron you must first pass this agility training course in the orbit of Mars. "
 					+ "Your supervisor will provide you with instructions.", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 
 			st = new StringTokenizer(file.readLine());
