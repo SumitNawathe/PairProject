@@ -3,9 +3,9 @@ true 96.61016949152543
 true 95.0
 true 81.0
 true 66.66666666666667
-false 0.0
-false 0.0
-false 0.0
-false 0.0
-false 0.0
+true 81.0
+true 81.0
+true 81.0
+true 81.0
+true 81.0
 false 0.0

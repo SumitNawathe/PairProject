@@ -131,6 +131,9 @@ public class LevelSelectScreen extends JPanel {
 			abilityState = 2;
 			addAbilityButtons();
 		}
+		
+		if (levelOptionList.get(0).SAVEDATA_COMPLETED)
+			focusOnCorrectLevel();
 	}
 	
 	public void focusOnLevel (int levelNum) {
@@ -170,6 +173,15 @@ public class LevelSelectScreen extends JPanel {
 		levelSelectScreen.add(useMultiShot);
 	}
 	
+	public void focusOnCorrectLevel () {
+		for (int i = 0; i < levelOptionList.size(); i++)
+			if (levelOptionList.get(i).getSAVEDATA_COMPLETED())
+				if (i == levelOptionList.size()-1)
+					focusOnLevel(i);
+				else
+					focusOnLevel(i+1);
+	}
+	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
 		try {
 			Scanner scan=new Scanner(new File(SAVEDATA_LOCATION));
@@ -193,9 +205,6 @@ public class LevelSelectScreen extends JPanel {
 						out.write(completed + " " + health + "\n");
 						levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
 						levelOptionList.get(i).setSAVEDATA_HEALTH(health);
-						
-						if (levelNum != levelOptionList.size()-1)
-							focusOnLevel(levelNum+1);
 					} else {
 						health = 0.0;
 						out.write(completed + " " + health + "\n");
@@ -204,15 +213,10 @@ public class LevelSelectScreen extends JPanel {
 					}
 				} else {
 					out.write(levelOptionList.get(i).getSAVEDATA_COMPLETED() + " " + levelOptionList.get(i).getSAVEDATA_HEALTH() + "\n");
-					if (levelOptionList.get(i).getSAVEDATA_COMPLETED()) {
-						if (levelNum == levelOptionList.size()-1)
-							focusOnLevel(levelNum);
-						else
-							focusOnLevel(levelNum+1);
-					}
 				}
 			}
 			out.close();
+			focusOnCorrectLevel();
 		} catch (Exception e) {System.out.println("Updating save data failed. "+SAVEDATA_LOCATION);}
 	}
 
