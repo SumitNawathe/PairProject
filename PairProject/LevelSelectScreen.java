@@ -44,35 +44,34 @@ public class LevelSelectScreen extends JPanel {
 			BufferedReader file = new BufferedReader(new FileReader(SAVEDATA_LOCATION));
 			file.readLine();
 			StringTokenizer st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new AgilityLevel1(), "Textures/MarsImage1.jpg", "Welcome, recruit! To serve in the legendary Arwing squadron you must first pass this training course in the orbit of Mars. "
-					+ "Your supervisor will provide you with instructions. Good luck!", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new AgilityLevel1(), "Textures/MarsImage1.jpg", "Welcome, sergeant! To serve in the legendary B-wing squadron you must first pass this agility training course in the orbit of Mars. Your supervisor will provide you with instructions.", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new AgilityLevel2(), "Textures/nebulaimage1.jpg", "Agility 2.", 1*SCREEN_WIDTH/7, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new AgilityLevel2(), "Textures/nebulaimage1.jpg", "Protocol mandates that you must complete this additional training course in preparation for deployment. We have set up replicas of Eagle Empire fighters built before the peace treaty. Although it is an agility course, be prepared to destroy these replicas. Instructions will be provided by your supervisor.\r\n", 1*SCREEN_WIDTH/7, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "Enemy 1.", 3*SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "We are getting reports that an Eagle squadron has crossed our border, violating the Treaty of Alpha Centauri. All attempts to establish diplomatic contact have failed. Move to intercept immediately. Reinforcements will be sent after you.", 3*SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new AgilityLevel3(), "Textures/strangeplanet2.jpg", "Agility 3.", 6*SCREEN_WIDTH/11, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new AgilityLevel3(), "Textures/strangeplanet2.jpg", "Nice work taking care of the threat. We have received news that the Eagle Empire has hired mercenaries for this war. The Peregrine Pirates are feared warriors known throughout the galaxy for their ferocity and reflexes. Complete this mock battle to prepare for the upcoming conflict.", 6*SCREEN_WIDTH/11, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel2(), "Textures/strangeplanet.jpg", "Enemy 2.", 7*SCREEN_WIDTH/11, 1*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new EnemyLevel2(), "Textures/strangeplanet.jpg", "Radar indicates that the Eagle Empire has left their Caladan trade system particularly vulnerable to attack. We are sending you in to deal critical economic damage. Expect moderate resistance.", 7*SCREEN_WIDTH/11, 1*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel3(), "Textures/strangeplanet4.jpg", "Enemy 3.", 5*SCREEN_WIDTH/11, 2*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new EnemyLevel3(), "Textures/strangeplanet4.jpg", "Excellent job. Without the Caladan chokepoint, the Eagle Empire will be unable to reinforce their fleets. Move in on the Pegasi system to meet up with our main attack force. You are entering the heart of the Eagle Empire. Good luck.", 5*SCREEN_WIDTH/11, 2*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new AgilityLevel4(), "Textures/strangeplanet3.jpg", "Agiliy 4.", SCREEN_WIDTH/2, 1*SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new AgilityLevel4(), "Textures/strangeplanet3.jpg", "We won a resounding victory against the Eagle Empire and have moved in to annex their territory. Unfortunately their ally, the Rhino Republic, is moving in on us to strike us while we are weak. Complete this training course with captured Rhino warships to understand their tactics.", SCREEN_WIDTH/2, 1*SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel4(), "Textures/whitedwarf.jpg", "Enemy 4.", 3*SCREEN_WIDTH/11, SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new EnemyLevel4(), "Textures/whitedwarf.jpg", "The Rhino Republic army has met up with the surviving Eagle Empire fleet and is preparing to launch an assault. Rumor has it that they have been building a powerful secret weapon. Lead the counterattack to defend our homeland.", 3*SCREEN_WIDTH/11, SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel4(), "Textures/strangeplanet5.jpg", "Enemy 5.", 2*SCREEN_WIDTH/11, 2*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new EnemyLevel4(), "Textures/strangeplanet5.jpg", "The united army has bought out all the Peregrine Pirate mercenaries and are moving toward the capital. This is going to be an intense fight. Based on your previous success, we are sending you to flank again in the Uldor system. Make sure you keep an eye on your energy reserves.", 2*SCREEN_WIDTH/11, 2*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.", 4*SCREEN_WIDTH/11, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		file.close();
+			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "We have discovered the location of the Rhino’s secret weapon at the center of the galaxy. It is feeding off of the energy of the black hole. Soon, they will have the power to destroy entire planets. The rest of our fleet is defending the capitol. You are our last hope. We are counting on you!", 4*SCREEN_WIDTH/11, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		file.close();
 		
 			System.out.println(levelOptionList.size());
 		} catch (Exception e) { System.out.println(e); }
