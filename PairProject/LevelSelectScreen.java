@@ -39,6 +39,7 @@ public class LevelSelectScreen extends JPanel {
 		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setLayout(null);
 
+		
 		levelOptionList = new ArrayList<LevelOption>();
 		try {
 			BufferedReader file = new BufferedReader(new FileReader(SAVEDATA_LOCATION));
