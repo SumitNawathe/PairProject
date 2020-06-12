@@ -47,7 +47,7 @@ public class LevelSelectScreen extends JPanel {
 			levelOptionList.add(new LevelOption(new AgilityLevel1(), "Textures/MarsImage1.jpg", "Welcome, sergeant! To serve in the legendary B-wing squadron you must first pass this agility training course in the orbit of Mars. Your supervisor will provide you with instructions.", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new AgilityLevel2(), "Textures/nebulaimage1.jpg", "Protocol mandates that you must complete this additional training course in preparation for deployment. We have set up replicas of Eagle Empire fighters built before the peace treaty. Although it is an agility course, be prepared to destroy these replicas. Instructions will be provided by your supervisor.\r\n", 1*SCREEN_WIDTH/7, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new AgilityLevel2(), "Textures/nebulaimage1.jpg", "Protocol mandates that you must complete this additional training course in preparation for deployment. We have set up replicas of Eagle Empire fighters built before the peace treaty. Although it is an agility course, be prepared to destroy these replicas. Instructions will be provided by your supervisor.", 1*SCREEN_WIDTH/7, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 			
 			st = new StringTokenizer(file.readLine());
 			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "We are getting reports that an Eagle squadron has crossed our border, violating the Treaty of Alpha Centauri. All attempts to establish diplomatic contact have failed. Move to intercept immediately. Reinforcements will be sent after you.", 3*SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
@@ -80,12 +80,7 @@ public class LevelSelectScreen extends JPanel {
 				for (int i = 0; i < levelOptionList.size(); i++) {
 					LevelOption levelOption = levelOptionList.get(i);
 					if (levelOption.clickedOnLevel(event.getX(), event.getY()) && ((i == 0) || (i != 0 && levelOptionList.get(i-1).SAVEDATA_COMPLETED))) {
-						currentImage = levelOption.getImage();
-						currentLevelIntroText = levelOption.getLevelIntroText();
-						currentLevel = levelOption.getLevel();
-						currentScore = levelOption.getSAVEDATA_HEALTH();
-						introTexts=BreakString.breakText(currentLevelIntroText);
-						levelSelectScreen.repaint();
+						focusOnLevel(i);
 						break;
 					}
 				}
@@ -132,10 +127,22 @@ public class LevelSelectScreen extends JPanel {
 		
 		if (levelOptionList.get(2).SAVEDATA_COMPLETED)
 			abilityState = 1;
-		if (levelOptionList.get(3).SAVEDATA_COMPLETED) {
+		if (levelOptionList.get(6).SAVEDATA_COMPLETED) {
 			abilityState = 2;
 			addAbilityButtons();
 		}
+		
+		if (levelOptionList.get(0).SAVEDATA_COMPLETED)
+			focusOnCorrectLevel();
+	}
+	
+	public void focusOnLevel (int levelNum) {
+		currentImage = levelOptionList.get(levelNum).getImage();
+		currentLevelIntroText = levelOptionList.get(levelNum).getLevelIntroText();
+		currentLevel = levelOptionList.get(levelNum).getLevel();
+		currentScore = levelOptionList.get(levelNum).getSAVEDATA_HEALTH();
+		introTexts=BreakString.breakText(currentLevelIntroText);
+		levelSelectScreen.repaint();
 	}
 	
 	public void addAbilityButtons () {
@@ -166,6 +173,15 @@ public class LevelSelectScreen extends JPanel {
 		levelSelectScreen.add(useMultiShot);
 	}
 	
+	public void focusOnCorrectLevel () {
+		for (int i = 0; i < levelOptionList.size(); i++)
+			if (levelOptionList.get(i).getSAVEDATA_COMPLETED())
+				if (i == levelOptionList.size()-1)
+					focusOnLevel(i);
+				else
+					focusOnLevel(i+1);
+	}
+	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
 		try {
 			Scanner scan=new Scanner(new File(SAVEDATA_LOCATION));
@@ -176,9 +192,9 @@ public class LevelSelectScreen extends JPanel {
 			for (int i = 0; i < levelOptionList.size(); i++) {
 				if (i == levelNum) {
 					if (levelOptionList.get(i).getSAVEDATA_COMPLETED() || completed) {
-						if (completed && levelNum == 1 && !canChangeAbilities)
+						if (completed && levelNum == 2 && !canChangeAbilities)
 							abilityState = 1;
-						else if (completed && levelNum == 3 && !canChangeAbilities) {
+						else if (completed && levelNum == 6 && !canChangeAbilities) {
 							abilityState = 2;
 							canChangeAbilities = true;
 							addAbilityButtons();
@@ -200,7 +216,7 @@ public class LevelSelectScreen extends JPanel {
 				}
 			}
 			out.close();
-			levelSelectScreen.repaint();
+			focusOnCorrectLevel();
 		} catch (Exception e) {System.out.println("Updating save data failed. "+SAVEDATA_LOCATION);}
 	}
 

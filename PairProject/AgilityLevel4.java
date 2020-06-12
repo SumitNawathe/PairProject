@@ -87,7 +87,7 @@ public class AgilityLevel4 extends Level {
 			graphicsPanel.getRingList().addAll(set2);
 			
 			incrementProgressState();
-			EnemyC enemy = new EnemyC(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 10, 0, difficulty);
+			Enemy enemy = new EnemyB(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 10, 0, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1400) {
@@ -96,7 +96,7 @@ public class AgilityLevel4 extends Level {
 			graphicsPanel.getMeshList().addAll(set3);
 			graphicsPanel.getRingList().addAll(set3);			
 			incrementProgressState();
-			EnemyC enemy = new EnemyC(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 20, 0, difficulty);
+			Enemy enemy = new EnemyB(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 20, 0, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		}
@@ -111,7 +111,7 @@ public class AgilityLevel4 extends Level {
 	}
 	
 	public double determineScore (GraphicsPanel graphicsPanel) {
-		return 100.0*(1.0 - graphicsPanel.getRingList().size()/59.0);
+		return 100.0*(1.0 - graphicsPanel.getRingList().size()/104.0);
 	}
 	
 	public void draw (GraphicsPanel graphicsPanel, Graphics g) {}
