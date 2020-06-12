@@ -143,9 +143,12 @@ public class LevelSelectScreen extends JPanel {
 		useCannonShot = new JButton("Use Cannon Shot");
 		useCannonShot.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
+				useCannonShot.setBackground(Color.green);
+				useMultiShot.setBackground(Color.gray);
 				abilityState = 1;
 			}
 		});
+		useCannonShot.setBackground(Color.green);
 		useCannonShot.setSize(new Dimension(3*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21));
 		useCannonShot.setLocation(12*SCREEN_WIDTH/21, 0);
 		levelSelectScreen.add(useCannonShot);
@@ -153,9 +156,12 @@ public class LevelSelectScreen extends JPanel {
 		useMultiShot = new JButton("Use MultiShot");
 		useMultiShot.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
+				useMultiShot.setBackground(Color.green);
+				useCannonShot.setBackground(Color.gray);
 				abilityState = 2;
 			}
 		});
+		useMultiShot.setBackground(Color.gray);
 		useMultiShot.setSize(new Dimension(3*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21));
 		useMultiShot.setLocation(12*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21);
 		levelSelectScreen.add(useMultiShot);

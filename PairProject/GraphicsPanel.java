@@ -60,7 +60,7 @@ public class GraphicsPanel extends JPanel {
 		try {
 			bulletMesh = Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png");
 			cannon = Boolean.parseBoolean(Files.readAllLines(Paths.get(gameFrame.CURRENT_SAVEDATA_LOCATION)).get(4).split("\\s+")[0]);
-			System.out.println("Cannon: "+cannon);
+			multi = Boolean.parseBoolean(Files.readAllLines(Paths.get(gameFrame.CURRENT_SAVEDATA_LOCATION)).get(8).split("\\s+")[0]);
 		} catch (Exception e) {}
 		this.difficulty=difficulty;
 		fPressed = false;
@@ -313,6 +313,8 @@ public class GraphicsPanel extends JPanel {
 				if (endAnimation && counter == 0) {
 					if (level.getLEVEL_NUM()==2&&!cannon) {
 						gameFrame.goToAbilityScreen(0);
+					} else if (level.getLEVEL_NUM()==6&&!multi) {
+						gameFrame.goToAbilityScreen(1);
 					} else {
 						gameFrame.goToLevelSelectScreen(gameFrame.CURRENT_SAVEDATA_LOCATION);
 					}
