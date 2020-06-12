@@ -2,9 +2,9 @@ difficulty 0
 true 93.22033898305084
 true 93.33333333333333
 true 65.0
-false 0.0
 true 91.66666666666666
-false 0.0
+true 91.66666666666666
+true 52.0
 false 0.0
 false 0.0
 false 0.0
