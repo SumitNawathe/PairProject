@@ -127,7 +127,7 @@ public class LevelSelectScreen extends JPanel {
 		
 		if (levelOptionList.get(2).SAVEDATA_COMPLETED)
 			abilityState = 1;
-		if (levelOptionList.get(3).SAVEDATA_COMPLETED) {
+		if (levelOptionList.get(6).SAVEDATA_COMPLETED) {
 			abilityState = 2;
 			addAbilityButtons();
 		}
