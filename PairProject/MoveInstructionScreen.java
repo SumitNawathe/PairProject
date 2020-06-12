@@ -30,7 +30,7 @@ public class MoveInstructionScreen extends JPanel {
 		this.setLayout(null);
 
 		try {
-			shipRoll=ImageIO.read(new File("Textures/Ship Multi.png"));
+			shipRoll=ImageIO.read(new File("Textures/Ship Roll.png"));
 
 		} catch (Exception e) {}
 		int xscale=480, yscale=270;
