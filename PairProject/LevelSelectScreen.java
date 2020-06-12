@@ -180,9 +180,9 @@ public class LevelSelectScreen extends JPanel {
 			for (int i = 0; i < levelOptionList.size(); i++) {
 				if (i == levelNum) {
 					if (levelOptionList.get(i).getSAVEDATA_COMPLETED() || completed) {
-						if (completed && levelNum == 1 && !canChangeAbilities)
+						if (completed && levelNum == 2 && !canChangeAbilities)
 							abilityState = 1;
-						else if (completed && levelNum == 3 && !canChangeAbilities) {
+						else if (completed && levelNum == 6 && !canChangeAbilities) {
 							abilityState = 2;
 							canChangeAbilities = true;
 							addAbilityButtons();
