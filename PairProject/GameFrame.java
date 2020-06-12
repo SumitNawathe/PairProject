@@ -24,12 +24,18 @@ public class GameFrame extends JFrame{
 		SCREEN_HEIGHT=9*width/16;
 		System.out.println(SCREEN_WIDTH+" "+SCREEN_HEIGHT);
 		
+		System.out.println("Environment: " + GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth());
+		System.out.println("SCREEN_WIDTH: " + SCREEN_WIDTH);
+		System.out.println("SCREEN_HEIGHT: " + SCREEN_HEIGHT);
+		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setFocusable(true);
 		this.setBounds(this.getBounds().x, this.getBounds().y, SCREEN_WIDTH, SCREEN_HEIGHT);
 		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+		
+		System.out.println(this.getWidth());
 		
 //		graphicsPanel = new GraphicsPanel(this, new Level1(), SCREEN_WIDTH, SCREEN_HEIGHT);
 //		this.getContentPane().add(graphicsPanel);
