@@ -17,7 +17,7 @@ public class LevelSelectScreen extends JPanel {
 	private Image currentImage;
 	private String currentLevelIntroText;
 	private Level currentLevel;
-	private int currentScore;
+	private double currentScore;
 	private JButton startButton, backToIntroScreen;
 	LevelSelectScreen levelSelectScreen;
 	private String saveFileLocation;
@@ -48,29 +48,48 @@ public class LevelSelectScreen extends JPanel {
 					+ "Your supervisor will provide you with instructions. Good luck!", SCREEN_WIDTH/10, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "Hello.", 3*SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			levelOptionList.add(new LevelOption(new AgilityLevel2(), "Textures/nebulaimage1.jpg", "Agility 2.", 1*SCREEN_WIDTH/7, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new EnemyLevel1(), "Textures/SaturnImage1.jpg", "Enemy 1.", 3*SCREEN_WIDTH/7, 4*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
 
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new AgilityLevel2(), "Textures/nebulaimage1.jpg", "Hello.", 9*SCREEN_WIDTH/14, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
-
+			levelOptionList.add(new LevelOption(new AgilityLevel3(), "Textures/strangeplanet2.jpg", "Agility 3.", 6*SCREEN_WIDTH/11, 3*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
 			st = new StringTokenizer(file.readLine());
-			levelOptionList.add(new LevelOption(new EnemyLevel2(), "Textures/strangeplanet.jpg", "Hello.", 5*SCREEN_WIDTH/11, 1*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
-
+			levelOptionList.add(new LevelOption(new EnemyLevel2(), "Textures/strangeplanet.jpg", "Enemy 2.", 7*SCREEN_WIDTH/11, 1*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new EnemyLevel3(), "Textures/strangeplanet4.jpg", "Enemy 3.", 5*SCREEN_WIDTH/11, 2*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new AgilityLevel4(), "Textures/strangeplanet3.jpg", "Agiliy 4.", SCREEN_WIDTH/2, 1*SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new EnemyLevel4(), "Textures/whitedwarf.jpg", "Enemy 4.", 3*SCREEN_WIDTH/11, SCREEN_HEIGHT/6, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
+			st = new StringTokenizer(file.readLine());
+			levelOptionList.add(new LevelOption(new EnemyLevel4(), "Textures/strangeplanet5.jpg", "Enemy 5.", 2*SCREEN_WIDTH/11, 2*SCREEN_HEIGHT/5, Boolean.parseBoolean(st.nextToken()), Double.parseDouble(st.nextToken())));
+			
 			st = new StringTokenizer(file.readLine());
 			levelOptionList.add(new LevelOption(new LevelBoss(), "Textures/BlackHolePhoto1.jpg", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.", 4*SCREEN_WIDTH/11, SCREEN_HEIGHT/2, Boolean.parseBoolean(st.nextToken()),  Double.parseDouble(st.nextToken())));		file.close();
+		
+			System.out.println(levelOptionList.size());
 		} catch (Exception e) { System.out.println(e); }
 		this.addMouseListener(new MouseListener () {
 			public void mousePressed (MouseEvent event) {
-				for (LevelOption levelOption : levelOptionList)
-					if (levelOption.clickedOnLevel(event.getX(), event.getY())) {
+				for (int i = 0; i < levelOptionList.size(); i++) {
+					LevelOption levelOption = levelOptionList.get(i);
+					if (levelOption.clickedOnLevel(event.getX(), event.getY()) && ((i == 0) || (i != 0 && levelOptionList.get(i-1).SAVEDATA_COMPLETED))) {
 						currentImage = levelOption.getImage();
 						currentLevelIntroText = levelOption.getLevelIntroText();
 						currentLevel = levelOption.getLevel();
-						currentScore = (int)levelOption.getSAVEDATA_HEALTH();
+						currentScore = levelOption.getSAVEDATA_HEALTH();
 						introTexts=BreakString.breakText(currentLevelIntroText);
 						levelSelectScreen.repaint();
 						break;
 					}
+				}
 			}
 			public void mouseReleased (MouseEvent event) {}
 			public void mouseClicked (MouseEvent event) {}
@@ -83,9 +102,11 @@ public class LevelSelectScreen extends JPanel {
 			public void actionPerformed (ActionEvent event) {
 				System.out.println(currentLevelIntroText);
 				if (currentLevel.getLEVEL_NUM()==0)
-					gameFrame.goToInstructionScreen(currentDifficulty, abilityState);
-				else
-					gameFrame.startLevel(currentLevel, currentDifficulty, abilityState);
+					gameFrame.goToInstructionScreen(currentDifficulty, abilityState, levelOptionList.get(1).SAVEDATA_COMPLETED);
+				else if (currentLevel.getLEVEL_NUM()==1)
+					gameFrame.goToEnemyInstructionScreen(currentDifficulty, abilityState, levelOptionList.get(1).SAVEDATA_COMPLETED);
+				else	
+					gameFrame.startLevel(currentLevel, currentDifficulty, abilityState, levelOptionList.get(1).SAVEDATA_COMPLETED);
 			}
 		});
 		startButton.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));
@@ -106,24 +127,28 @@ public class LevelSelectScreen extends JPanel {
 			currentImage = levelOptionList.get(0).getImage();
 			currentLevelIntroText = levelOptionList.get(0).getLevelIntroText();
 			currentLevel = levelOptionList.get(0).getLevel();
-			currentScore = (int)levelOptionList.get(0).getSAVEDATA_HEALTH();
-			System.out.println("current"+currentScore);
+			currentScore = levelOptionList.get(0).getSAVEDATA_HEALTH();
 		}
 		introTexts=BreakString.breakText(currentLevelIntroText);
 		
-		if (levelOptionList.get(1).SAVEDATA_COMPLETED)
+		if (levelOptionList.get(2).SAVEDATA_COMPLETED)
 			abilityState = 1;
-		if (levelOptionList.get(3).SAVEDATA_COMPLETED)
+		if (levelOptionList.get(3).SAVEDATA_COMPLETED) {
+			abilityState = 2;
 			addAbilityButtons();
+		}
 	}
 	
 	public void addAbilityButtons () {
 		useCannonShot = new JButton("Use Cannon Shot");
 		useCannonShot.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
+				useCannonShot.setBackground(Color.green);
+				useMultiShot.setBackground(Color.gray);
 				abilityState = 1;
 			}
 		});
+		useCannonShot.setBackground(Color.green);
 		useCannonShot.setSize(new Dimension(3*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21));
 		useCannonShot.setLocation(12*SCREEN_WIDTH/21, 0);
 		levelSelectScreen.add(useCannonShot);
@@ -131,9 +156,12 @@ public class LevelSelectScreen extends JPanel {
 		useMultiShot = new JButton("Use MultiShot");
 		useMultiShot.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
+				useMultiShot.setBackground(Color.green);
+				useCannonShot.setBackground(Color.gray);
 				abilityState = 2;
 			}
 		});
+		useMultiShot.setBackground(Color.gray);
 		useMultiShot.setSize(new Dimension(3*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21));
 		useMultiShot.setLocation(12*SCREEN_WIDTH/21, 1*SCREEN_HEIGHT/21);
 		levelSelectScreen.add(useMultiShot);
@@ -159,7 +187,6 @@ public class LevelSelectScreen extends JPanel {
 						
 						completed = true;
 						health = Math.max(health, levelOptionList.get(i).getSAVEDATA_HEALTH());
-						health*=10;
 						out.write(completed + " " + health + "\n");
 						levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
 						levelOptionList.get(i).setSAVEDATA_HEALTH(health);
@@ -175,14 +202,6 @@ public class LevelSelectScreen extends JPanel {
 			}
 			out.close();
 		} catch (Exception e) {System.out.println("Updating save data failed. "+SAVEDATA_LOCATION);}
-		
-//		LevelSelectScreen lss = this;
-//		(new java.util.Timer()).schedule(new TimerTask () {
-//			public void run () {
-//				System.out.println("hello");
-//				lss.repaint();
-//			}
-//		}, 2000);
 	}
 
 	public void paintComponent (Graphics g1) {
@@ -200,11 +219,12 @@ public class LevelSelectScreen extends JPanel {
 		//		g.setColor(Color.RED);
 		for (int i=0;i<levelOptionList.size();i++) {
 			LevelOption levelOption=levelOptionList.get(i);
-			if (levelOption.SAVEDATA_COMPLETED) {
+			if (levelOption.SAVEDATA_COMPLETED&&i!=levelOptionList.size()) {
 				g.setColor(Color.BLACK);
 				g.setStroke(new BasicStroke(6));
-				g.drawLine(levelOption.getX0()+LevelOption.SQUARE_SIZE/2, levelOption.getY0()+LevelOption.SQUARE_SIZE/2, 
-						levelOptionList.get(i+1).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i+1).getY0()+LevelOption.SQUARE_SIZE/2);
+				if (i != levelOptionList.size()-1)
+					g.drawLine(levelOption.getX0()+LevelOption.SQUARE_SIZE/2, levelOption.getY0()+LevelOption.SQUARE_SIZE/2, 
+							levelOptionList.get(i+1).getX0()+LevelOption.SQUARE_SIZE/2, levelOptionList.get(i+1).getY0()+LevelOption.SQUARE_SIZE/2);
 				g.setColor(Color.GREEN);
 				g.fillRect(levelOption.getX0(), levelOption.getY0(), LevelOption.SQUARE_SIZE, LevelOption.SQUARE_SIZE);
 			} else {
@@ -223,8 +243,8 @@ public class LevelSelectScreen extends JPanel {
 			for (int i=0;i<introTexts.size();i++) {
 				g.drawString(introTexts.get(i), 16*SCREEN_WIDTH/21, 7*SCREEN_HEIGHT/21+12*i);
 			}
-			System.out.println(currentScore);
-			g.drawString("High Score: "+currentScore,17*SCREEN_WIDTH/21-(int)(20*scaleX), 7*SCREEN_HEIGHT/21+(int)(12*34*scaleY));
+			//System.out.println(currentScore);
+			g.drawString("High Score: "+(int)(10*currentScore),17*SCREEN_WIDTH/21-(int)(20*scaleX), 7*SCREEN_HEIGHT/21+(int)(12*34*scaleY));
 		}
 	}
 
@@ -240,7 +260,9 @@ public class LevelSelectScreen extends JPanel {
 		public Level getLevel () { return level; }
 		public Image getImage () { try { return ImageIO.read(new File(imagePath)); } catch (Exception e) { return null; } }
 		public String getLevelIntroText () { return levelIntroText; }
-		public boolean clickedOnLevel (int x, int y) { return x0 < x && x < x0+SQUARE_SIZE && y0 < y && y < y0+SQUARE_SIZE; }
+		public boolean clickedOnLevel (int x, int y) {
+			return (x0 < x && x < x0+SQUARE_SIZE) && (y0 < y && y < y0+SQUARE_SIZE);
+		}
 		public int getX0 () { return x0; }
 		public int getY0 () { return y0; }
 		public boolean getSAVEDATA_COMPLETED () { return SAVEDATA_COMPLETED; }

@@ -6,6 +6,7 @@ public class GameFrame extends JFrame{
 	private SavePurgatory purgatory;
 	private LevelSelectScreen levelSelectScreen;
 	private InstructionScreen instructionScreen;
+	private EnemyInstructionScreen enemyInstructionScreen;
 	private GraphicsPanel graphicsPanel;
 	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
 	String CURRENT_SAVEDATA_LOCATION;
@@ -39,6 +40,27 @@ public class GameFrame extends JFrame{
 //		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
 		
 		goToIntroScreen();
+	}
+	
+	public GameFrame (Level level, int difficulty, int abilityState, boolean canRoll) {
+		int width = SCREEN_WIDTH;
+		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		if (width > gd.getDisplayMode().getWidth())
+		    width = gd.getDisplayMode().getWidth();
+		while (width*3/4 > gd.getDisplayMode().getHeight())
+		    width = (int) (width - width*0.1);
+		width-=10;
+		SCREEN_WIDTH=width;
+		SCREEN_HEIGHT=width*3/4;
+		
+		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.setFocusable(true);
+		this.setBounds(this.getBounds().x, this.getBounds().y, width, width*3/4);
+		this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+		startLevel(level, difficulty, abilityState, canRoll);
 	}
 	
 	public void updateSAVEDATA (int levelNum, boolean completed, double health) {
@@ -85,9 +107,9 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
-	public void goToInstructionScreen (int difficulty, int abilityState) {
+	public void goToInstructionScreen (int difficulty, int abilityState, boolean canRoll) {
 		this.getContentPane().removeAll();
-		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState);
+		instructionScreen = new InstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState, canRoll);
 		this.getContentPane().add(instructionScreen);
 		this.pack();
 		this.revalidate();
@@ -95,9 +117,31 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 	}
 	
-	public void startLevel (Level level, int difficulty, int abilityState) {
+	public void goToEnemyInstructionScreen (int difficulty, int abilityState, boolean canRoll) {
 		this.getContentPane().removeAll();
-		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState);
+		enemyInstructionScreen = new EnemyInstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState, canRoll);
+		this.getContentPane().add(enemyInstructionScreen);
+		this.pack();
+		this.revalidate();
+		this.repaint();
+        this.setVisible(true);
+	}
+	
+	public void goToAbilityScreen (int ability) {
+		this.getContentPane().removeAll();
+		if (ability==0)
+			this.getContentPane().add(new CannonScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		else
+			this.getContentPane().add(new MultiScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		this.pack();
+		this.revalidate();
+		this.repaint();
+        this.setVisible(true);
+	}
+	
+	public void startLevel (Level level, int difficulty, int abilityState, boolean canRoll) {
+		this.getContentPane().removeAll();
+		graphicsPanel = new GraphicsPanel(this, level, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, abilityState, canRoll);
 		this.getContentPane().add(graphicsPanel);
 		this.pack();
 		this.revalidate();

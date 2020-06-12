@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class PlayerShip extends SpaceShip {
-	private double health = 100, energy = 100;;
+	private double health = 100, energy = 100;
 	private int horizAngleState, vertAngleState;
 	private static final double standardPlayerSpeed = 1;
 	private Vector playerVel = new Vector(standardPlayerSpeed, 0, 0);

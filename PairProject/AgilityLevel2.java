@@ -6,7 +6,7 @@ public class AgilityLevel2 extends Level {
 	ArrayList<AgilityRing> set1, set2, set3;
 	private int difficulty;
 	
-	public AgilityLevel2 () { super(); setLEVEL_NUM(2); }
+	public AgilityLevel2 () { super(); setLEVEL_NUM(1); }
 	
 	public void initializeGame(GraphicsPanel graphicsPanel, int difficulty) {
 		this.difficulty=difficulty;
@@ -21,11 +21,11 @@ public class AgilityLevel2 extends Level {
 		set3 = new ArrayList<AgilityRing>();
 		
 		for (int i = 0; i < 20; i++) {
-			set1.add(new AgilityRing(new Vector(80+20*i, 10*Math.sin(i*Math.PI/10+Math.PI/2), 10*Math.cos(2*i*Math.PI/10))));
+			set1.add(new AgilityRing(new Vector(80+20*i, 15*Math.sin(i*Math.PI/10+Math.PI/2), 15*Math.cos(2*i*Math.PI/10))));
 		}
 		
 		for (int i = 0; i < 20; i++) {
-			set2.add(new AgilityRing(new Vector(700+20*i, 15*Math.cos(i*Math.PI/10+Math.PI/2), 15*Math.sin(2*i*Math.PI/10))));
+			set2.add(new AgilityRing(new Vector(700+20*i, 20*Math.cos(i*Math.PI/10+Math.PI/2), 20*Math.sin(2*i*Math.PI/10))));
 		}
 		
 		for (int i = 0; i < 20; i++) {
@@ -45,7 +45,7 @@ public class AgilityLevel2 extends Level {
 			graphicsPanel.getRingList().addAll(set2);
 			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 10, 0, difficulty);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 10, 0, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		} else if (getProgressState() == 1 && graphicsPanel.getPlayerShip().getPos().getX() > 1100) {
@@ -54,7 +54,7 @@ public class AgilityLevel2 extends Level {
 			graphicsPanel.getMeshList().addAll(set3);
 			graphicsPanel.getRingList().addAll(set3);			
 			incrementProgressState();
-			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 0, 0), 20, 1, difficulty);
+			EnemyA enemy = new EnemyA(new Vector(graphicsPanel.getPlayerShip().getPos().getX()+100, 20*Math.random(), 20*Math.random()), 20, 0, difficulty);
 			graphicsPanel.getEnemyShips().add(enemy);
 			graphicsPanel.getMeshList().add(enemy);
 		}
