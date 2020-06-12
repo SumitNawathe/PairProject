@@ -102,11 +102,11 @@ public class LevelSelectScreen extends JPanel {
 			public void actionPerformed (ActionEvent event) {
 				System.out.println(currentLevelIntroText);
 				if (currentLevel.getLEVEL_NUM()==0)
-					gameFrame.goToInstructionScreen(currentDifficulty, abilityState);
+					gameFrame.goToInstructionScreen(currentDifficulty, abilityState, levelOptionList.get(1).SAVEDATA_COMPLETED);
 				else if (currentLevel.getLEVEL_NUM()==1)
-					gameFrame.goToEnemyInstructionScreen(currentDifficulty, abilityState);
+					gameFrame.goToEnemyInstructionScreen(currentDifficulty, abilityState, levelOptionList.get(1).SAVEDATA_COMPLETED);
 				else	
-					gameFrame.startLevel(currentLevel, currentDifficulty, abilityState);
+					gameFrame.startLevel(currentLevel, currentDifficulty, abilityState, levelOptionList.get(1).SAVEDATA_COMPLETED);
 			}
 		});
 		startButton.setSize(new Dimension(4*SCREEN_WIDTH/21, 2*SCREEN_HEIGHT/21));

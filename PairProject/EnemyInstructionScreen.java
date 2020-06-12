@@ -13,7 +13,7 @@ public class EnemyInstructionScreen extends JPanel {
 	private Image shipFire1, enemyFire1, shipRing1;
 	private JButton startButton;
 
-	public EnemyInstructionScreen (GameFrame gameFrame, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty, int abilityState) {
+	public EnemyInstructionScreen (GameFrame gameFrame, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty, int abilityState, boolean canRoll) {
 		this.SCREEN_WIDTH=SCREEN_WIDTH;
 		this.SCREEN_HEIGHT=SCREEN_HEIGHT;
 		scaleX=(double)SCREEN_WIDTH/1200;
@@ -49,7 +49,7 @@ public class EnemyInstructionScreen extends JPanel {
 		startButton = new JButton("BEGIN!");
 		startButton.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent event) {
-					gameFrame.startLevel(new AgilityLevel2(), difficulty, abilityState);
+					gameFrame.startLevel(new AgilityLevel2(), difficulty, abilityState, canRoll);
 			}
 		});
 		this.add(startButton);

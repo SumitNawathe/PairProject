@@ -56,7 +56,7 @@ public class GraphicsPanel extends JPanel {
 		meshList.add(bullet);
 	}
 	
-	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty, int abilityState) {
+	public GraphicsPanel (GameFrame gameFrame, Level level, int SCREEN_WIDTH, int SCREEN_HEIGHT, int difficulty, int abilityState, boolean canRoll) {
 		try {
 			bulletMesh = Mesh.loadFromObjFile("Models/bullet.obj", "Textures/bullet map.png");
 			cannon = Boolean.parseBoolean(Files.readAllLines(Paths.get(gameFrame.CURRENT_SAVEDATA_LOCATION)).get(4).split("\\s+")[0]);
@@ -183,7 +183,7 @@ public class GraphicsPanel extends JPanel {
 						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, -0.5)));
 						moveHoriz = 1;
 						
-						if (meshList.contains(rocket)) {
+						if (meshList.contains(rocket) && canRoll) {
 							playerShip.startRightRoll();
 						}
 					} else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -191,7 +191,7 @@ public class GraphicsPanel extends JPanel {
 						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, 0, 0.5)));
 						moveHoriz = -1;
 						
-						if (meshList.contains(rocket))
+						if (meshList.contains(rocket) && canRoll)
 							playerShip.startRollLeft();
 					} else if (event.getKeyCode() == KeyEvent.VK_UP) {
 						//xAngle -= Math.PI/(18*3);
