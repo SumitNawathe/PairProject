@@ -39,7 +39,8 @@ public class GameFrame extends JFrame{
 		introScreen = new IntroScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT);
 //		levelSelectScreen = new LevelSelectScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT, "SaveFiles/SaveFile2.txt");
 		
-		goToIntroScreen();
+		//goToIntroScreen();
+		goToAbilityScreen(2);
 	}
 	
 	public GameFrame (Level level, int difficulty, int abilityState) {
@@ -131,8 +132,10 @@ public class GameFrame extends JFrame{
 		this.getContentPane().removeAll();
 		if (ability==0)
 			this.getContentPane().add(new CannonScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
-		else
+		else if (ability==1)
 			this.getContentPane().add(new MultiScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		else
+			this.getContentPane().add(new MoveInstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.pack();
 		this.revalidate();
 		this.repaint();
