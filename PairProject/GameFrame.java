@@ -131,12 +131,23 @@ public class GameFrame extends JFrame{
 		this.getContentPane().removeAll();
 		if (ability==0)
 			this.getContentPane().add(new CannonScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
-		else
+		else if (ability==1)
 			this.getContentPane().add(new MultiScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		else
+			this.getContentPane().add(new MoveInstructionScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.pack();
 		this.revalidate();
 		this.repaint();
         this.setVisible(true);
+	}
+	
+	public void goToVictoryScreen() {
+		this.getContentPane().removeAll();
+		this.getContentPane().add(new VictoryScreen(this, SCREEN_WIDTH, SCREEN_HEIGHT));
+		this.pack();
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
 	}
 	
 	public void startLevel (Level level, int difficulty, int abilityState, boolean canRoll) {
