@@ -103,7 +103,9 @@ public class LevelSelectScreen extends JPanel {
 				System.out.println(currentLevelIntroText);
 				if (currentLevel.getLEVEL_NUM()==0)
 					gameFrame.goToInstructionScreen(currentDifficulty, abilityState);
-				else
+				else if (currentLevel.getLEVEL_NUM()==1)
+					gameFrame.goToEnemyInstructionScreen(currentDifficulty, abilityState);
+				else	
 					gameFrame.startLevel(currentLevel, currentDifficulty, abilityState);
 			}
 		});
@@ -129,7 +131,7 @@ public class LevelSelectScreen extends JPanel {
 		}
 		introTexts=BreakString.breakText(currentLevelIntroText);
 		
-		if (levelOptionList.get(1).SAVEDATA_COMPLETED)
+		if (levelOptionList.get(2).SAVEDATA_COMPLETED)
 			abilityState = 1;
 		if (levelOptionList.get(3).SAVEDATA_COMPLETED) {
 			abilityState = 2;
