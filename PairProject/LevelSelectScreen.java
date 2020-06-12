@@ -81,12 +81,7 @@ public class LevelSelectScreen extends JPanel {
 				for (int i = 0; i < levelOptionList.size(); i++) {
 					LevelOption levelOption = levelOptionList.get(i);
 					if (levelOption.clickedOnLevel(event.getX(), event.getY()) && ((i == 0) || (i != 0 && levelOptionList.get(i-1).SAVEDATA_COMPLETED))) {
-						currentImage = levelOption.getImage();
-						currentLevelIntroText = levelOption.getLevelIntroText();
-						currentLevel = levelOption.getLevel();
-						currentScore = levelOption.getSAVEDATA_HEALTH();
-						introTexts=BreakString.breakText(currentLevelIntroText);
-						levelSelectScreen.repaint();
+						focusOnLevel(i);
 						break;
 					}
 				}
@@ -137,6 +132,15 @@ public class LevelSelectScreen extends JPanel {
 			abilityState = 2;
 			addAbilityButtons();
 		}
+	}
+	
+	public void focusOnLevel (int levelNum) {
+		currentImage = levelOptionList.get(levelNum).getImage();
+		currentLevelIntroText = levelOptionList.get(levelNum).getLevelIntroText();
+		currentLevel = levelOptionList.get(levelNum).getLevel();
+		currentScore = levelOptionList.get(levelNum).getSAVEDATA_HEALTH();
+		introTexts=BreakString.breakText(currentLevelIntroText);
+		levelSelectScreen.repaint();
 	}
 	
 	public void addAbilityButtons () {
@@ -190,6 +194,9 @@ public class LevelSelectScreen extends JPanel {
 						out.write(completed + " " + health + "\n");
 						levelOptionList.get(i).setSAVEDATA_COMPLETED(completed);
 						levelOptionList.get(i).setSAVEDATA_HEALTH(health);
+						
+						if (levelNum != levelOptionList.size()-1)
+							focusOnLevel(levelNum+1);
 					} else {
 						health = 0.0;
 						out.write(completed + " " + health + "\n");
