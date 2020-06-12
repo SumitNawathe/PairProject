@@ -8,7 +8,7 @@ public class GameFrame extends JFrame{
 	private InstructionScreen instructionScreen;
 	private EnemyInstructionScreen enemyInstructionScreen;
 	private GraphicsPanel graphicsPanel;
-	int SCREEN_WIDTH = 1220, SCREEN_HEIGHT = 900;
+	int SCREEN_WIDTH = 3000, SCREEN_HEIGHT = 900;
 	String CURRENT_SAVEDATA_LOCATION;
 	
 	public GameFrame () {
