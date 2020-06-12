@@ -65,18 +65,6 @@ public class GraphicsPanel extends JPanel {
 		} catch (Exception e) {System.out.println("Failed to load booleans in GraphicsPanel");}
 		this.difficulty=difficulty;
 		fPressed = false;
-		//		int width = SCREEN_WIDTH;
-		//		//TODO: Delete: Credit to https://stackoverflow.com/questions/44490655/how-to-maintain-the-aspect-ratio-of-a-jframe for this.
-		//		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		//		//System.out.println(gd.getDisplayMode().getWidth()+" "+gd.getDisplayMode().getHeight());
-		//		if (width > gd.getDisplayMode().getWidth())
-		//		    width = gd.getDisplayMode().getWidth();
-		//		while (width*3/4 > gd.getDisplayMode().getHeight())
-		//		    width = (int) (width - width*0.1);
-		//		//System.out.println(width);
-		//		width-=10;
-		//		SCREEN_WIDTH=width;
-		//		SCREEN_HEIGHT=width*3/4;
 		this.SCREEN_WIDTH = SCREEN_WIDTH;
 		this.SCREEN_HEIGHT = SCREEN_HEIGHT;
 
@@ -170,7 +158,7 @@ public class GraphicsPanel extends JPanel {
 								meshList.add(rocket);
 						}
 
-					} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {//TODO: Pretty sure this is not supposed to be here.
+					} else if (event.getKeyCode() == KeyEvent.VK_SHIFT) {
 						//playerShip.moveShipTo(playerShip.getPlayerPos().plus(new Vector(0, -1, 0)));
 						//velocity = velocity.plus(new Vector(-0.1, 0, 0));
 						//System.out.println("Shift");
@@ -474,7 +462,6 @@ public class GraphicsPanel extends JPanel {
 						shadingValue = 0;
 					if (shadingValue > 1)
 						shadingValue = 1;
-					//shadingValue = 1; //TODO remove
 					shadingValue /= 4;
 					shadingValue += 0.75;
 					//					Color color = new Color((int) (255*shadingValue), (int) (255*shadingValue), (int) (255*shadingValue));
