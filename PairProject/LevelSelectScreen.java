@@ -201,6 +201,7 @@ public class LevelSelectScreen extends JPanel {
 				}
 			}
 			out.close();
+			levelSelectScreen.repaint();
 		} catch (Exception e) {System.out.println("Updating save data failed. "+SAVEDATA_LOCATION);}
 	}
 
